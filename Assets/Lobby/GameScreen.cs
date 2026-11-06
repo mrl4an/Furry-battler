@@ -56,8 +56,10 @@ namespace AnimalBattler.Client.Lobby
             _line = _root.Q<VisualElement>("attack-line");
             _root.RegisterCallback<GeometryChangedEvent>(evt =>
             {
-                _root.EnableInClassList("compact", evt.newRect.width < 650);
+                _root.EnableInClassList("compact", evt.newRect.height < 680);
             });
+            foreach (var scroll in _root.Query<ScrollView>(className: "capsule-scroll").ToList())
+                BindScrollAppearance(scroll);
             _root.Q<Button>("language-button").clicked += _switchLanguage;
             if (_line != null)
             {
@@ -128,7 +130,9 @@ namespace AnimalBattler.Client.Lobby
             SetText("self-summary", "playerSummary", selfName, _state.self?.health ?? 0,
                 _state.self?.coins ?? 0, _state.self?.availableCoins ?? 0);
             SetText("opponent-summary", "opponentSummary", otherName, _state.opponent?.health ?? 0);
-            _root.Q<Label>("game-error").text = string.IsNullOrEmpty(_errorKey) ? string.Empty : Format(_errorKey);
+            var error = _root.Q<Label>("game-error");
+            error.text = string.IsNullOrEmpty(_errorKey) ? string.Empty : Format(_errorKey);
+            error.EnableInClassList("hidden", string.IsNullOrEmpty(_errorKey));
 
             switch (_state.phase)
             {
@@ -174,6 +178,38 @@ namespace AnimalBattler.Client.Lobby
         private static string SceneFor(string phase) => phase == "auction" ? "Auction"
             : phase == "preparation" ? "Preparation" : phase == "battle" ? "Battle" : "Result";
 
+        private static void BindScrollAppearance(ScrollView scroll)
+        {
+            var fade = scroll.schedule.Execute(() => scroll.RemoveFromClassList("scroll-active"));
+            fade.Pause();
+            void ShowTrack()
+            {
+                scroll.AddToClassList("scroll-active");
+                fade.ExecuteLater(700);
+            }
+            scroll.horizontalScroller.valueChanged += value => ShowTrack();
+            scroll.verticalScroller.valueChanged += value => ShowTrack();
+            scroll.RegisterCallback<WheelEvent>(evt => ShowTrack(), TrickleDown.TrickleDown);
+            foreach (var scroller in new[] { scroll.horizontalScroller, scroll.verticalScroller })
+            {
+                scroller.RegisterCallback<PointerDownEvent>(evt =>
+                {
+                    scroll.AddToClassList("scroll-dragging");
+                    ShowTrack();
+                }, TrickleDown.TrickleDown);
+                scroller.RegisterCallback<PointerUpEvent>(evt =>
+                {
+                    scroll.RemoveFromClassList("scroll-dragging");
+                    ShowTrack();
+                }, TrickleDown.TrickleDown);
+                scroller.RegisterCallback<PointerCaptureOutEvent>(evt =>
+                {
+                    scroll.RemoveFromClassList("scroll-dragging");
+                    ShowTrack();
+                });
+            }
+        }
+
         private void SetText(string name, string key, params object[] args)
         {
             var label = _root.Q<Label>(name);
@@ -195,8 +231,8 @@ namespace AnimalBattler.Client.Lobby
             SetText("stage-heading", "auctionHeading");
             SetText("auction-hint", "auctionHint");
             SetText("opponent-hand-count", "opponentHandCount", _state.opponent?.handCount ?? 0);
-            var list = _root.Q<ScrollView>("offers");
-            list.contentContainer.Clear();
+            var list = _root.Q<VisualElement>("offers");
+            list.Clear();
             var bids = _state.self?.bids ?? Array.Empty<int>();
             var offers = _state.auction ?? Array.Empty<string>();
             for (var slot = 0; slot < 5; slot++)
@@ -225,6 +261,7 @@ namespace AnimalBattler.Client.Lobby
             SetText("stage-heading", "preparationHeading");
             var results = _root.Q<ScrollView>("auction-results");
             results.contentContainer.Clear();
+            results.parent.EnableInClassList("hidden", _state.auctionResults == null || _state.auctionResults.Length == 0);
             _root.Q<Label>("results-heading").text = _state.auctionResults != null && _state.auctionResults.Length > 0
                 ? Format("auctionResultsHeading") : string.Empty;
             if (_state.auctionResults != null && _state.auctionResults.Length > 0)
@@ -239,8 +276,8 @@ namespace AnimalBattler.Client.Lobby
                 }
             }
             SetText("shop-heading", "shopHeading");
-            var shop = _root.Q<ScrollView>("shop");
-            shop.contentContainer.Clear();
+            var shop = _root.Q<VisualElement>("shop");
+            shop.Clear();
             for (var slot = 0; slot < 5; slot++)
             {
                 var index = slot;
@@ -249,32 +286,36 @@ namespace AnimalBattler.Client.Lobby
                 item.Add(Card(offer?.cardId, 1, false));
                 if (offer != null)
                 {
-                    item.Add(Button("buy", () => _send(new GameRequest { type = "buy", slot = index }),
+                    var actions = Row("offer-actions");
+                    actions.Add(Button("buy", () => _send(new GameRequest { type = "buy", slot = index }),
                         !_state.self.ready && _state.self.coins >= 3));
-                    item.Add(Button(offer.frozen ? "unfreeze" : "freeze", () => _send(new GameRequest
+                    actions.Add(Button(offer.frozen ? "unfreeze" : "freeze", () => _send(new GameRequest
                     {
                         type = "setFrozen", slot = index, frozen = !offer.frozen
                     }), !_state.self.ready));
+                    item.Add(actions);
                 }
                 shop.Add(item);
             }
             SetButton("refresh-button", "refreshShop", () => _send(new GameRequest { type = "refreshShop" }),
                 !_state.self.ready && _state.self.coins >= 1);
             SetText("board-heading", "boardHeading");
-            var board = _root.Q<ScrollView>("board");
-            board.contentContainer.Clear();
+            var board = _root.Q<VisualElement>("board");
+            board.Clear();
             for (var slot = 0; slot < 5; slot++)
             {
                 var index = slot;
                 var card = _state.self.board != null && slot < _state.self.board.Length ? _state.self.board[slot] : null;
                 var target = Column("board-slot");
-                target.Add(Text("slot-title", slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot));
+                var heading = Row("slot-heading");
+                heading.Add(Text("slot-title", slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot));
+                target.Add(heading);
                 var cardVisual = Card(card?.cardId, card?.copies ?? 1, true);
                 target.Add(cardVisual);
                 if (card != null)
                 {
                     BindDrag(cardVisual, new DragSource { FromBoard = true, BoardSlot = index, CardId = card.id });
-                    target.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
+                    heading.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
                         !_state.self.ready));
                 }
                 _boardTargets[slot] = target;
@@ -310,8 +351,8 @@ namespace AnimalBattler.Client.Lobby
                 SetText(position == 0 ? "top-side-name" : "bottom-side-name",
                     side == 0 ? "firstSide" : "secondSide",
                     NameFor(side < _players.Length ? _players[side].playerId : null));
-                var row = _root.Q<ScrollView>(position == 0 ? "top-board" : "bottom-board");
-                row.contentContainer.Clear();
+                var row = _root.Q<VisualElement>(position == 0 ? "top-board" : "bottom-board");
+                row.Clear();
                 for (var slot = 0; slot < 5; slot++)
                 {
                     var card = opening.FirstOrDefault(item => item.playerIndex == side && item.slot == slot);
@@ -324,6 +365,7 @@ namespace AnimalBattler.Client.Lobby
                         _battleCards[card.id] = holder;
                         _battleHealth[card.id] = health;
                     }
+                    else holder.Add(Card(null, 1, false));
                     row.Add(holder);
                 }
             }
@@ -355,6 +397,7 @@ namespace AnimalBattler.Client.Lobby
             var visual = _cardTemplate.CloneTree().Q<VisualElement>("game-card");
             if (string.IsNullOrEmpty(id))
             {
+                visual.AddToClassList("empty-card");
                 visual.Q<Label>("card-name").text = Format("emptySlot");
                 visual.Q<Label>("card-tier").text = string.Empty;
                 visual.Q<Label>("card-art").text = string.Empty;

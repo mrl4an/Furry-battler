@@ -7,27 +7,37 @@
                 <ui:Button name="language-button" class="language-button" />
             </ui:VisualElement>
             <ui:Label name="subtitle" class="subtitle" />
-            <ui:VisualElement class="section">
-                <ui:Label name="server-label" class="field-label" />
-                <ui:TextField name="server-url" />
-            </ui:VisualElement>
-            <ui:VisualElement name="entry" class="entry">
-                <ui:Button name="create-button" class="primary-button" />
-                <ui:Label name="or-label" class="field-label centered" />
-                <ui:Label name="code-label" class="field-label" />
-                <ui:TextField name="room-code" max-length="8" />
-                <ui:Button name="join-button" class="secondary-button" />
-            </ui:VisualElement>
-            <ui:VisualElement name="room" class="room hidden">
-                <ui:Label name="room-heading" class="section-title" />
-                <ui:Label name="room-code-display" class="room-code" />
-                <ui:Label name="players" class="field-label" />
-                <ui:Label name="room-players" class="field-label" />
-                <ui:TextField name="nickname-input" max-length="20" />
-                <ui:Button name="nickname-button" class="secondary-button" />
-                <ui:Button name="room-ready-button" class="primary-button" />
-                <ui:Button name="copy-button" class="secondary-button" />
-                <ui:Button name="leave-button" class="secondary-button" />
+            <ui:VisualElement class="lobby-body">
+                <ui:VisualElement class="connection-section">
+                    <ui:Label name="server-label" class="field-label" />
+                    <ui:TextField name="server-url" />
+                </ui:VisualElement>
+                <ui:VisualElement class="lobby-actions">
+                    <ui:VisualElement name="entry" class="entry">
+                        <ui:Button name="create-button" class="primary-button" />
+                        <ui:Label name="or-label" class="field-label centered" />
+                        <ui:Label name="code-label" class="field-label" />
+                        <ui:VisualElement class="join-row">
+                            <ui:TextField name="room-code" max-length="8" />
+                            <ui:Button name="join-button" class="secondary-button" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement name="room" class="room hidden">
+                        <ui:Label name="room-heading" class="section-title" />
+                        <ui:Label name="room-code-display" class="room-code" />
+                        <ui:Label name="players" class="field-label" />
+                        <ui:Label name="room-players" class="field-label" />
+                        <ui:VisualElement class="nickname-row">
+                            <ui:TextField name="nickname-input" max-length="20" />
+                            <ui:Button name="nickname-button" class="secondary-button" />
+                        </ui:VisualElement>
+                        <ui:Button name="room-ready-button" class="primary-button" />
+                        <ui:VisualElement class="room-actions">
+                            <ui:Button name="copy-button" class="secondary-button" />
+                            <ui:Button name="leave-button" class="secondary-button" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:Label name="status" class="status" />
         </ui:VisualElement>

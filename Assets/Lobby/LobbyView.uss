@@ -1,59 +1,155 @@
-.screen { flex-grow: 1; justify-content: center; align-items: center; padding: 16px; background-color: rgb(17, 25, 36); }
-.panel { width: 100%; max-width: 560px; padding: 24px; background-color: rgb(31, 43, 59); border-top-left-radius: 18px; border-top-right-radius: 18px; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; }
-.header { flex-direction: row; justify-content: space-between; align-items: center; }
-.title { color: rgb(255, 250, 233); font-size: 28px; -unity-font-style: bold; white-space: normal; }
-.subtitle { color: rgb(224, 233, 240); font-size: 16px; margin-top: 8px; margin-bottom: 20px; white-space: normal; }
-.section { margin-bottom: 16px; }
-.field-label { color: rgb(239, 245, 248); font-size: 16px; margin-bottom: 7px; white-space: normal; }
-.centered { align-self: center; margin-top: 12px; }
-.section-title { color: rgb(255, 250, 233); font-size: 20px; -unity-font-style: bold; margin-bottom: 8px; white-space: normal; }
-.room-code { color: rgb(255, 211, 112); font-size: 30px; -unity-font-style: bold; -unity-text-align: middle-center; margin: 12px; }
-.status { color: rgb(255, 211, 112); font-size: 16px; margin-top: 16px; min-height: 24px; white-space: normal; }
-.primary-button { background-color: rgb(231, 174, 84); color: rgb(22, 29, 37); -unity-font-style: bold; min-height: 48px; font-size: 17px; margin-top: 8px; }
-.secondary-button { background-color: rgb(69, 97, 124); color: rgb(255, 255, 255); min-height: 44px; font-size: 16px; margin-top: 8px; }
-.language-button { background-color: rgb(69, 97, 124); color: white; width: 56px; height: 40px; font-size: 15px; }
+:root { --ink: #291F24; --panel: #342D38; --plum: #493E48; --paper: #E9D4B5; --cream: #F3E4D1; --muted: #C2B3BA; --teal: #63DCC5; --coral: #D77C6F; --gold: #DBB773; }
+.screen, .game-screen { -unity-font-definition: initial; -unity-font: url("Fonts/NotoSans-Regular.ttf"); color: var(--cream); font-size: 18px; background-color: var(--ink); position: absolute; left: 0; right: 0; top: 0; bottom: 0; padding: 4px 12px; }
+.screen { align-items: center; justify-content: center; }
+.panel { background-color: var(--panel); padding: 20px; width: 100%; max-width: 1120px; max-height: 100%; border-left-width: 4px; border-left-color: var(--gold); }
+.header, .game-header, .summary-row, .section-header, .action-bar, .hand-controls { flex-direction: row; align-items: center; }
+.header, .section-header { justify-content: space-between; }
+.title, .game-title, .section-title, .result, .card-name { -unity-font: url("Fonts/NotoSerif-Bold.ttf"); -unity-font-style: normal; }
+.title { font-size: 28px; flex-grow: 1; white-space: normal; color: var(--paper); }
+.subtitle { color: var(--muted); font-size: 16px; margin: 4px 0 16px 0; white-space: normal; }
+.section { margin-bottom: 20px; }
+.field-label { color: var(--cream); margin: 6px 0; white-space: normal; }
+.centered { align-self: center; margin: 12px; color: var(--muted); }
+.section-title { color: var(--paper); font-size: 18px; margin: 0 0 4px 0; white-space: normal; }
+.room-code { color: var(--teal); font-size: 26px; -unity-text-align: middle-center; margin: 4px; letter-spacing: 4px; }
+.status { color: var(--gold); font-size: 14px; margin-top: 8px; white-space: normal; }
+Button { background-color: var(--paper); color: #2B2225; min-height: 40px; padding: 4px 10px; margin: 4px 0; border-top-width: 2px; border-bottom-width: 4px; border-left-width: 2px; border-right-width: 2px; border-top-color: #A18B78; border-bottom-color: var(--ink); border-left-color: #A18B78; border-right-color: var(--ink); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; font-size: 16px; white-space: normal; -unity-text-align: middle-center; }
+Button:hover { background-color: #F3E4D1; border-top-color: var(--teal); border-left-color: var(--teal); }
+Button:active { background-color: #C2AA8D; border-bottom-width: 2px; }
+Button:focus { border-top-color: var(--teal); border-bottom-color: var(--teal); border-left-color: var(--teal); border-right-color: var(--teal); }
+Button:disabled { background-color: #514650; color: #AA9DA5; border-top-color: #665964; border-left-color: #665964; }
+.primary-button { background-color: var(--teal); color: var(--ink); -unity-font-style: bold; }
+.primary-button:hover { background-color: #85E8D5; }
+.primary-button:active { background-color: #43B8A5; }
+.primary-button:disabled { background-color: #46655F; color: #B3C3BE; }
+.language-button { width: 52px; min-width: 52px; margin-left: 16px; flex-shrink: 0; }
 .hidden { display: none; }
-TextField { color: rgb(255, 255, 255); background-color: rgb(28, 39, 52); min-height: 44px; font-size: 16px; }
-IntegerField { color: rgb(255, 255, 255); min-height: 44px; font-size: 16px; }
-.panel .unity-base-text-field__input, .panel .unity-text-field__input, .panel #unity-text-input,
-.game-screen .unity-base-text-field__input, .game-screen .unity-text-field__input, .game-screen #unity-text-input {
-    background-color: rgb(28, 39, 52);
-    color: rgb(255, 255, 255);
-    font-size: 16px;
-    min-height: 42px;
-    -unity-text-align: middle-left;
-}
-.game-screen { position: absolute; left: 0; right: 0; top: 0; bottom: 0; padding: 12px; background-color: rgb(17, 25, 36); }
-#page-scroll { flex-grow: 1; }
+TextField, IntegerField { color: var(--cream); min-height: 40px; font-size: 16px; margin: 4px 0; }
+.unity-base-field__label { color: var(--cream); min-width: 0; margin-right: 8px; }
+.unity-base-text-field__input, .unity-text-field__input, #unity-text-input { background-color: var(--ink); color: var(--cream); font-size: 16px; min-height: 34px; padding: 4px 8px; -unity-text-align: middle-left; border-top-width: 1px; border-bottom-width: 2px; border-left-width: 1px; border-right-width: 1px; border-top-color: #796573; border-bottom-color: #796573; border-left-color: #796573; border-right-color: #796573; }
+.unity-base-text-field__input:focus { border-bottom-color: var(--teal); }
+.game-header { flex-shrink: 0; padding: 0 12px; background-color: var(--panel); border-bottom-width: 2px; border-bottom-color: var(--gold); }
+.game-title { color: var(--paper); font-size: 22px; flex-grow: 1; }
+.round, .timer { font-size: 16px; color: var(--paper); margin-left: 16px; }
+.timer { color: var(--gold); min-width: 136px; -unity-text-align: middle-right; }
+.summary-row { flex-shrink: 0; justify-content: space-between; padding: 4px 12px; }
+.game-summary { color: var(--cream); white-space: normal; font-size: 14px; flex-shrink: 1; }
+#self-summary { margin-right: 24px; }
+.game-error { color: var(--coral); font-size: 14px; white-space: normal; flex-shrink: 0; margin: 0 16px; }
+.hint, .slot-title, .battle-health { color: var(--muted); font-size: 14px; white-space: normal; }
+.hint { margin: 4px 0; }
+.action-bar { background-color: var(--panel); padding: 2px 12px; flex-shrink: 0; border-top-width: 2px; border-top-color: #796573; }
+.action-bar .hint { flex-grow: 1; margin-right: 16px; }
+.action-bar Button { width: 220px; min-height: 40px; flex-shrink: 0; }
+.slot-title { min-height: 18px; margin-bottom: 2px; font-size: 13px; flex-shrink: 0; color: var(--paper); -unity-text-align: middle-center; }
+.game-card:hover { background-color: #584956; }
+.empty-card .card-name { color: var(--muted); background-color: transparent; }
+.empty-card .card-meta, .empty-card .card-art, .empty-card .card-ability, .empty-card .card-stats, .empty-card .card-copies { display: none; }
 .attack-line { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
-.game-header { flex-direction: row; justify-content: space-between; min-height: 40px; }
-.game-title { color: rgb(255, 250, 233); font-size: 19px; -unity-font-style: bold; }
-.game-summary, .hint, .slot-title, .round, .timer { color: rgb(234, 242, 247); font-size: 15px; white-space: normal; }
-.game-summary { margin-bottom: 4px; }
-.section-title { margin-top: 10px; margin-bottom: 6px; }
-.offer-scroll { height: 250px; flex-shrink: 0; }
-.results-scroll { height: 100px; flex-shrink: 0; }
-.hand-scroll { height: 230px; flex-shrink: 0; }
-.hand-controls { flex-direction: row; align-items: center; }
-.hand-controls .hand-scroll { flex-grow: 1; min-width: 0; }
-.hand-controls .game-button { width: 36px; }
-.offer, .hand-item { width: 184px; min-width: 184px; padding: 5px; }
-.board-row { height: 250px; flex-shrink: 0; }
-.board-slot { width: 174px; min-width: 174px; padding: 4px; }
-.slot-title { min-height: 22px; }
-.game-card { flex-grow: 1; min-height: 150px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-color: rgb(232, 186, 82); border-right-color: rgb(232, 186, 82); border-bottom-color: rgb(232, 186, 82); border-left-color: rgb(232, 186, 82); padding: 6px; background-color: rgb(36, 48, 62); }
-.rarity-rare { border-top-color: rgb(78, 183, 241); border-right-color: rgb(78, 183, 241); border-bottom-color: rgb(78, 183, 241); border-left-color: rgb(78, 183, 241); }
-.rarity-epic { border-top-color: rgb(199, 119, 250); border-right-color: rgb(199, 119, 250); border-bottom-color: rgb(199, 119, 250); border-left-color: rgb(199, 119, 250); }
-.card-tier { color: rgb(255, 224, 120); font-size: 13px; -unity-text-align: upper-right; }
-.card-art { height: 24px; color: rgb(196, 211, 219); -unity-text-align: middle-center; font-size: 12px; }
-.card-name { color: rgb(255, 255, 255); font-size: 16px; -unity-font-style: bold; white-space: normal; }
-.card-group, .card-ability, .card-copies { color: rgb(227, 238, 245); font-size: 13px; white-space: normal; }
-.card-stats, .battle-health { color: rgb(255, 220, 132); font-size: 15px; -unity-font-style: bold; white-space: normal; }
-.game-button { min-height: 40px; margin-top: 4px; background-color: rgb(69, 97, 124); color: rgb(255, 255, 255); font-size: 15px; }
-.offer .game-button { min-height: 36px; }
-.offer IntegerField { min-height: 44px; color: white; }
-.offer .unity-base-field__label { color: white; font-size: 14px; }
-.result { color: rgb(255, 211, 112); font-size: 28px; -unity-font-style: bold; margin: 24px; -unity-text-align: middle-center; }
-.drag-ghost { position: absolute; background-color: rgb(105, 121, 132); color: white; padding: 8px; }
-.game-error { color: rgb(255, 158, 128); font-size: 16px; white-space: normal; }
-.game-screen.compact { padding: 8px; }
+.drag-ghost { position: absolute; background-color: var(--paper); color: var(--ink); padding: 12px; font-size: 20px; }
+/* Screen areas share available height; only unbounded collections scroll. */
+.page-content { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; margin: 4px 0; }
+.stage-title { color: var(--paper); font-size: 16px; margin: 2px 12px; flex-shrink: 0; }
+.surface { background-color: var(--panel); padding: 6px 8px; margin-bottom: 4px; border-left-width: 3px; border-left-color: #796573; min-height: 0; }
+.card-grid { flex-direction: row; flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; align-items: stretch; }
+.offer, .board-slot { width: 20%; min-width: 0; flex-shrink: 1; min-height: 0; padding: 0 3px; }
+.game-card { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; padding: 5px; border-top-width: 2px; border-bottom-width: 3px; border-left-width: 2px; border-right-width: 2px; border-top-color: #A18B78; border-bottom-color: #A18B78; border-left-color: #A18B78; border-right-color: #A18B78; border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; background-color: var(--plum); }
+.card-meta, .card-footer { flex-direction: row; justify-content: space-between; align-items: center; flex-shrink: 0; }
+.card-tier { color: var(--gold); font-size: 12px; flex-shrink: 0; margin-right: 4px; }
+.card-group { color: var(--cream); font-size: 12px; white-space: normal; flex-shrink: 1; -unity-text-align: middle-right; }
+.card-art { display: none; }
+.card-name { color: #2B2225; background-color: var(--paper); font-size: 17px; white-space: normal; padding: 2px 3px; -unity-text-align: middle-center; flex-shrink: 0; }
+.card-ability { color: var(--cream); font-size: 14px; white-space: normal; margin: 2px 0; flex-grow: 1; flex-shrink: 0; }
+.card-stats { color: var(--gold); font-size: 18px; -unity-font-style: bold; white-space: normal; }
+.card-copies { color: var(--muted); font-size: 11px; white-space: normal; margin-left: 4px; }
+.card-footer .card-stats { flex-shrink: 1; }
+.card-footer .card-copies { flex-shrink: 1; }
+.offer-actions { flex-direction: row; flex-shrink: 0; }
+.offer-actions Button { width: 50%; min-width: 0; flex-shrink: 1; min-height: 32px; font-size: 13px; padding: 2px; margin: 3px 0 0 0; }
+.board-slot > Button, .hand-item > Button { min-height: 28px; font-size: 13px; padding: 1px 4px; margin: 2px 0 0 0; flex-shrink: 0; }
+.preparation-top { flex-direction: row; flex-grow: 1; flex-basis: 0; min-height: 0; }
+.board-surface { width: 76%; flex-shrink: 1; }
+.hand-surface { width: 24%; flex-shrink: 1; margin-left: 4px; }
+.shop-surface { flex-grow: 1; flex-basis: 0; min-height: 0; }
+.section-header { flex-shrink: 0; }
+.section-header Button { min-height: 28px; font-size: 13px; padding: 1px 8px; margin: 0 0 3px 0; }
+.hand-controls { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; align-items: stretch; }
+.hand-controls > Button { width: 24px; min-width: 24px; min-height: 0; font-size: 13px; padding: 0; margin: 0; }
+.hand-scroll { flex-grow: 1; min-width: 0; min-height: 0; }
+.hand-scroll > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; height: 100%; }
+.hand-item { width: 144px; height: 100%; padding: 0 2px; flex-shrink: 0; justify-content: center; }
+.hand-item .game-card { max-height: 140px; }
+.hand-item .card-name { font-size: 14px; }
+.hand-item .card-ability { font-size: 12px; }
+.hand-item .card-tier, .hand-item .card-group { font-size: 10px; }
+.hand-item .card-stats { font-size: 14px; }
+.hand-item .card-copies { font-size: 10px; }
+.action-bar #drag-hint { flex-grow: 1; flex-shrink: 1; font-size: 12px; }
+.action-bar #ready-status { flex-grow: 0; flex-shrink: 0; font-size: 13px; }
+.results-surface { flex-direction: row; flex-shrink: 0; height: 32px; padding: 2px 8px; align-items: center; }
+.results-surface .section-title { font-size: 13px; margin: 0 10px 0 0; flex-shrink: 0; }
+.results-scroll { flex-grow: 1; min-width: 0; height: 28px; }
+.results-scroll > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; align-items: center; }
+.results-scroll .hint { flex-shrink: 0; font-size: 12px; white-space: nowrap; margin: 0 18px 0 0; }
+.auction-surface { flex-grow: 1; min-height: 0; }
+.auction-screen .game-card { padding: 10px; }
+.auction-screen .card-art { display: flex; flex-grow: 1; flex-shrink: 1; min-height: 0; max-height: 180px; background-color: #61535E; color: #C2B3BA; -unity-text-align: middle-center; font-size: 16px; }
+.auction-screen .card-name { font-size: 24px; padding: 5px; }
+.auction-screen .card-ability { font-size: 18px; flex-grow: 0; margin: 8px 0; }
+.auction-screen .card-tier, .auction-screen .card-group { font-size: 16px; }
+.auction-screen .card-stats { font-size: 24px; }
+.auction-screen .offer > Button, .auction-screen .offer > IntegerField { flex-shrink: 0; }
+.auction-screen .offer .unity-base-field__label { font-size: 14px; }
+.battle-surface { flex-grow: 1; flex-basis: 0; min-height: 0; }
+.battle-health { color: var(--coral); font-size: 16px; -unity-font-style: bold; margin-top: 2px; -unity-text-align: middle-center; flex-shrink: 0; white-space: normal; }
+.battle-screen .card-stats { display: none; }
+.result-screen .page-content { justify-content: center; align-items: center; }
+.result-panel { width: 70%; max-width: 640px; padding: 24px; background-color: var(--panel); border-top-width: 4px; border-top-color: var(--gold); }
+.result { color: var(--paper); font-size: 42px; white-space: normal; margin-bottom: 20px; -unity-text-align: middle-center; }
+.lobby-body, .nickname-row, .room-actions, .join-row { flex-direction: row; }
+.lobby-body { min-height: 0; }
+.connection-section { width: 36%; padding-right: 24px; }
+.lobby-actions { width: 64%; padding-left: 24px; border-left-width: 1px; border-left-color: #796573; }
+.lobby-actions .room { min-height: 0; }
+.nickname-row TextField, .join-row TextField { flex-grow: 1; min-width: 0; }
+.nickname-row Button, .join-row Button { margin-left: 8px; }
+.room-actions Button { width: 50%; flex-shrink: 1; }
+.room-actions #copy-button { margin-right: 8px; }
+/* Native scrolling and pointer handling stay intact; the track fades in on activity. */
+.capsule-scroll .unity-scroller--horizontal { height: 14px; min-height: 14px; margin: 1px 0; background-color: transparent; }
+.capsule-scroll .unity-scroller--vertical { width: 14px; min-width: 14px; margin: 0 1px; background-color: transparent; }
+.capsule-scroll .unity-scroller__low-button, .capsule-scroll .unity-scroller__high-button { display: none; }
+.capsule-scroll .unity-scroller__slider { margin: 0; padding: 0; min-height: 0; min-width: 0; }
+.capsule-scroll .unity-base-slider__tracker { background-color: rgba(243, 228, 209, 0.035); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; transition-property: background-color; transition-duration: 0.25s; }
+.capsule-scroll .unity-scroller--horizontal .unity-base-slider__tracker { height: 6px; }
+.capsule-scroll .unity-scroller--vertical .unity-base-slider__tracker { width: 6px; }
+.capsule-scroll .unity-base-slider__dragger { background-color: #A18B94; border-top-width: 0; border-bottom-width: 0; border-left-width: 0; border-right-width: 0; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; transition-property: background-color; transition-duration: 0.2s; }
+.capsule-scroll .unity-scroller--horizontal .unity-base-slider__dragger { height: 8px; min-width: 28px; }
+.capsule-scroll .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; min-height: 28px; }
+.capsule-scroll .unity-base-slider__dragger-border { display: none; }
+.capsule-scroll.scroll-active .unity-base-slider__tracker, .capsule-scroll.scroll-dragging .unity-base-slider__tracker, .capsule-scroll .unity-scroller:hover .unity-base-slider__tracker { background-color: rgba(243, 228, 209, 0.18); }
+.capsule-scroll.scroll-active .unity-base-slider__dragger, .capsule-scroll.scroll-dragging .unity-base-slider__dragger, .capsule-scroll .unity-scroller:hover .unity-base-slider__dragger { background-color: var(--teal); }
+.compact .game-title { font-size: 20px; }
+.compact .stage-title { font-size: 14px; margin: 0 12px; }
+.compact .summary-row { padding: 2px 12px; }
+.compact .game-summary { font-size: 13px; }
+.compact .surface { padding: 3px 6px; }
+.compact .card-name { font-size: 16px; }
+.compact .card-ability { font-size: 13px; }
+.compact .card-stats { font-size: 16px; }
+.compact .hand-item .card-name { font-size: 14px; }
+.compact .hand-item .card-ability { font-size: 12px; }
+.compact .hand-item .card-stats { font-size: 14px; }
+.compact .auction-surface .card-name { font-size: 21px; }
+.compact .auction-surface .card-ability { font-size: 16px; }
+.compact .auction-surface .card-stats { font-size: 22px; }
+.rarity-rare { border-top-color: #A6BEC3; border-bottom-color: #A6BEC3; border-left-color: #A6BEC3; border-right-color: #A6BEC3; }
+.rarity-epic { border-top-color: #A999B0; border-bottom-color: #A999B0; border-left-color: #A999B0; border-right-color: #A999B0; }
+.empty-card { background-color: #302933; border-top-color: #665964; border-bottom-color: #665964; border-left-color: #665964; border-right-color: #665964; justify-content: center; }
+
+.slot-heading { flex-direction: row; align-items: center; min-height: 24px; flex-shrink: 0; margin-bottom: 2px; }
+.slot-heading .slot-title { flex-grow: 1; flex-shrink: 1; font-size: 12px; -unity-text-align: middle-left; margin: 0; }
+.slot-heading Button { min-height: 24px; font-size: 11px; padding: 0 4px; margin: 0 0 0 4px; flex-shrink: 0; }
+.auction-screen .empty-card .card-art { display: none; }
+.results-scroll .unity-scroller--horizontal { height: 8px; min-height: 8px; margin: 0; }
+.results-scroll .unity-scroller--horizontal .unity-base-slider__dragger { height: 6px; }

@@ -1,23 +1,31 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
-    <ui:VisualElement name="game-screen" class="game-screen">
-        <ui:ScrollView name="page-scroll" mode="Vertical">
-            <ui:VisualElement class="game-header">
-                <ui:Label name="game-title" class="game-title" />
-                <ui:Label name="round" class="round" />
-                <ui:Label name="timer" class="timer" />
-                <ui:Button name="language-button" class="language-button" />
-            </ui:VisualElement>
+    <ui:VisualElement name="game-screen" class="game-screen battle-screen">
+        <ui:VisualElement class="game-header">
+            <ui:Label name="game-title" class="game-title" />
+            <ui:Label name="round" class="round" />
+            <ui:Label name="timer" class="timer" />
+            <ui:Button name="language-button" class="language-button" />
+        </ui:VisualElement>
+        <ui:Label name="stage-heading" class="stage-title" />
+        <ui:VisualElement class="summary-row">
             <ui:Label name="self-summary" class="game-summary" />
             <ui:Label name="opponent-summary" class="game-summary" />
-            <ui:Label name="game-error" class="game-error" />
-            <ui:Label name="stage-heading" class="section-title" />
-            <ui:Label name="top-side-name" class="slot-title" />
-            <ui:ScrollView name="top-board" mode="Horizontal" class="board-row" />
-            <ui:Label name="bottom-side-name" class="slot-title" />
-            <ui:ScrollView name="bottom-board" mode="Horizontal" class="board-row" />
+        </ui:VisualElement>
+        <ui:Label name="game-error" class="game-error" />
+        <ui:VisualElement name="page-content" class="page-content">
+            <ui:VisualElement class="surface battle-surface">
+                <ui:Label name="top-side-name" class="slot-title" />
+                <ui:VisualElement name="top-board" class="card-grid board-row" />
+            </ui:VisualElement>
+            <ui:VisualElement class="surface battle-surface">
+                <ui:Label name="bottom-side-name" class="slot-title" />
+                <ui:VisualElement name="bottom-board" class="card-grid board-row" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="action-bar">
             <ui:Label name="battle-hint" class="hint" />
-        </ui:ScrollView>
+        </ui:VisualElement>
         <ui:VisualElement name="attack-line" class="attack-line" />
     </ui:VisualElement>
 </ui:UXML>
