@@ -12,18 +12,22 @@ using UnityEngine;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace AnimalBattler.Client.Lobby
 {
-    [RequireComponent(typeof(UIDocument))]
     public sealed class LobbyController : MonoBehaviour
     {
         private const string TableName = "Lobby";
+        private static LobbyController _instance;
         [SerializeField] private string configuredServerUrl;
+        [SerializeField] private VisualTreeAsset cardTemplate;
         private readonly ConcurrentQueue<Action> _mainThreadActions = new ConcurrentQueue<Action>();
         private readonly SemaphoreSlim _sendGate = new SemaphoreSlim(1, 1);
         private UIDocument _document;
+        private string _boundSceneName;
+        private Scene _initialScene;
         private TextField _serverUrl;
         private TextField _roomCodeInput;
         private Label _status;
@@ -54,6 +58,8 @@ namespace AnimalBattler.Client.Lobby
         private bool _createRequested;
         private string _requestedCode;
         private StringTable _strings;
+        private string _serverAddress;
+        private string _inviteCode;
 #if !UNITY_WEBGL || UNITY_EDITOR
         private ClientWebSocket _socket;
 #endif
@@ -68,7 +74,38 @@ namespace AnimalBattler.Client.Lobby
 
         private void Awake()
         {
-            _document = GetComponent<UIDocument>();
+            if (_instance != null && _instance != this)
+            {
+                gameObject.name = "DiscardedClientSession";
+                Destroy(gameObject);
+                return;
+            }
+            _instance = this;
+            _initialScene = gameObject.scene;
+            DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded;
+            _gameScreen = new GameScreen(SendGameRequest, Localized, SwitchLanguage, cardTemplate);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode _) => BindScene(scene);
+
+        private void BindScene(Scene scene)
+        {
+            UIDocument document = null;
+            foreach (var rootObject in scene.GetRootGameObjects())
+            {
+                document = rootObject.GetComponent<UIDocument>();
+                if (document != null) break;
+            }
+            if (document == null) return;
+            _document = document;
+            _boundSceneName = scene.name;
+            if (scene.name != "Lobby")
+            {
+                _gameScreen.Bind(_document, scene.name);
+                _gameScreen.Refresh();
+                return;
+            }
             var root = _document.rootVisualElement;
             _serverUrl = root.Q<TextField>("server-url");
             _roomCodeInput = root.Q<TextField>("room-code");
@@ -86,7 +123,6 @@ namespace AnimalBattler.Client.Lobby
             _nicknameButton = root.Q<Button>("nickname-button");
             _nicknameInput = root.Q<TextField>("nickname-input");
             _roomPlayers = root.Q<Label>("room-players");
-            _gameScreen = new GameScreen(root, SendGameRequest, Localized);
             _createButton.clicked += () => StartConnection(true);
             _joinButton.clicked += () => StartConnection(false);
             _copyButton.clicked += CopyInvite;
@@ -109,12 +145,18 @@ namespace AnimalBattler.Client.Lobby
                 if (!string.IsNullOrEmpty(code)) _roomCodeInput.value = code;
             }
 #else
-            _serverUrl.value = configuredServerUrl;
+            _serverUrl.value = _serverAddress ?? configuredServerUrl;
 #endif
+            if (!string.IsNullOrEmpty(_serverAddress)) _serverUrl.value = _serverAddress;
+            if (!string.IsNullOrEmpty(_inviteCode)) _roomCodeInput.value = _inviteCode;
+            ShowLobbyState();
+            RefreshText();
         }
 
         private IEnumerator Start()
         {
+            if (_instance != this) yield break;
+            BindScene(_initialScene);
             yield return LocalizationSettings.InitializationOperation;
             LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
             yield return LoadStrings();
@@ -123,12 +165,16 @@ namespace AnimalBattler.Client.Lobby
 
         private void Update()
         {
+            if (_instance != this) return;
             while (_mainThreadActions.TryDequeue(out var action)) action();
             _gameScreen?.Tick();
         }
 
         private void OnDestroy()
         {
+            if (_instance != this) return;
+            _instance = null;
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             LocalizationSettings.SelectedLocaleChanged -= OnLocaleChanged;
             CloseSocket();
         }
@@ -147,6 +193,11 @@ namespace AnimalBattler.Client.Lobby
 
         private void RefreshText()
         {
+            if (_document == null || _boundSceneName != "Lobby")
+            {
+                _gameScreen?.Refresh();
+                return;
+            }
             var root = _document.rootVisualElement;
             root.Q<Label>("title").text = Localized("title");
             root.Q<Label>("subtitle").text = Localized("subtitle");
@@ -178,7 +229,8 @@ namespace AnimalBattler.Client.Lobby
         private void SetStatus(string key)
         {
             _statusKey = key;
-            _status.text = Localized(key);
+            if (_status != null && _boundSceneName == "Lobby")
+                _status.text = Localized(key);
         }
 
         private void StartConnection(bool create)
@@ -199,6 +251,8 @@ namespace AnimalBattler.Client.Lobby
             }
 
             _createRequested = create;
+            _serverAddress = _serverUrl.value;
+            _inviteCode = _roomCodeInput.value;
             _requestedCode = code;
             _connecting = true;
             _intentionalClose = false;
@@ -327,9 +381,11 @@ namespace AnimalBattler.Client.Lobby
             if (message.type == "matchState")
             {
                 _matchOpponentId = message.opponent?.playerId;
-                _entry.AddToClassList("hidden");
-                _room.AddToClassList("hidden");
                 _gameScreen.SetMatch(message);
+                var target = message.phase == "auction" ? "Auction"
+                    : message.phase == "preparation" ? "Preparation"
+                    : message.phase == "battle" ? "Battle" : "Result";
+                if (SceneManager.GetActiveScene().name != target) SceneManager.LoadScene(target);
                 return;
             }
 
@@ -346,11 +402,10 @@ namespace AnimalBattler.Client.Lobby
                 _gameScreen.Hide();
             }
             _gameScreen.SetPlayers(message.players);
-            UpdateRoomPlayers();
-            _roomReadyButton.SetEnabled(_playerCount == 2);
-            _roomReadyButton.text = Localized(_roomReady ? "cancelReady" : "ready");
-            _entry.AddToClassList("hidden");
-            _room.RemoveFromClassList("hidden");
+            if (SceneManager.GetActiveScene().name == "Result" && _playerCount == 2
+                && !string.IsNullOrEmpty(_matchOpponentId)) return;
+            if (SceneManager.GetActiveScene().name != "Lobby") SceneManager.LoadScene("Lobby");
+            ShowLobbyState();
             SetStatus(_playerCount == 2 ? "roomFullStatus" : "waitingForPlayer");
             RefreshText();
             SendSocketMessage("{\"type\":\"getCatalog\"}");
@@ -373,10 +428,8 @@ namespace AnimalBattler.Client.Lobby
             _roomReady = false;
             _playerCount = 0;
             _gameScreen.Hide();
-            _entry.RemoveFromClassList("hidden");
-            _room.AddToClassList("hidden");
-            _createButton.SetEnabled(true);
-            _joinButton.SetEnabled(true);
+            if (SceneManager.GetActiveScene().name != "Lobby") SceneManager.LoadScene("Lobby");
+            ShowLobbyState();
             if (!_intentionalClose && _statusKey != "connectionFailed") SetStatus("statusDisconnected");
             RefreshText();
         }
@@ -391,6 +444,7 @@ namespace AnimalBattler.Client.Lobby
 
         private void UpdateRoomPlayers()
         {
+            if (_roomPlayers == null || _boundSceneName != "Lobby") return;
             _roomReady = false;
             var names = new StringBuilder();
             foreach (var player in _roomPlayersSnapshot ?? Array.Empty<RoomPlayer>())
@@ -406,6 +460,16 @@ namespace AnimalBattler.Client.Lobby
             }
             _roomPlayers.text = names.ToString();
             _roomReadyButton.text = Localized(_roomReady ? "cancelReady" : "ready");
+        }
+
+        private void ShowLobbyState()
+        {
+            if (_entry == null || _boundSceneName != "Lobby") return;
+            _entry.EnableInClassList("hidden", !string.IsNullOrEmpty(_roomCode));
+            _room.EnableInClassList("hidden", string.IsNullOrEmpty(_roomCode));
+            _createButton.SetEnabled(!_connecting);
+            _joinButton.SetEnabled(!_connecting);
+            _roomReadyButton.SetEnabled(_playerCount == 2);
         }
 
         private void CloseSocket()

@@ -8,7 +8,20 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: d85ab1faaab5e6444ba1b94e302f81d5
+  - enabled: 1
+    path: Assets/Scenes/Auction.unity
+    guid: b7d34d2482c94a6abdb07008684fbe58
+  - enabled: 1
+    path: Assets/Scenes/Preparation.unity
+    guid: ffb511215f8043b88f089ac4bb089354
+  - enabled: 1
+    path: Assets/Scenes/Battle.unity
+    guid: 4a56dd1e66a84f7da9f106c97443c43c
+  - enabled: 1
+    path: Assets/Scenes/Result.unity
+    guid: b399aacdcb88414baafdb9fefcb76093
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 87e885eed6c823f40bec50a737cde229, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: 35367207d861b444d8eac02438508d6e, type: 2}
   m_UseUCBPForAssetBundles: 0

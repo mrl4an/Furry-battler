@@ -10,15 +10,18 @@ namespace AnimalBattler.Client.Lobby
 {
     internal sealed class GameScreen
     {
-        private readonly VisualElement _root;
-        private readonly VisualElement _content;
+        private VisualElement _root;
         private readonly Action<GameRequest> _send;
         private readonly Func<string, string> _localize;
         private readonly Dictionary<string, CardDefinitionMessage> _catalog = new Dictionary<string, CardDefinitionMessage>();
         private readonly Dictionary<string, VisualElement> _battleCards = new Dictionary<string, VisualElement>();
         private readonly Dictionary<string, Label> _battleHealth = new Dictionary<string, Label>();
+        private readonly Dictionary<Button, Action> _buttonActions = new Dictionary<Button, Action>();
         private readonly VisualElement[] _boardTargets = new VisualElement[5];
-        private readonly VisualElement _line;
+        private VisualElement _line;
+        private readonly Action _switchLanguage;
+        private readonly VisualTreeAsset _cardTemplate;
+        private string _sceneName;
         private ServerMessage _state;
         private RoomPlayer[] _players = Array.Empty<RoomPlayer>();
         private DragSource _drag;
@@ -36,30 +39,31 @@ namespace AnimalBattler.Client.Lobby
             public bool FromBoard;
         }
 
-        public GameScreen(VisualElement parent, Action<GameRequest> send, Func<string, string> localize)
+        public GameScreen(Action<GameRequest> send, Func<string, string> localize,
+            Action switchLanguage, VisualTreeAsset cardTemplate)
         {
             _send = send;
             _localize = localize;
-            _root = new VisualElement { name = "game-screen" };
-            _root.AddToClassList("game-screen");
-            _root.AddToClassList("hidden");
+            _switchLanguage = switchLanguage;
+            _cardTemplate = cardTemplate;
+        }
+
+        public void Bind(UIDocument document, string sceneName)
+        {
+            _buttonActions.Clear();
+            _sceneName = sceneName;
+            _root = document.rootVisualElement.Q<VisualElement>("game-screen");
+            _line = _root.Q<VisualElement>("attack-line");
             _root.RegisterCallback<GeometryChangedEvent>(evt =>
             {
                 _root.EnableInClassList("compact", evt.newRect.width < 650);
             });
-            parent.Add(_root);
-            var scroll = new ScrollView(ScrollViewMode.Vertical);
-            scroll.style.flexGrow = 1;
-            _root.Add(scroll);
-            _content = scroll.contentContainer;
-            _line = new VisualElement { pickingMode = PickingMode.Ignore };
-            _line.style.position = Position.Absolute;
-            _line.style.left = 0;
-            _line.style.top = 0;
-            _line.style.right = 0;
-            _line.style.bottom = 0;
-            _line.generateVisualContent += DrawAttackLine;
-            _root.Add(_line);
+            _root.Q<Button>("language-button").clicked += _switchLanguage;
+            if (_line != null)
+            {
+                _line.pickingMode = PickingMode.Ignore;
+                _line.generateVisualContent += DrawAttackLine;
+            }
         }
 
         public void SetPlayers(RoomPlayer[] players)
@@ -91,7 +95,6 @@ namespace AnimalBattler.Client.Lobby
             }
             _state = state;
             _errorKey = null;
-            _root.RemoveFromClassList("hidden");
             Refresh();
         }
 
@@ -100,8 +103,7 @@ namespace AnimalBattler.Client.Lobby
             _state = null;
             _lastBattleKey = null;
             _errorKey = null;
-            _root.AddToClassList("hidden");
-            _line.MarkDirtyRepaint();
+            _line?.MarkDirtyRepaint();
         }
 
         public void ShowError(string key)
@@ -112,24 +114,21 @@ namespace AnimalBattler.Client.Lobby
 
         public void Refresh()
         {
-            if (_state == null) return;
-            _content.Clear();
+            if (_state == null || _root == null || _sceneName != SceneFor(_state.phase)) return;
             _battleCards.Clear();
             _battleHealth.Clear();
             Array.Clear(_boardTargets, 0, _boardTargets.Length);
-
-            var header = Row("game-header");
-            header.Add(Text("game-title", "gameTitle"));
-            header.Add(Text("round", "round", _state.round));
-            _timer = Text("timer", "timer", 0);
-            header.Add(_timer);
-            _content.Add(header);
+            SetText("game-title", "gameTitle");
+            SetText("round", "round", _state.round);
+            _timer = _root.Q<Label>("timer");
+            _root.Q<Button>("language-button").text =
+                LocalizationSettings.SelectedLocale?.Identifier.Code == "ru" ? "EN" : "RU";
             var selfName = NameFor(_state.self?.playerId);
             var otherName = NameFor(_state.opponent?.playerId);
-            _content.Add(Text("game-summary", "playerSummary", selfName, _state.self?.health ?? 0,
-                _state.self?.coins ?? 0, _state.self?.availableCoins ?? 0));
-            _content.Add(Text("game-summary", "opponentSummary", otherName, _state.opponent?.health ?? 0));
-            if (!string.IsNullOrEmpty(_errorKey)) _content.Add(Text("game-error", _errorKey));
+            SetText("self-summary", "playerSummary", selfName, _state.self?.health ?? 0,
+                _state.self?.coins ?? 0, _state.self?.availableCoins ?? 0);
+            SetText("opponent-summary", "opponentSummary", otherName, _state.opponent?.health ?? 0);
+            _root.Q<Label>("game-error").text = string.IsNullOrEmpty(_errorKey) ? string.Empty : Format(_errorKey);
 
             switch (_state.phase)
             {
@@ -145,7 +144,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void Tick()
         {
-            if (_state == null) return;
+            if (_state == null || _sceneName != SceneFor(_state.phase)) return;
             if (_timer != null && DateTimeOffset.TryParse(_state.endsAtUtc, CultureInfo.InvariantCulture,
                 DateTimeStyles.AssumeUniversal, out var deadline))
             {
@@ -169,15 +168,35 @@ namespace AnimalBattler.Client.Lobby
                 _visibleBattleEvent = eventIndex;
                 ShowBattleProgress(eventIndex);
             }
-            _line.MarkDirtyRepaint();
+            _line?.MarkDirtyRepaint();
+        }
+
+        private static string SceneFor(string phase) => phase == "auction" ? "Auction"
+            : phase == "preparation" ? "Preparation" : phase == "battle" ? "Battle" : "Result";
+
+        private void SetText(string name, string key, params object[] args)
+        {
+            var label = _root.Q<Label>(name);
+            if (label != null) label.text = Format(key, args);
+        }
+
+        private void SetButton(string name, string key, Action action, bool enabled)
+        {
+            var button = _root.Q<Button>(name);
+            button.text = Format(key);
+            button.SetEnabled(enabled);
+            if (_buttonActions.TryGetValue(button, out var previous)) button.clicked -= previous;
+            button.clicked += action;
+            _buttonActions[button] = action;
         }
 
         private void RenderAuction()
         {
-            _content.Add(Text("section-title", "auctionHeading"));
-            _content.Add(Text("hint", "auctionHint"));
-            _content.Add(Text("hint", "opponentHandCount", _state.opponent?.handCount ?? 0));
-            var list = Scroll("offer-scroll");
+            SetText("stage-heading", "auctionHeading");
+            SetText("auction-hint", "auctionHint");
+            SetText("opponent-hand-count", "opponentHandCount", _state.opponent?.handCount ?? 0);
+            var list = _root.Q<ScrollView>("offers");
+            list.contentContainer.Clear();
             var bids = _state.self?.bids ?? Array.Empty<int>();
             var offers = _state.auction ?? Array.Empty<string>();
             for (var slot = 0; slot < 5; slot++)
@@ -198,17 +217,18 @@ namespace AnimalBattler.Client.Lobby
                 }
                 list.Add(container);
             }
-            _content.Add(list);
             ReadyButton();
         }
 
         private void RenderPreparation()
         {
-            _content.Add(Text("section-title", "preparationHeading"));
+            SetText("stage-heading", "preparationHeading");
+            var results = _root.Q<ScrollView>("auction-results");
+            results.contentContainer.Clear();
+            _root.Q<Label>("results-heading").text = _state.auctionResults != null && _state.auctionResults.Length > 0
+                ? Format("auctionResultsHeading") : string.Empty;
             if (_state.auctionResults != null && _state.auctionResults.Length > 0)
             {
-                var results = Scroll("results-scroll");
-                results.Add(Text("section-title", "auctionResultsHeading"));
                 foreach (var result in _state.auctionResults)
                 {
                     var winner = string.IsNullOrEmpty(result.winnerId) ? Format("noWinner") : NameFor(result.winnerId);
@@ -217,10 +237,10 @@ namespace AnimalBattler.Client.Lobby
                         selfFirst ? result.firstBid : result.secondBid,
                         selfFirst ? result.secondBid : result.firstBid));
                 }
-                _content.Add(results);
             }
-            _content.Add(Text("section-title", "shopHeading"));
-            var shop = Scroll("offer-scroll");
+            SetText("shop-heading", "shopHeading");
+            var shop = _root.Q<ScrollView>("shop");
+            shop.contentContainer.Clear();
             for (var slot = 0; slot < 5; slot++)
             {
                 var index = slot;
@@ -238,11 +258,11 @@ namespace AnimalBattler.Client.Lobby
                 }
                 shop.Add(item);
             }
-            _content.Add(shop);
-            _content.Add(Button("refreshShop", () => _send(new GameRequest { type = "refreshShop" }),
-                !_state.self.ready && _state.self.coins >= 1));
-            _content.Add(Text("section-title", "boardHeading"));
-            var board = Scroll("board-row");
+            SetButton("refresh-button", "refreshShop", () => _send(new GameRequest { type = "refreshShop" }),
+                !_state.self.ready && _state.self.coins >= 1);
+            SetText("board-heading", "boardHeading");
+            var board = _root.Q<ScrollView>("board");
+            board.contentContainer.Clear();
             for (var slot = 0; slot < 5; slot++)
             {
                 var index = slot;
@@ -260,11 +280,10 @@ namespace AnimalBattler.Client.Lobby
                 _boardTargets[slot] = target;
                 board.Add(target);
             }
-            _content.Add(board);
-            _content.Add(Text("section-title", "handHeading"));
-            var hand = Scroll("hand-scroll");
-            var handControls = Row("hand-controls");
-            handControls.Add(Button("handPrevious", () => hand.horizontalScroller.value -= 120, true));
+            SetText("hand-heading", "handHeading");
+            var hand = _root.Q<ScrollView>("hand");
+            hand.contentContainer.Clear();
+            SetButton("hand-previous", "handPrevious", () => hand.horizontalScroller.value -= 120, true);
             foreach (var card in _state.self.hand ?? Array.Empty<CardInstanceMessage>())
             {
                 var item = Column("hand-item");
@@ -275,24 +294,24 @@ namespace AnimalBattler.Client.Lobby
                     !_state.self.ready));
                 hand.Add(item);
             }
-            handControls.Add(hand);
-            handControls.Add(Button("handNext", () => hand.horizontalScroller.value += 120, true));
-            _content.Add(handControls);
-            _content.Add(Text("hint", "dragHint"));
+            SetButton("hand-next", "handNext", () => hand.horizontalScroller.value += 120, true);
+            SetText("drag-hint", "dragHint");
             ReadyButton();
         }
 
         private void RenderBattle()
         {
-            _content.Add(Text("section-title", "battleHeading"));
+            SetText("stage-heading", "battleHeading");
             var opening = _state.battle?.openingCards ?? Array.Empty<BattleCardMessage>();
             var selfIndex = _players.Length > 0 && _players[0].playerId == _state.self.playerId ? 0 : 1;
             for (var position = 0; position < 2; position++)
             {
                 var side = position == 0 ? 1 - selfIndex : selfIndex;
-                _content.Add(Text("slot-title", side == 0 ? "firstSide" : "secondSide",
-                    NameFor(side < _players.Length ? _players[side].playerId : null)));
-                var row = Scroll("board-row");
+                SetText(position == 0 ? "top-side-name" : "bottom-side-name",
+                    side == 0 ? "firstSide" : "secondSide",
+                    NameFor(side < _players.Length ? _players[side].playerId : null));
+                var row = _root.Q<ScrollView>(position == 0 ? "top-board" : "bottom-board");
+                row.contentContainer.Clear();
                 for (var slot = 0; slot < 5; slot++)
                 {
                     var card = opening.FirstOrDefault(item => item.playerIndex == side && item.slot == slot);
@@ -307,58 +326,59 @@ namespace AnimalBattler.Client.Lobby
                     }
                     row.Add(holder);
                 }
-                _content.Add(row);
             }
-            _content.Add(Text("hint", "battleHint"));
+            SetText("battle-hint", "battleHint");
         }
 
         private void RenderFinished()
         {
             var result = _state.isDraw ? "draw" : _state.winnerId == _state.self.playerId ? "victory" : "defeat";
-            _content.Add(Text("result", result));
-            _content.Add(Button(_state.rematchReady ? "rematchWaiting" : "rematch", () =>
-                _send(new GameRequest { type = "acceptRematch" }), !_state.rematchReady));
-            _content.Add(Button("leaveAfterMatch", () => _send(new GameRequest { type = "declineRematch" }), true));
+            SetText("result", result);
+            SetButton("rematch-button", _state.rematchReady ? "rematchWaiting" : "rematch", () =>
+                _send(new GameRequest { type = "acceptRematch" }), !_state.rematchReady);
+            SetButton("leave-button", "leaveAfterMatch", () =>
+                _send(new GameRequest { type = "declineRematch" }), true);
         }
 
         private void ReadyButton()
         {
             var ready = _state.self.ready;
-            _content.Add(Button(ready ? "cancelReady" : "ready", () => _send(new GameRequest
+            SetButton("ready-button", ready ? "cancelReady" : "ready", () => _send(new GameRequest
             {
                 type = "setReady", ready = !ready
-            }), true));
-            _content.Add(Text("hint", _state.opponent.ready ? "opponentReady" : "opponentNotReady"));
+            }), true);
+            SetText("ready-status", _state.opponent.ready ? "opponentReady" : "opponentNotReady");
         }
 
         private VisualElement Card(string id, int copies, bool showCopies)
         {
-            var visual = Column("game-card");
+            var visual = _cardTemplate.CloneTree().Q<VisualElement>("game-card");
             if (string.IsNullOrEmpty(id))
             {
-                visual.Add(Text("card-name", "emptySlot"));
+                visual.Q<Label>("card-name").text = Format("emptySlot");
+                visual.Q<Label>("card-tier").text = string.Empty;
+                visual.Q<Label>("card-art").text = string.Empty;
+                visual.Q<Label>("card-group").text = string.Empty;
+                visual.Q<Label>("card-ability").text = string.Empty;
+                visual.Q<Label>("card-stats").text = string.Empty;
+                visual.Q<Label>("card-copies").text = string.Empty;
                 return visual;
             }
             _catalog.TryGetValue(id, out var definition);
             visual.AddToClassList("rarity-" + (definition?.rarity ?? "common"));
-            visual.Add(Text("card-tier", "tier", copies == 6 ? 3 : copies >= 3 ? 2 : 1));
-            visual.Add(Text("card-art", "artPlaceholder"));
-            var name = new Label(CardName(id));
-            name.AddToClassList("card-name");
-            visual.Add(name);
-            var group = new Label(Format("group." + (definition?.group ?? "unknown")));
-            group.AddToClassList("card-group");
-            visual.Add(group);
+            visual.Q<Label>("card-tier").text = Format("tier", copies == 6 ? 3 : copies >= 3 ? 2 : 1);
+            visual.Q<Label>("card-art").text = Format("artPlaceholder");
+            visual.Q<Label>("card-name").text = CardName(id);
+            visual.Q<Label>("card-group").text = Format("group." + (definition?.group ?? "unknown"));
+            visual.Q<Label>("card-ability").text = string.Empty;
             if (definition?.ability != null)
             {
-                var ability = new Label(Format("ability." + definition.ability.kind,
-                    definition.ability.amount * (copies == 6 ? 3 : copies >= 3 ? 2 : 1)));
-                ability.AddToClassList("card-ability");
-                visual.Add(ability);
+                visual.Q<Label>("card-ability").text = Format("ability." + definition.ability.kind,
+                    definition.ability.amount * (copies == 6 ? 3 : copies >= 3 ? 2 : 1));
             }
-            visual.Add(Text("card-stats", "cardStats", (definition?.attack ?? 0) + copies - 1,
-                (definition?.health ?? 0) + copies - 1));
-            if (showCopies) visual.Add(Text("card-copies", "copies", copies));
+            visual.Q<Label>("card-stats").text = Format("cardStats", (definition?.attack ?? 0) + copies - 1,
+                (definition?.health ?? 0) + copies - 1);
+            visual.Q<Label>("card-copies").text = showCopies ? Format("copies", copies) : string.Empty;
             return visual;
         }
 
@@ -501,11 +521,5 @@ namespace AnimalBattler.Client.Lobby
 
         private static VisualElement Column(string style) => Row(style);
 
-        private static ScrollView Scroll(string style)
-        {
-            var scroll = new ScrollView(ScrollViewMode.Horizontal);
-            scroll.AddToClassList(style);
-            return scroll;
-        }
     }
 }

@@ -1,0 +1,33 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
+    <ui:VisualElement name="game-screen" class="game-screen">
+        <ui:ScrollView name="page-scroll" mode="Vertical">
+            <ui:VisualElement class="game-header">
+                <ui:Label name="game-title" class="game-title" />
+                <ui:Label name="round" class="round" />
+                <ui:Label name="timer" class="timer" />
+                <ui:Button name="language-button" class="language-button" />
+            </ui:VisualElement>
+            <ui:Label name="self-summary" class="game-summary" />
+            <ui:Label name="opponent-summary" class="game-summary" />
+            <ui:Label name="game-error" class="game-error" />
+            <ui:Label name="stage-heading" class="section-title" />
+            <ui:Label name="results-heading" class="section-title" />
+            <ui:ScrollView name="auction-results" mode="Vertical" class="results-scroll" />
+            <ui:Label name="shop-heading" class="section-title" />
+            <ui:ScrollView name="shop" mode="Horizontal" class="offer-scroll" />
+            <ui:Button name="refresh-button" class="game-button" />
+            <ui:Label name="board-heading" class="section-title" />
+            <ui:ScrollView name="board" mode="Horizontal" class="board-row" />
+            <ui:Label name="hand-heading" class="section-title" />
+            <ui:VisualElement class="hand-controls">
+                <ui:Button name="hand-previous" class="game-button" />
+                <ui:ScrollView name="hand" mode="Horizontal" class="hand-scroll" />
+                <ui:Button name="hand-next" class="game-button" />
+            </ui:VisualElement>
+            <ui:Label name="drag-hint" class="hint" />
+            <ui:Button name="ready-button" class="game-button" />
+            <ui:Label name="ready-status" class="hint" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

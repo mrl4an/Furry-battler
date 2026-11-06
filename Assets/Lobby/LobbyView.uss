@@ -24,6 +24,8 @@ IntegerField { color: rgb(255, 255, 255); min-height: 44px; font-size: 16px; }
     -unity-text-align: middle-left;
 }
 .game-screen { position: absolute; left: 0; right: 0; top: 0; bottom: 0; padding: 12px; background-color: rgb(17, 25, 36); }
+#page-scroll { flex-grow: 1; }
+.attack-line { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .game-header { flex-direction: row; justify-content: space-between; min-height: 40px; }
 .game-title { color: rgb(255, 250, 233); font-size: 19px; -unity-font-style: bold; }
 .game-summary, .hint, .slot-title, .round, .timer { color: rgb(234, 242, 247); font-size: 15px; white-space: normal; }

@@ -1,40 +1,54 @@
-using AnimalBattler.Client.Lobby;
 using UnityEditor;
 using UnityEditor.Localization;
-using UnityEditor.SceneManagement;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 using UnityEngine.Localization.Tables;
-using UnityEngine.UIElements;
 
 namespace AnimalBattler.Client.Editor
 {
     public static class LobbySetup
     {
-        private const string LobbyScenePath = "Assets/Scenes/Lobby.unity";
+        private const string LocalizationSettingsPath = "Assets/Lobby/Localization/LocalizationSettings.asset";
 
-        [MenuItem("Animal Battler/Setup Lobby")]
-        public static void Create()
+        [InitializeOnLoadMethod]
+        private static void InitializeLocalization()
         {
-            EnsureLocalization();
-            var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-            var panel = AssetDatabase.LoadAssetAtPath<PanelSettings>("Assets/Lobby/LobbyPanel.asset");
-            if (panel == null)
-            {
-                panel = ScriptableObject.CreateInstance<PanelSettings>();
-                AssetDatabase.CreateAsset(panel, "Assets/Lobby/LobbyPanel.asset");
-            }
+            EditorApplication.delayCall += EnsureSettingsAfterReload;
+        }
 
-            var root = new GameObject("LobbyUI");
-            var document = root.AddComponent<UIDocument>();
-            document.panelSettings = panel;
-            document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Lobby/LobbyView.uxml");
-            root.AddComponent<LobbyController>();
-            EditorSceneManager.SaveScene(scene, LobbyScenePath);
-            EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(LobbyScenePath, true) };
+        private static void EnsureSettingsAfterReload()
+        {
+            if (LocalizationEditorSettings.ActiveLocalizationSettings != null) return;
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+                return;
+            }
+            EnsureLocalizationSettings();
+        }
+
+        private static void OnPlayModeStateChanged(PlayModeStateChange state)
+        {
+            if (state != PlayModeStateChange.EnteredEditMode) return;
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            EnsureLocalizationSettings();
+        }
+
+        private static void EnsureLocalizationSettings()
+        {
+            if (LocalizationEditorSettings.ActiveLocalizationSettings != null) return;
+            var settings = AssetDatabase.LoadAssetAtPath<LocalizationSettings>(LocalizationSettingsPath);
+            if (settings == null)
+            {
+                settings = ScriptableObject.CreateInstance<LocalizationSettings>();
+                settings.name = "Animal Battler Localization";
+                AssetDatabase.CreateAsset(settings, LocalizationSettingsPath);
+            }
+            LocalizationEditorSettings.ActiveLocalizationSettings = settings;
             AssetDatabase.SaveAssets();
-            Debug.Log("Lobby scene and localization are ready.");
         }
 
         public static void BuildWebForVerification()
@@ -42,7 +56,8 @@ namespace AnimalBattler.Client.Editor
             var output = Path.Combine(Directory.GetParent(Application.dataPath).FullName, "Builds", "WebGL");
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
-                scenes = new[] { LobbyScenePath },
+                scenes = EditorBuildSettings.scenes.Where(scene => scene.enabled)
+                    .Select(scene => scene.path).ToArray(),
                 locationPathName = output,
                 target = BuildTarget.WebGL,
                 options = BuildOptions.Development
@@ -55,6 +70,7 @@ namespace AnimalBattler.Client.Editor
         [MenuItem("Animal Battler/Update Game Localization")]
         public static void UpdateGameLocalization()
         {
+            EnsureLocalizationSettings();
             EnsureLocalization();
             AssetDatabase.SaveAssets();
         }

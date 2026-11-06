@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:VisualElement name="game-card" class="game-card">
+        <ui:Label name="card-tier" class="card-tier" />
+        <ui:Label name="card-art" class="card-art" />
+        <ui:Label name="card-name" class="card-name" />
+        <ui:Label name="card-group" class="card-group" />
+        <ui:Label name="card-ability" class="card-ability" />
+        <ui:Label name="card-stats" class="card-stats" />
+        <ui:Label name="card-copies" class="card-copies" />
+    </ui:VisualElement>
+</ui:UXML>

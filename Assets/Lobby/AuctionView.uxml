@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
+    <ui:VisualElement name="game-screen" class="game-screen">
+        <ui:ScrollView name="page-scroll" mode="Vertical">
+            <ui:VisualElement class="game-header">
+                <ui:Label name="game-title" class="game-title" />
+                <ui:Label name="round" class="round" />
+                <ui:Label name="timer" class="timer" />
+                <ui:Button name="language-button" class="language-button" />
+            </ui:VisualElement>
+            <ui:Label name="self-summary" class="game-summary" />
+            <ui:Label name="opponent-summary" class="game-summary" />
+            <ui:Label name="game-error" class="game-error" />
+            <ui:Label name="stage-heading" class="section-title" />
+            <ui:Label name="auction-hint" class="hint" />
+            <ui:Label name="opponent-hand-count" class="hint" />
+            <ui:ScrollView name="offers" mode="Horizontal" class="offer-scroll" />
+            <ui:Button name="ready-button" class="game-button" />
+            <ui:Label name="ready-status" class="hint" />
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>
