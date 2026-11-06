@@ -1,16 +1,57 @@
-.screen { flex-grow: 1; justify-content: center; align-items: center; padding: 18px; background-color: rgb(17, 25, 36); }
-.panel { width: 100%; max-width: 520px; padding: 24px; background-color: rgb(31, 43, 59); border-top-left-radius: 18px; border-top-right-radius: 18px; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; }
+.screen { flex-grow: 1; justify-content: center; align-items: center; padding: 16px; background-color: rgb(17, 25, 36); }
+.panel { width: 100%; max-width: 560px; padding: 24px; background-color: rgb(31, 43, 59); border-top-left-radius: 18px; border-top-right-radius: 18px; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; }
 .header { flex-direction: row; justify-content: space-between; align-items: center; }
-.title { color: rgb(246, 242, 226); font-size: 28px; -unity-font-style: bold; }
-.subtitle { color: rgb(192, 205, 216); font-size: 15px; margin-top: 8px; margin-bottom: 20px; }
+.title { color: rgb(255, 250, 233); font-size: 28px; -unity-font-style: bold; white-space: normal; }
+.subtitle { color: rgb(224, 233, 240); font-size: 16px; margin-top: 8px; margin-bottom: 20px; white-space: normal; }
 .section { margin-bottom: 16px; }
-.field-label { color: rgb(221, 228, 231); font-size: 14px; margin-bottom: 7px; }
+.field-label { color: rgb(239, 245, 248); font-size: 16px; margin-bottom: 7px; white-space: normal; }
 .centered { align-self: center; margin-top: 12px; }
-.section-title { color: rgb(246, 242, 226); font-size: 20px; -unity-font-style: bold; margin-bottom: 8px; }
+.section-title { color: rgb(255, 250, 233); font-size: 20px; -unity-font-style: bold; margin-bottom: 8px; white-space: normal; }
 .room-code { color: rgb(255, 211, 112); font-size: 30px; -unity-font-style: bold; -unity-text-align: middle-center; margin: 12px; }
-.status { color: rgb(255, 211, 112); font-size: 14px; margin-top: 16px; min-height: 22px; white-space: normal; }
-.primary-button { background-color: rgb(215, 159, 71); color: rgb(25, 31, 38); -unity-font-style: bold; height: 44px; font-size: 16px; margin-top: 8px; }
-.secondary-button { background-color: rgb(65, 86, 107); color: rgb(246, 242, 226); height: 40px; font-size: 15px; margin-top: 8px; }
-.language-button { background-color: rgb(65, 86, 107); color: rgb(246, 242, 226); width: 56px; height: 36px; }
+.status { color: rgb(255, 211, 112); font-size: 16px; margin-top: 16px; min-height: 24px; white-space: normal; }
+.primary-button { background-color: rgb(231, 174, 84); color: rgb(22, 29, 37); -unity-font-style: bold; min-height: 48px; font-size: 17px; margin-top: 8px; }
+.secondary-button { background-color: rgb(69, 97, 124); color: rgb(255, 255, 255); min-height: 44px; font-size: 16px; margin-top: 8px; }
+.language-button { background-color: rgb(69, 97, 124); color: white; width: 56px; height: 40px; font-size: 15px; }
 .hidden { display: none; }
-TextField { color: rgb(246, 242, 226); background-color: rgb(44, 59, 76); height: 40px; }
+TextField { color: rgb(255, 255, 255); background-color: rgb(28, 39, 52); min-height: 44px; font-size: 16px; }
+IntegerField { color: rgb(255, 255, 255); min-height: 44px; font-size: 16px; }
+.panel .unity-base-text-field__input, .panel .unity-text-field__input, .panel #unity-text-input,
+.game-screen .unity-base-text-field__input, .game-screen .unity-text-field__input, .game-screen #unity-text-input {
+    background-color: rgb(28, 39, 52);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    min-height: 42px;
+    -unity-text-align: middle-left;
+}
+.game-screen { position: absolute; left: 0; right: 0; top: 0; bottom: 0; padding: 12px; background-color: rgb(17, 25, 36); }
+.game-header { flex-direction: row; justify-content: space-between; min-height: 40px; }
+.game-title { color: rgb(255, 250, 233); font-size: 19px; -unity-font-style: bold; }
+.game-summary, .hint, .slot-title, .round, .timer { color: rgb(234, 242, 247); font-size: 15px; white-space: normal; }
+.game-summary { margin-bottom: 4px; }
+.section-title { margin-top: 10px; margin-bottom: 6px; }
+.offer-scroll { height: 250px; flex-shrink: 0; }
+.results-scroll { height: 100px; flex-shrink: 0; }
+.hand-scroll { height: 230px; flex-shrink: 0; }
+.hand-controls { flex-direction: row; align-items: center; }
+.hand-controls .hand-scroll { flex-grow: 1; min-width: 0; }
+.hand-controls .game-button { width: 36px; }
+.offer, .hand-item { width: 184px; min-width: 184px; padding: 5px; }
+.board-row { height: 250px; flex-shrink: 0; }
+.board-slot { width: 174px; min-width: 174px; padding: 4px; }
+.slot-title { min-height: 22px; }
+.game-card { flex-grow: 1; min-height: 150px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-color: rgb(232, 186, 82); border-right-color: rgb(232, 186, 82); border-bottom-color: rgb(232, 186, 82); border-left-color: rgb(232, 186, 82); padding: 6px; background-color: rgb(36, 48, 62); }
+.rarity-rare { border-top-color: rgb(78, 183, 241); border-right-color: rgb(78, 183, 241); border-bottom-color: rgb(78, 183, 241); border-left-color: rgb(78, 183, 241); }
+.rarity-epic { border-top-color: rgb(199, 119, 250); border-right-color: rgb(199, 119, 250); border-bottom-color: rgb(199, 119, 250); border-left-color: rgb(199, 119, 250); }
+.card-tier { color: rgb(255, 224, 120); font-size: 13px; -unity-text-align: upper-right; }
+.card-art { height: 24px; color: rgb(196, 211, 219); -unity-text-align: middle-center; font-size: 12px; }
+.card-name { color: rgb(255, 255, 255); font-size: 16px; -unity-font-style: bold; white-space: normal; }
+.card-group, .card-ability, .card-copies { color: rgb(227, 238, 245); font-size: 13px; white-space: normal; }
+.card-stats, .battle-health { color: rgb(255, 220, 132); font-size: 15px; -unity-font-style: bold; white-space: normal; }
+.game-button { min-height: 40px; margin-top: 4px; background-color: rgb(69, 97, 124); color: rgb(255, 255, 255); font-size: 15px; }
+.offer .game-button { min-height: 36px; }
+.offer IntegerField { min-height: 44px; color: white; }
+.offer .unity-base-field__label { color: white; font-size: 14px; }
+.result { color: rgb(255, 211, 112); font-size: 28px; -unity-font-style: bold; margin: 24px; -unity-text-align: middle-center; }
+.drag-ghost { position: absolute; background-color: rgb(105, 121, 132); color: white; padding: 8px; }
+.game-error { color: rgb(255, 158, 128); font-size: 16px; white-space: normal; }
+.game-screen.compact { padding: 8px; }

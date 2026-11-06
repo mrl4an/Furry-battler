@@ -22,6 +22,10 @@
                 <ui:Label name="room-heading" class="section-title" />
                 <ui:Label name="room-code-display" class="room-code" />
                 <ui:Label name="players" class="field-label" />
+                <ui:Label name="room-players" class="field-label" />
+                <ui:TextField name="nickname-input" max-length="20" />
+                <ui:Button name="nickname-button" class="secondary-button" />
+                <ui:Button name="room-ready-button" class="primary-button" />
                 <ui:Button name="copy-button" class="secondary-button" />
                 <ui:Button name="leave-button" class="secondary-button" />
             </ui:VisualElement>

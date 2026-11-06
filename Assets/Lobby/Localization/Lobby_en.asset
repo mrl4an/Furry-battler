@@ -110,6 +110,418 @@ MonoBehaviour:
     m_Localized: Already in a room
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628115
+    m_Localized: "Ready"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628116
+    m_Localized: "Cancel readiness"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628117
+    m_Localized: "Ready"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628118
+    m_Localized: "Not ready"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628119
+    m_Localized: "Change nickname"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628120
+    m_Localized: "Room closed"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628121
+    m_Localized: "Animal Battler"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628122
+    m_Localized: "Round {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628123
+    m_Localized: "Time: {0}s"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628124
+    m_Localized: "{0}: {1} HP \u00b7 {2} coins ({3} available)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628125
+    m_Localized: "{0}: {1} HP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628126
+    m_Localized: "Player"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628127
+    m_Localized: "Auction"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628128
+    m_Localized: "Enter 0 to remove a bid. Minimum bid: 2."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628129
+    m_Localized: "Opponent's hand: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628130
+    m_Localized: "Bid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628131
+    m_Localized: "Place bid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628132
+    m_Localized: "Preparation"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628133
+    m_Localized: "Auction results"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628134
+    m_Localized: "{0}: {1}, bids {2}/{3}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628135
+    m_Localized: "No winner"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628136
+    m_Localized: "Shop"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628137
+    m_Localized: "Buy \u00b7 3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628138
+    m_Localized: "Freeze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628139
+    m_Localized: "Unfreeze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628140
+    m_Localized: "Refresh shop \u00b7 1"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628141
+    m_Localized: "Board"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628142
+    m_Localized: "Hand"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628143
+    m_Localized: "Attack"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628144
+    m_Localized: "Support {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628145
+    m_Localized: "Defense"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628146
+    m_Localized: "Sell"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628147
+    m_Localized: "Drag cards from hand to board or between board slots."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628148
+    m_Localized: "Opponent is ready"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628149
+    m_Localized: "Opponent is not ready"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628150
+    m_Localized: "Battle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628151
+    m_Localized: "Battle plays automatically"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628152
+    m_Localized: "{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628153
+    m_Localized: "{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628154
+    m_Localized: "Attack {0} \u00b7 HP {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628155
+    m_Localized: "Victory"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628156
+    m_Localized: "Defeat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628157
+    m_Localized: "Draw"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628158
+    m_Localized: "Rematch"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628159
+    m_Localized: "Waiting for opponent"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628160
+    m_Localized: "Leave room"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628161
+    m_Localized: "Empty"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628162
+    m_Localized: "Artwork"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628163
+    m_Localized: "Tier {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628164
+    m_Localized: "{0} ATK \u00b7 {1} HP"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628165
+    m_Localized: "Copies: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628166
+    m_Localized: "Pack"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628167
+    m_Localized: "Armored"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628168
+    m_Localized: "Forest"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628169
+    m_Localized: "Feathered"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628170
+    m_Localized: "Venomous"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628171
+    m_Localized: "Urban"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628172
+    m_Localized: "+{0} attack on own turn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628173
+    m_Localized: "+{0} attack before first turn"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628174
+    m_Localized: "+{0} attack to other allies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628175
+    m_Localized: "{0} extra damage on exchange"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628176
+    m_Localized: "Blocks {0} first direct damage"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628177
+    m_Localized: "+{0} health to other allies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628178
+    m_Localized: "+{0} attack and health to previous slot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628179
+    m_Localized: "+{0} health to defense slot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628180
+    m_Localized: "+{0} attack to attack slot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628181
+    m_Localized: "-{0} enemy attack on exchange"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628182
+    m_Localized: "Dog"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628183
+    m_Localized: "Jackal"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628184
+    m_Localized: "Coyote"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628185
+    m_Localized: "Wolf"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628186
+    m_Localized: "Turtle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628187
+    m_Localized: "Porcupine"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628188
+    m_Localized: "Armadillo"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628189
+    m_Localized: "Pangolin"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628190
+    m_Localized: "Hare"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628191
+    m_Localized: "Squirrel"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628192
+    m_Localized: "Deer"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628193
+    m_Localized: "Moose"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628194
+    m_Localized: "Raven"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628195
+    m_Localized: "Owl"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628196
+    m_Localized: "Hawk"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628197
+    m_Localized: "Eagle"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628198
+    m_Localized: "Spider"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628199
+    m_Localized: "Poison frog"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628200
+    m_Localized: "Scorpion"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628201
+    m_Localized: "Viper"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628202
+    m_Localized: "Pigeon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628203
+    m_Localized: "Stray cat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628204
+    m_Localized: "Rat"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628205
+    m_Localized: "Raccoon"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628206
+    m_Localized: "Action unavailable now"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628207
+    m_Localized: "Invalid nickname"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628208
+    m_Localized: "Not enough coins"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628209
+    m_Localized: "Invalid bid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628210
+    m_Localized: "Invalid shop slot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628211
+    m_Localized: "Invalid board slot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628212
+    m_Localized: "Card not found"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628213
+    m_Localized: "Cards cannot be merged"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628214
+    m_Localized: "Player is not in match"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628215
+    m_Localized: "Cancel readiness before acting"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628216
+    m_Localized: "<"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628217
+    m_Localized: ">"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -107,6 +107,418 @@ MonoBehaviour:
     m_Key: alreadyInRoom
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628115
+    m_Key: ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628116
+    m_Key: cancelReady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628117
+    m_Key: readyStatus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628118
+    m_Key: notReadyStatus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628119
+    m_Key: setNickname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628120
+    m_Key: roomClosed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628121
+    m_Key: gameTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628122
+    m_Key: round
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628123
+    m_Key: timer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628124
+    m_Key: playerSummary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628125
+    m_Key: opponentSummary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628126
+    m_Key: playerFallback
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628127
+    m_Key: auctionHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628128
+    m_Key: auctionHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628129
+    m_Key: opponentHandCount
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628130
+    m_Key: bidLabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628131
+    m_Key: setBid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628132
+    m_Key: preparationHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628133
+    m_Key: auctionResultsHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628134
+    m_Key: auctionResult
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628135
+    m_Key: noWinner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628136
+    m_Key: shopHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628137
+    m_Key: buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628138
+    m_Key: freeze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628139
+    m_Key: unfreeze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628140
+    m_Key: refreshShop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628141
+    m_Key: boardHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628142
+    m_Key: handHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628143
+    m_Key: attackSlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628144
+    m_Key: supportSlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628145
+    m_Key: defenseSlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628146
+    m_Key: sell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628147
+    m_Key: dragHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628148
+    m_Key: opponentReady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628149
+    m_Key: opponentNotReady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628150
+    m_Key: battleHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628151
+    m_Key: battleHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628152
+    m_Key: firstSide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628153
+    m_Key: secondSide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628154
+    m_Key: battleStats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628155
+    m_Key: victory
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628156
+    m_Key: defeat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628157
+    m_Key: draw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628158
+    m_Key: rematch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628159
+    m_Key: rematchWaiting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628160
+    m_Key: leaveAfterMatch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628161
+    m_Key: emptySlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628162
+    m_Key: artPlaceholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628163
+    m_Key: tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628164
+    m_Key: cardStats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628165
+    m_Key: copies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628166
+    m_Key: group.pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628167
+    m_Key: group.armored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628168
+    m_Key: group.forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628169
+    m_Key: group.feathered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628170
+    m_Key: group.venomous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628171
+    m_Key: group.urban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628172
+    m_Key: ability.attackOnOwnTurn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628173
+    m_Key: ability.attackBeforeFirstTurn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628174
+    m_Key: ability.buffOtherGroupAttack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628175
+    m_Key: ability.exchangeDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628176
+    m_Key: ability.firstDirectShield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628177
+    m_Key: ability.buffOtherGroupHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628178
+    m_Key: ability.buffPreviousBoth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628179
+    m_Key: ability.buffDefenseHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628180
+    m_Key: ability.buffAttackSlotAttack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628181
+    m_Key: ability.poisonOnExchange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628182
+    m_Key: card.dog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628183
+    m_Key: card.jackal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628184
+    m_Key: card.coyote
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628185
+    m_Key: card.wolf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628186
+    m_Key: card.turtle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628187
+    m_Key: card.porcupine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628188
+    m_Key: card.armadillo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628189
+    m_Key: card.pangolin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628190
+    m_Key: card.hare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628191
+    m_Key: card.squirrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628192
+    m_Key: card.deer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628193
+    m_Key: card.moose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628194
+    m_Key: card.raven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628195
+    m_Key: card.owl
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628196
+    m_Key: card.hawk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628197
+    m_Key: card.eagle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628198
+    m_Key: card.spider
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628199
+    m_Key: card.poisonFrog
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628200
+    m_Key: card.scorpion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628201
+    m_Key: card.viper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628202
+    m_Key: card.pigeon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628203
+    m_Key: card.strayCat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628204
+    m_Key: card.rat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628205
+    m_Key: card.raccoon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628206
+    m_Key: wrongPhase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628207
+    m_Key: invalidNickname
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628208
+    m_Key: notEnoughCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628209
+    m_Key: invalidBid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628210
+    m_Key: invalidShopSlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628211
+    m_Key: invalidBoardSlot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628212
+    m_Key: cardNotFound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628213
+    m_Key: invalidMerge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628214
+    m_Key: notInMatch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628215
+    m_Key: playerReady
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628216
+    m_Key: handPrevious
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628217
+    m_Key: handNext
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

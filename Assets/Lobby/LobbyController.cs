@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Globalization;
+using System.IO;
 using System.Net.WebSockets;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,6 +22,7 @@ namespace AnimalBattler.Client.Lobby
         private const string TableName = "Lobby";
         [SerializeField] private string configuredServerUrl;
         private readonly ConcurrentQueue<Action> _mainThreadActions = new ConcurrentQueue<Action>();
+        private readonly SemaphoreSlim _sendGate = new SemaphoreSlim(1, 1);
         private UIDocument _document;
         private TextField _serverUrl;
         private TextField _roomCodeInput;
@@ -34,6 +36,16 @@ namespace AnimalBattler.Client.Lobby
         private Button _copyButton;
         private Button _leaveButton;
         private Button _languageButton;
+        private Button _roomReadyButton;
+        private Button _nicknameButton;
+        private TextField _nicknameInput;
+        private Label _roomPlayers;
+        private GameScreen _gameScreen;
+        private string _playerId;
+        private long _latestRevision;
+        private bool _roomReady;
+        private RoomPlayer[] _roomPlayersSnapshot;
+        private string _matchOpponentId;
         private string _roomCode;
         private string _statusKey = "statusDisconnected";
         private int _playerCount;
@@ -70,11 +82,21 @@ namespace AnimalBattler.Client.Lobby
             _copyButton = root.Q<Button>("copy-button");
             _leaveButton = root.Q<Button>("leave-button");
             _languageButton = root.Q<Button>("language-button");
+            _roomReadyButton = root.Q<Button>("room-ready-button");
+            _nicknameButton = root.Q<Button>("nickname-button");
+            _nicknameInput = root.Q<TextField>("nickname-input");
+            _roomPlayers = root.Q<Label>("room-players");
+            _gameScreen = new GameScreen(root, SendGameRequest, Localized);
             _createButton.clicked += () => StartConnection(true);
             _joinButton.clicked += () => StartConnection(false);
             _copyButton.clicked += CopyInvite;
             _leaveButton.clicked += LeaveRoom;
             _languageButton.clicked += SwitchLanguage;
+            _roomReadyButton.clicked += () => SendGameRequest(new GameRequest { type = "roomReady", ready = !_roomReady });
+            _nicknameButton.clicked += () => SendGameRequest(new GameRequest
+            {
+                type = "setNickname", nickname = _nicknameInput.value
+            });
 
 #if UNITY_WEBGL && !UNITY_EDITOR
             var pageUrl = AnimalBattlerGetPageUrl();
@@ -102,6 +124,7 @@ namespace AnimalBattler.Client.Lobby
         private void Update()
         {
             while (_mainThreadActions.TryDequeue(out var action)) action();
+            _gameScreen?.Tick();
         }
 
         private void OnDestroy()
@@ -140,6 +163,10 @@ namespace AnimalBattler.Client.Lobby
             var culture = LocalizationSettings.SelectedLocale?.Identifier.CultureInfo ?? CultureInfo.InvariantCulture;
             _players.text = string.Format(culture, Localized("playerCount"), _playerCount);
             _status.text = Localized(_statusKey);
+            _roomReadyButton.text = Localized(_roomReady ? "cancelReady" : "ready");
+            _nicknameButton.text = Localized("setNickname");
+            UpdateRoomPlayers();
+            _gameScreen.Refresh();
         }
 
         private void SwitchLanguage()
@@ -196,17 +223,17 @@ namespace AnimalBattler.Client.Lobby
                 var buffer = new byte[4096];
                 while (_socket.State == WebSocketState.Open)
                 {
-                    var count = 0;
+                    using var messageBuffer = new MemoryStream();
                     WebSocketReceiveResult result;
                     do
                     {
-                        result = await _socket.ReceiveAsync(new ArraySegment<byte>(buffer, count, buffer.Length - count), CancellationToken.None);
+                        result = await _socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
                         if (result.MessageType == WebSocketMessageType.Close) break;
-                        count += result.Count;
-                    } while (!result.EndOfMessage && count < buffer.Length);
+                        messageBuffer.Write(buffer, 0, result.Count);
+                        if (messageBuffer.Length > 1024 * 1024) throw new WebSocketException();
+                    } while (!result.EndOfMessage);
                     if (result.MessageType == WebSocketMessageType.Close) break;
-                    if (!result.EndOfMessage) throw new WebSocketException();
-                    var message = Encoding.UTF8.GetString(buffer, 0, count);
+                    var message = Encoding.UTF8.GetString(messageBuffer.ToArray());
                     _mainThreadActions.Enqueue(() => OnSocketMessage(message));
                 }
             }
@@ -232,9 +259,25 @@ namespace AnimalBattler.Client.Lobby
 #endif
         }
 
+        private void SendGameRequest(GameRequest request)
+        {
+            if (_connecting || string.IsNullOrEmpty(_roomCode)) return;
+            SendSocketMessage(JsonUtility.ToJson(request));
+        }
+
+        private void SendSocketMessage(string request)
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            AnimalBattlerSocketSend(request);
+#else
+            _ = SendNativeAsync(request);
+#endif
+        }
+
 #if !UNITY_WEBGL || UNITY_EDITOR
         private async Task SendNativeAsync(string message)
         {
+            await _sendGate.WaitAsync();
             try
             {
                 var bytes = Encoding.UTF8.GetBytes(message);
@@ -244,29 +287,73 @@ namespace AnimalBattler.Client.Lobby
             {
                 _mainThreadActions.Enqueue(() => OnSocketError("connectionFailed"));
             }
+            finally { _sendGate.Release(); }
         }
 #endif
 
         public void OnSocketMessage(string json)
         {
             var message = JsonUtility.FromJson<ServerMessage>(json);
+            if (message == null) return;
             if (message.type == "error")
             {
                 SetStatus(message.code);
+                _gameScreen.ShowError(message.code);
+                if (string.IsNullOrEmpty(_roomCode))
+                {
+                    _intentionalClose = true;
+                    CloseSocket();
+                    OnSocketClosed();
+                }
+                return;
+            }
+            if (message.type == "roomClosed")
+            {
                 _intentionalClose = true;
                 CloseSocket();
                 OnSocketClosed();
+                SetStatus("roomClosed");
                 return;
             }
-            if (message.type != "roomState") return;
+            if (message.type == "catalog")
+            {
+                _gameScreen.SetCatalog(message.cards);
+                return;
+            }
+            if (message.type != "roomState" && message.type != "matchState") return;
+            if (message.revision < _latestRevision) return;
+            _latestRevision = message.revision;
+
+            if (message.type == "matchState")
+            {
+                _matchOpponentId = message.opponent?.playerId;
+                _entry.AddToClassList("hidden");
+                _room.AddToClassList("hidden");
+                _gameScreen.SetMatch(message);
+                return;
+            }
 
             _roomCode = message.roomCode;
+            _playerId = message.playerId;
             _playerCount = message.playerCount;
             _connecting = false;
+            _roomPlayersSnapshot = message.players;
+            if (!string.IsNullOrEmpty(_matchOpponentId) && message.players != null
+                && message.players.Length == 2
+                && !Array.Exists(message.players, player => player.playerId == _matchOpponentId))
+            {
+                _matchOpponentId = null;
+                _gameScreen.Hide();
+            }
+            _gameScreen.SetPlayers(message.players);
+            UpdateRoomPlayers();
+            _roomReadyButton.SetEnabled(_playerCount == 2);
+            _roomReadyButton.text = Localized(_roomReady ? "cancelReady" : "ready");
             _entry.AddToClassList("hidden");
             _room.RemoveFromClassList("hidden");
             SetStatus(_playerCount == 2 ? "roomFullStatus" : "waitingForPlayer");
             RefreshText();
+            SendSocketMessage("{\"type\":\"getCatalog\"}");
         }
 
         public void OnSocketError(string _)
@@ -279,7 +366,13 @@ namespace AnimalBattler.Client.Lobby
         {
             _connecting = false;
             _roomCode = null;
+            _playerId = null;
+            _matchOpponentId = null;
+            _roomPlayersSnapshot = null;
+            _latestRevision = 0;
+            _roomReady = false;
             _playerCount = 0;
+            _gameScreen.Hide();
             _entry.RemoveFromClassList("hidden");
             _room.AddToClassList("hidden");
             _createButton.SetEnabled(true);
@@ -294,6 +387,25 @@ namespace AnimalBattler.Client.Lobby
             CloseSocket();
             OnSocketClosed();
             SetStatus("statusDisconnected");
+        }
+
+        private void UpdateRoomPlayers()
+        {
+            _roomReady = false;
+            var names = new StringBuilder();
+            foreach (var player in _roomPlayersSnapshot ?? Array.Empty<RoomPlayer>())
+            {
+                if (names.Length > 0) names.Append("\n");
+                names.Append(player.nickname);
+                names.Append(" — ");
+                names.Append(Localized(player.ready ? "readyStatus" : "notReadyStatus"));
+                if (player.playerId != _playerId) continue;
+                _roomReady = player.ready;
+                if (_nicknameInput.focusController?.focusedElement != _nicknameInput)
+                    _nicknameInput.SetValueWithoutNotify(player.nickname);
+            }
+            _roomPlayers.text = names.ToString();
+            _roomReadyButton.text = Localized(_roomReady ? "cancelReady" : "ready");
         }
 
         private void CloseSocket()
@@ -331,12 +443,5 @@ namespace AnimalBattler.Client.Lobby
         }
 
         [Serializable] private sealed class JoinRequest { public string type; public string roomCode; }
-        [Serializable] private sealed class ServerMessage
-        {
-            public string type;
-            public string code;
-            public string roomCode;
-            public int playerCount;
-        }
     }
 }
