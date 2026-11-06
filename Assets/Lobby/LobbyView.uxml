@@ -1,0 +1,31 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
+    <ui:VisualElement name="root" class="screen">
+        <ui:VisualElement class="panel">
+            <ui:VisualElement class="header">
+                <ui:Label name="title" class="title" />
+                <ui:Button name="language-button" class="language-button" />
+            </ui:VisualElement>
+            <ui:Label name="subtitle" class="subtitle" />
+            <ui:VisualElement class="section">
+                <ui:Label name="server-label" class="field-label" />
+                <ui:TextField name="server-url" />
+            </ui:VisualElement>
+            <ui:VisualElement name="entry" class="entry">
+                <ui:Button name="create-button" class="primary-button" />
+                <ui:Label name="or-label" class="field-label centered" />
+                <ui:Label name="code-label" class="field-label" />
+                <ui:TextField name="room-code" max-length="8" />
+                <ui:Button name="join-button" class="secondary-button" />
+            </ui:VisualElement>
+            <ui:VisualElement name="room" class="room hidden">
+                <ui:Label name="room-heading" class="section-title" />
+                <ui:Label name="room-code-display" class="room-code" />
+                <ui:Label name="players" class="field-label" />
+                <ui:Button name="copy-button" class="secondary-button" />
+                <ui:Button name="leave-button" class="secondary-button" />
+            </ui:VisualElement>
+            <ui:Label name="status" class="status" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,16 @@
+.screen { flex-grow: 1; justify-content: center; align-items: center; padding: 18px; background-color: rgb(17, 25, 36); }
+.panel { width: 100%; max-width: 520px; padding: 24px; background-color: rgb(31, 43, 59); border-top-left-radius: 18px; border-top-right-radius: 18px; border-bottom-left-radius: 18px; border-bottom-right-radius: 18px; }
+.header { flex-direction: row; justify-content: space-between; align-items: center; }
+.title { color: rgb(246, 242, 226); font-size: 28px; -unity-font-style: bold; }
+.subtitle { color: rgb(192, 205, 216); font-size: 15px; margin-top: 8px; margin-bottom: 20px; }
+.section { margin-bottom: 16px; }
+.field-label { color: rgb(221, 228, 231); font-size: 14px; margin-bottom: 7px; }
+.centered { align-self: center; margin-top: 12px; }
+.section-title { color: rgb(246, 242, 226); font-size: 20px; -unity-font-style: bold; margin-bottom: 8px; }
+.room-code { color: rgb(255, 211, 112); font-size: 30px; -unity-font-style: bold; -unity-text-align: middle-center; margin: 12px; }
+.status { color: rgb(255, 211, 112); font-size: 14px; margin-top: 16px; min-height: 22px; white-space: normal; }
+.primary-button { background-color: rgb(215, 159, 71); color: rgb(25, 31, 38); -unity-font-style: bold; height: 44px; font-size: 16px; margin-top: 8px; }
+.secondary-button { background-color: rgb(65, 86, 107); color: rgb(246, 242, 226); height: 40px; font-size: 15px; margin-top: 8px; }
+.language-button { background-color: rgb(65, 86, 107); color: rgb(246, 242, 226); width: 56px; height: 36px; }
+.hidden { display: none; }
+TextField { color: rgb(246, 242, 226); background-color: rgb(44, 59, 76); height: 40px; }
