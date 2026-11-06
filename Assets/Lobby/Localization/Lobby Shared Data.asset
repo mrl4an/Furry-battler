@@ -519,6 +519,18 @@ MonoBehaviour:
     m_Key: handNext
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628218
+    m_Key: connectionHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628219
+    m_Key: nicknameLabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628220
+    m_Key: nicknameHint
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

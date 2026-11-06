@@ -522,6 +522,18 @@ MonoBehaviour:
     m_Localized: ">"
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628218
+    m_Localized: "Before the match"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628219
+    m_Localized: "Nickname"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628220
+    m_Localized: "A random name is ready. You can replace it with your own."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

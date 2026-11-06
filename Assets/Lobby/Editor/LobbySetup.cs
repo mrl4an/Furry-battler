@@ -92,6 +92,10 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "title", "Animal Battler", "Битва животных");
             Add(english, russian, "subtitle", "Create a room or join a friend", "Создайте комнату или присоединитесь к другу");
             Add(english, russian, "serverLabel", "Server WebSocket address", "Адрес WebSocket-сервера");
+            Add(english, russian, "connectionHeading", "Before the match", "Перед матчем");
+            Add(english, russian, "nicknameLabel", "Nickname", "Никнейм");
+            Add(english, russian, "nicknameHint", "A random name is ready. You can replace it with your own.",
+                "Случайное имя уже выбрано. Можно заменить его своим.");
             Add(english, russian, "codeLabel", "Room code", "Код комнаты");
             Add(english, russian, "orLabel", "or", "или");
             Add(english, russian, "roomHeading", "Your room", "Ваша комната");

@@ -60,6 +60,8 @@ namespace AnimalBattler.Client.Lobby
         private StringTable _strings;
         private string _serverAddress;
         private string _inviteCode;
+        private string _nickname;
+        private string _pendingNickname;
 #if !UNITY_WEBGL || UNITY_EDITOR
         private ClientWebSocket _socket;
 #endif
@@ -81,6 +83,7 @@ namespace AnimalBattler.Client.Lobby
                 return;
             }
             _instance = this;
+            _nickname = "AB" + UnityEngine.Random.Range(1000, 10000).ToString(CultureInfo.InvariantCulture);
             _initialScene = gameObject.scene;
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -122,6 +125,7 @@ namespace AnimalBattler.Client.Lobby
             _roomReadyButton = root.Q<Button>("room-ready-button");
             _nicknameButton = root.Q<Button>("nickname-button");
             _nicknameInput = root.Q<TextField>("nickname-input");
+            _nicknameInput.SetValueWithoutNotify(_nickname);
             _roomPlayers = root.Q<Label>("room-players");
             _createButton.clicked += () => StartConnection(true);
             _joinButton.clicked += () => StartConnection(false);
@@ -129,10 +133,7 @@ namespace AnimalBattler.Client.Lobby
             _leaveButton.clicked += LeaveRoom;
             _languageButton.clicked += SwitchLanguage;
             _roomReadyButton.clicked += () => SendGameRequest(new GameRequest { type = "roomReady", ready = !_roomReady });
-            _nicknameButton.clicked += () => SendGameRequest(new GameRequest
-            {
-                type = "setNickname", nickname = _nicknameInput.value
-            });
+            _nicknameButton.clicked += ApplyNickname;
 
 #if UNITY_WEBGL && !UNITY_EDITOR
             var pageUrl = AnimalBattlerGetPageUrl();
@@ -202,6 +203,9 @@ namespace AnimalBattler.Client.Lobby
             root.Q<Label>("title").text = Localized("title");
             root.Q<Label>("subtitle").text = Localized("subtitle");
             root.Q<Label>("server-label").text = Localized("serverLabel");
+            root.Q<Label>("nickname-label").text = Localized("nicknameLabel");
+            root.Q<Label>("nickname-hint").text = Localized("nicknameHint");
+            root.Q<Label>("connection-heading").text = Localized("connectionHeading");
             root.Q<Label>("code-label").text = Localized("codeLabel");
             root.Q<Label>("or-label").text = Localized("orLabel");
             root.Q<Label>("room-heading").text = Localized("roomHeading");
@@ -250,6 +254,10 @@ namespace AnimalBattler.Client.Lobby
                 return;
             }
 
+            if (!TryReadNickname(out var nickname)) return;
+            _nickname = nickname;
+            _pendingNickname = nickname;
+
             _createRequested = create;
             _serverAddress = _serverUrl.value;
             _inviteCode = _roomCodeInput.value;
@@ -258,12 +266,33 @@ namespace AnimalBattler.Client.Lobby
             _intentionalClose = false;
             _createButton.SetEnabled(false);
             _joinButton.SetEnabled(false);
+            _nicknameInput.SetEnabled(false);
             SetStatus("connecting");
 #if UNITY_WEBGL && !UNITY_EDITOR
             AnimalBattlerSocketConnect(endpoint.ToString(), gameObject.name);
 #else
             _ = ConnectNativeAsync(endpoint);
 #endif
+        }
+
+        private bool TryReadNickname(out string nickname)
+        {
+            nickname = _nicknameInput.value.Trim();
+            if (nickname.Length >= 2 && nickname.Length <= 20
+                && Array.TrueForAll(nickname.ToCharArray(), character =>
+                    character >= 'A' && character <= 'Z' || character >= 'a' && character <= 'z'
+                    || character >= 'А' && character <= 'Я' || character >= 'а' && character <= 'я'
+                    || character == 'Ё' || character == 'ё' || character >= '0' && character <= '9'
+                    || character == ' ' || character == '_' || character == '-')) return true;
+            SetStatus("invalidNickname");
+            return false;
+        }
+
+        private void ApplyNickname()
+        {
+            if (!TryReadNickname(out var nickname)) return;
+            _pendingNickname = nickname;
+            SendGameRequest(new GameRequest { type = "setNickname", nickname = nickname });
         }
 
 #if !UNITY_WEBGL || UNITY_EDITOR
@@ -351,6 +380,7 @@ namespace AnimalBattler.Client.Lobby
             if (message == null) return;
             if (message.type == "error")
             {
+                if (message.code == "invalidNickname") _pendingNickname = null;
                 SetStatus(message.code);
                 _gameScreen.ShowError(message.code);
                 if (string.IsNullOrEmpty(_roomCode))
@@ -389,10 +419,13 @@ namespace AnimalBattler.Client.Lobby
                 return;
             }
 
+            var joinedRoom = string.IsNullOrEmpty(_roomCode);
             _roomCode = message.roomCode;
             _playerId = message.playerId;
             _playerCount = message.playerCount;
             _connecting = false;
+            if (joinedRoom && _pendingNickname != null)
+                SendGameRequest(new GameRequest { type = "setNickname", nickname = _pendingNickname });
             _roomPlayersSnapshot = message.players;
             if (!string.IsNullOrEmpty(_matchOpponentId) && message.players != null
                 && message.players.Length == 2
@@ -420,6 +453,7 @@ namespace AnimalBattler.Client.Lobby
         public void OnSocketClosed()
         {
             _connecting = false;
+            _pendingNickname = null;
             _roomCode = null;
             _playerId = null;
             _matchOpponentId = null;
@@ -455,6 +489,9 @@ namespace AnimalBattler.Client.Lobby
                 names.Append(Localized(player.ready ? "readyStatus" : "notReadyStatus"));
                 if (player.playerId != _playerId) continue;
                 _roomReady = player.ready;
+                if (_pendingNickname != null && player.nickname != _pendingNickname) continue;
+                _pendingNickname = null;
+                _nickname = player.nickname;
                 if (_nicknameInput.focusController?.focusedElement != _nicknameInput)
                     _nicknameInput.SetValueWithoutNotify(player.nickname);
             }
@@ -470,6 +507,8 @@ namespace AnimalBattler.Client.Lobby
             _createButton.SetEnabled(!_connecting);
             _joinButton.SetEnabled(!_connecting);
             _roomReadyButton.SetEnabled(_playerCount == 2);
+            _nicknameInput.SetEnabled(!_connecting);
+            _nicknameButton.EnableInClassList("hidden", string.IsNullOrEmpty(_roomCode));
         }
 
         private void CloseSocket()

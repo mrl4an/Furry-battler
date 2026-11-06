@@ -153,3 +153,21 @@ TextField, IntegerField { color: var(--cream); min-height: 40px; font-size: 16px
 .auction-screen .empty-card .card-art { display: none; }
 .results-scroll .unity-scroller--horizontal { height: 8px; min-height: 8px; margin: 0; }
 .results-scroll .unity-scroller--horizontal .unity-base-slider__dragger { height: 6px; }
+/* Lobby-only courtyard and framed paper/ink composition. */
+.lobby-screen { background-image: url("Art/LobbyCourtyard.png"); background-size: cover; background-position: center; background-repeat: no-repeat; -unity-background-image-tint-color: #C1B3BF; padding: 16px 36px; }
+.lobby-panel { max-width: 1080px; padding: 20px 24px; background-color: rgba(52, 45, 56, 0.97); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 5px; border-top-color: #796573; border-right-color: #291F24; border-bottom-color: #291F24; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
+.lobby-panel .header { padding-bottom: 10px; border-bottom-width: 1px; border-bottom-color: #796573; }
+.lobby-panel .title { font-size: 32px; }
+.lobby-panel .subtitle { margin: 10px 0 16px 0; }
+.lobby-panel .connection-section { width: 42%; background-color: #403541; padding: 12px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
+.lobby-panel .lobby-actions { width: 58%; border-left-width: 0; padding-left: 24px; }
+.lobby-panel .connection-section .section-title { color: var(--gold); margin-bottom: 8px; }
+.lobby-panel .field-label { font-size: 14px; margin: 4px 0; }
+.lobby-panel .nickname-row { align-items: center; }
+.lobby-panel .nickname-row TextField { flex-shrink: 1; }
+.lobby-panel .nickname-row Button { font-size: 13px; padding: 2px 6px; flex-shrink: 0; }
+.nickname-hint { color: var(--muted); font-size: 13px; white-space: normal; margin: 4px 0 12px 0; }
+.lobby-panel .entry > .primary-button { min-height: 64px; font-size: 20px; }
+.lobby-panel .entry .centered { margin: 12px 0; color: var(--muted); }
+.lobby-panel .status { border-top-width: 1px; border-top-color: #796573; padding-top: 8px; margin-top: 12px; }
+.lobby-panel .room-code { background-color: #291F24; padding: 6px 12px; border-bottom-width: 2px; border-bottom-color: var(--teal); }
