@@ -39,7 +39,7 @@
 .bid-value { min-width: 66px; font-size: 26px; color: #DBB773; -unity-text-align: middle-center; }
 .player-sidebar { width: 224px; flex-shrink: 0; margin-left: 20px; justify-content: space-between; }
 .player-portrait { align-items: center; padding: 14px 10px; background-color: rgba(52, 45, 56, 0.94); border-width: 2px; border-color: #796573; border-radius: 10px; }
-.shared-avatar { width: 96px; height: 96px; background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #E9D4B5; border-radius: 50px; border-width: 3px; border-color: #796573; }
+.shared-avatar { width: 96px; height: 96px; background-image: url("Art/player-avatar-neutral-v1.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #E9D4B5; border-radius: 50px; overflow: hidden; border-width: 3px; border-color: #796573; }
 .player-name { color: #F3E4D1; font-size: 22px; white-space: normal; -unity-text-align: middle-center; margin: 8px 0; }
 .hud-stat { flex-direction: row; align-items: center; justify-content: center; }
 .hud-icon { width: 34px; height: 34px; flex-shrink: 0; margin-right: 8px; background-size: contain; background-position: center; background-repeat: no-repeat; }

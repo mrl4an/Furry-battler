@@ -14,7 +14,7 @@
             <ui:VisualElement class="lobby-body">
                 <ui:VisualElement class="paper-sheet connection-section player-pass">
                     <ui:Label name="connection-heading" class="section-title" />
-                    <ui:VisualElement class="raccoon-stamp" picking-mode="Ignore" />
+                    <ui:VisualElement class="player-pass-avatar" picking-mode="Ignore" />
                     <ui:Label name="nickname-label" class="field-label" />
                     <ui:VisualElement class="nickname-row">
                         <ui:TextField name="nickname-input" max-length="20" />

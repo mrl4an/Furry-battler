@@ -38,7 +38,7 @@
                 </ui:ScrollView>
             </ui:VisualElement>
             <ui:VisualElement name="page-content" class="match-table battle-table">
-                <ui:VisualElement class="battle-zone"><ui:Label name="top-side-name" class="section-title paper-heading" /><ui:VisualElement name="top-board" class="card-grid board-row">
+                <ui:VisualElement class="battle-zone"><ui:VisualElement name="top-board" class="card-grid board-row">
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -46,7 +46,7 @@
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
                 </ui:VisualElement></ui:VisualElement>
                 <ui:VisualElement class="battle-divider" picking-mode="Ignore" />
-                <ui:VisualElement class="battle-zone"><ui:Label name="bottom-side-name" class="section-title paper-heading" /><ui:VisualElement name="bottom-board" class="card-grid board-row">
+                <ui:VisualElement class="battle-zone"><ui:VisualElement name="bottom-board" class="card-grid board-row">
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
                         <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>

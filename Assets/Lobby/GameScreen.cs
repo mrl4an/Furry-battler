@@ -359,9 +359,6 @@ namespace AnimalBattler.Client.Lobby
             for (var position = 0; position < 2; position++)
             {
                 var side = position == 0 ? 1 - selfIndex : selfIndex;
-                SetText(position == 0 ? "top-side-name" : "bottom-side-name",
-                    side == 0 ? "firstSide" : "secondSide",
-                    NameFor(side < _players.Length ? _players[side].playerId : null));
                 var row = _root.Q<VisualElement>(position == 0 ? "top-board" : "bottom-board");
                 row.Clear();
                 for (var slot = 0; slot < 5; slot++)

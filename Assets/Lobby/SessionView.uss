@@ -23,7 +23,7 @@
 .session-screen .connection-section { width: 38%; padding: 28px; }
 .session-screen .lobby-actions { width: 62%; padding: 32px 40px; margin-left: 20px; border-left-width: 2px; border-left-color: #796573; }
 .session-screen .connection-section .section-title { color: #291F24; background-color: #E9D4B5; border-radius: 3px; padding: 7px 12px; font-size: 24px; margin: 0 0 16px 0; }
-.session-screen .raccoon-stamp { width: 150px; height: 150px; align-self: center; margin: 0 0 16px 0; flex-shrink: 0; }
+.session-screen .player-pass-avatar { width: 150px; height: 150px; align-self: center; margin: 0 0 16px 0; flex-shrink: 0; background-image: url("Art/player-avatar-neutral-v1.png"); background-size: contain; background-position: center; background-repeat: no-repeat; border-radius: 80px; overflow: hidden; }
 .session-screen .field-label { color: #E9D4B5; font-size: 22px; margin: 12px 0 6px 0; white-space: normal; }
 .session-screen.lobby-screen #server-label { color: #C2B3BA; font-size: 20px; margin-top: 24px; }
 .session-screen TextField { min-height: 56px; margin: 0; }
