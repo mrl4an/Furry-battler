@@ -4,6 +4,8 @@
     <ui:Style src="AuctionView.uss" />
     <ui:Style src="Resources/Cards/CharacterCard.uss" />
     <ui:VisualElement name="game-screen" class="game-screen match-screen auction-screen">
+        <ui:VisualElement name="match-backdrop" class="match-backdrop" picking-mode="Ignore" />
+        <ui:VisualElement class="match-shade" picking-mode="Ignore" />
         <ui:VisualElement class="auction-header">
             <ui:Label name="stage-heading" class="section-title phase-banner" />
             <ui:Label name="round" class="round" />
@@ -16,40 +18,28 @@
                 <ui:Label name="synergy-heading" class="section-title" />
                 <ui:ScrollView name="synergies" mode="Vertical" class="capsule-scroll synergy-list" horizontal-scroller-visibility="Hidden">
                     <ui:VisualElement name="synergy-pack" class="synergy-entry inactive">
-                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-pack" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
-                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
-                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-pack" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Button name="synergy-help" class="synergy-help" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="synergy-armored" class="synergy-entry inactive">
-                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-armored" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
-                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
-                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-armored" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Button name="synergy-help" class="synergy-help" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="synergy-forest" class="synergy-entry inactive">
-                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-forest" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
-                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
-                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-forest" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Button name="synergy-help" class="synergy-help" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="synergy-feathered" class="synergy-entry inactive">
-                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-feathered" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
-                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
-                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-feathered" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Button name="synergy-help" class="synergy-help" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="synergy-venomous" class="synergy-entry inactive">
-                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-venomous" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
-                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
-                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-venomous" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Button name="synergy-help" class="synergy-help" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
                     </ui:VisualElement>
                     <ui:VisualElement name="synergy-urban" class="synergy-entry inactive">
-                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-urban" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
-                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
-                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-urban" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Button name="synergy-help" class="synergy-help" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
                     </ui:VisualElement>
                 </ui:ScrollView>
             </ui:VisualElement>
             <ui:VisualElement class="auction-table">
                 <ui:VisualElement class="opponent-hand-zone">
-                    <ui:Label name="opponent-hand-count" class="hint" />
+                    <ui:VisualElement class="hand-zone-mark opponent-mark"><ui:VisualElement class="hand-zone-icon" picking-mode="Ignore" /><ui:Label name="opponent-hand-count" class="hand-count" /></ui:VisualElement>
                     <ui:ScrollView name="opponent-hand" mode="Horizontal" class="capsule-scroll auction-hand" vertical-scroller-visibility="Hidden" />
                 </ui:VisualElement>
                 <ui:VisualElement class="auction-offers-zone">
@@ -78,19 +68,24 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
                 <ui:VisualElement class="self-hand-zone">
-                    <ui:Label name="hand-heading" class="section-title" />
+                    <ui:VisualElement class="hand-zone-mark self-mark"><ui:VisualElement class="hand-zone-icon" picking-mode="Ignore" /><ui:Label name="hand-heading" class="hand-count" /></ui:VisualElement>
                     <ui:ScrollView name="auction-hand" mode="Horizontal" class="capsule-scroll auction-hand" vertical-scroller-visibility="Hidden" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="player-sidebar">
-                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="opponent-name" class="player-name" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement>
+                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="opponent-name" class="player-name" /><ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement></ui:VisualElement>
                 <ui:VisualElement class="auction-ready">
                     <ui:Label name="timer" class="timer" />
                     <ui:Button name="ready-button" class="primary-button" />
                     <ui:Label name="ready-status" class="hint" />
                 </ui:VisualElement>
-                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:Label name="self-health" class="player-health" /><ui:Label name="self-coins" class="player-coins" /></ui:VisualElement>
+                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="self-health" class="player-health" /></ui:VisualElement><ui:VisualElement class="hud-stat coin-stat"><ui:VisualElement class="hud-icon coin-icon" picking-mode="Ignore" /><ui:Label name="self-coins" class="player-coins" /></ui:VisualElement><ui:VisualElement class="hud-stat available-stat"><ui:Label name="available-caption" /><ui:Label name="available-coins" /></ui:VisualElement></ui:VisualElement>
             </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="synergy-help-panel" class="synergy-help-panel hidden" picking-mode="Ignore">
+            <ui:Label name="synergy-help-title" class="section-title" picking-mode="Ignore" />
+            <ui:Label name="synergy-help-body" picking-mode="Ignore" />
+            <ui:Label name="synergy-help-rules" picking-mode="Ignore" />
         </ui:VisualElement>
         <ui:VisualElement name="card-details-layer" class="card-details-layer hidden" picking-mode="Ignore">
             <ui:VisualElement name="card-details-scrim" class="card-details-scrim" />

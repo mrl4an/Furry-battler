@@ -118,6 +118,7 @@ namespace AnimalBattler.Client.Lobby
         public RoomPlayer[] players;
         public CardDefinitionMessage[] cards;
         public string phase;
+        public string backgroundId;
         public int round;
         public string endsAtUtc;
         public MatchSelfMessage self;
@@ -137,6 +138,7 @@ namespace AnimalBattler.Client.Lobby
         public string cardId;
         public int slot;
         public int sourceSlot;
+        public int shopSlot;
         public int targetSlot;
         public int amount;
         public bool ready;

@@ -31,8 +31,8 @@ namespace AnimalBattler.Client.Lobby
         {
             SetText("stage-heading", "auctionHeading");
             SetText("auction-hint", "auction.stepHint");
-            SetText("hand-heading", "handHeading");
-            SetText("opponent-hand-count", "opponentHandCount", _state.opponent?.handCount ?? 0);
+            SetText("hand-heading", "ui.number", _state.self.hand?.Length ?? 0);
+            SetText("opponent-hand-count", "ui.number", _state.opponent?.handCount ?? 0);
             RenderMatchSidebar();
 
             var bids = _state.self.bids ?? Array.Empty<int>();
@@ -88,9 +88,12 @@ namespace AnimalBattler.Client.Lobby
         {
             SetText("self-name", "firstSide", NameFor(_state.self.playerId));
             SetText("opponent-name", "firstSide", NameFor(_state.opponent?.playerId));
-            SetText("self-health", "auction.health", _state.self.health);
-            SetText("opponent-health", "auction.health", _state.opponent?.health ?? 0);
-            SetText("self-coins", "auction.coins", _state.self.coins, _state.self.availableCoins);
+            SetText("self-health", "ui.number", _state.self.health);
+            SetText("opponent-health", "ui.number", _state.opponent?.health ?? 0);
+            SetText("self-coins", "ui.number", _state.self.coins);
+            SetText("available-coins", "ui.number", _state.self.availableCoins);
+            SetText("available-caption", "match.available");
+
             SetText("synergy-heading", "auction.synergies");
             RenderAuctionSynergies();
         }
@@ -116,13 +119,9 @@ namespace AnimalBattler.Client.Lobby
                     .Sum(card => card.copies);
                 entry.Q<Label>("synergy-name").text = Format("group." + group);
                 entry.Q<Label>("synergy-count").text = Format("ui.number", count);
-                entry.Q<Label>("synergy-thresholds").text = Format("auction.thresholds");
                 entry.tooltip = Format("synergy." + group);
                 entry.EnableInClassList("active", count >= 3);
                 entry.EnableInClassList("inactive", count < 3);
-                for (var i = 0; i < 3; i++)
-                    entry.Q<VisualElement>("threshold-" + i).EnableInClassList("filled",
-                        count >= (i == 0 ? 3 : i == 1 ? 6 : 10));
             }
         }
 
@@ -144,14 +143,16 @@ namespace AnimalBattler.Client.Lobby
             }
             _catalog.TryGetValue(id, out var definition);
             var tier = copies >= 6 ? 3 : copies >= 3 ? 2 : 1;
-            var drops = tier == 3 ? 0 : tier == 2 ? copies - 3 : copies;
             card.RemoveFromClassList("rarity-common");
             card.AddToClassList("rarity-" + (definition?.rarity ?? "common"));
             card.Q<Label>("character-name").text = CardName(id);
             card.Q<Label>("character-group").text = definition == null ? Format("ui.unknown")
                 : Format("group." + definition.group);
-            card.Q<Label>("character-ability").text = definition?.ability == null ? Format("card.noAbility")
-                : Format("ability." + definition.ability.kind, definition.ability.amount * tier);
+            var ability = card.Q<Label>("character-ability");
+            var hasAbility = !string.IsNullOrEmpty(definition?.ability?.kind);
+            card.EnableInClassList("no-ability", !hasAbility);
+            ability.text = hasAbility ? Format("ability." + definition.ability.kind, definition.ability.amount * tier) : string.Empty;
+            if (!hasAbility) ability.style.display = DisplayStyle.None;
             card.Q<Label>("character-attack").text = definition == null ? Format("ui.unknown")
                 : Format("ui.number", definition.attack + copies - 1);
             card.Q<Label>("character-health").text = definition == null ? Format("ui.unknown")
@@ -160,9 +161,7 @@ namespace AnimalBattler.Client.Lobby
             if (health.HasValue) SetCharacterStat(card.Q<Label>("character-health"), health.Value);
             foreach (var number in card.Query<Label>(className: "stat-number").ToList())
                 number.EnableInClassList("wide-number", number.text.Length >= 3);
-            card.Q<Label>("character-tier").text = Format("card.level", tier);
-            card.Q<Label>("character-level").text = Format("card.level", tier);
-            card.Q<Label>("character-copy-count").text = Format("copies", copies);
+            var drops = tier == 3 ? 0 : tier == 2 ? copies - 3 : copies;
             for (var i = 0; i < 3; i++)
                 card.Q<VisualElement>("merge-" + i).EnableInClassList("filled", i < drops);
             foreach (var name in new[] { "character-class", "detail-class-icon", "character-art" })
@@ -243,6 +242,7 @@ namespace AnimalBattler.Client.Lobby
         private void OpenCardDetails(VisualElement anchor, string id, int copies, bool touch)
         {
             if (_detailsLayer == null || _detailsHost == null || _ghost != null) return;
+            HideSynergyHelp();
             _touchDetails = touch;
             _detailsAnchor = anchor;
             _detailsHost.Clear();

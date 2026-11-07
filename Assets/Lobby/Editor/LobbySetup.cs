@@ -224,6 +224,18 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "invalidMerge", "Cards cannot be merged", "Карты нельзя объединить");
             Add(english, russian, "notInMatch", "Player is not in match", "Игрок не участвует в матче");
             Add(english, russian, "playerReady", "Cancel readiness before acting", "Снимите готовность перед действием");
+            Add(english, russian, "synergy.scope", "Combat bonuses affect this class. Thresholds: 3 / 6 / 10 field copies.", "Боевые бонусы — своему классу. Пороги: 3 / 6 / 10 копий на поле.");
+            Add(english, russian, "synergy.short.pack", "Attack +1 / +2 / +4", "Атака +1 / +2 / +4");
+            Add(english, russian, "synergy.short.armored", "Health +2 / +4 / +7", "Здоровье +2 / +4 / +7");
+            Add(english, russian, "synergy.short.forest", "Attack & health +1 / +2 / +3", "Атака и здоровье +1 / +2 / +3");
+            Add(english, russian, "synergy.short.feathered", "Own-turn attack +2 / +4 / +7", "Атака в свой ход +2 / +4 / +7");
+            Add(english, russian, "synergy.short.venomous", "Extra poison: −1 / −2 / −3 attack", "Яд: ещё −1 / −2 / −3 к атаке");
+            Add(english, russian, "synergy.short.urban", "Next-round income +1 / +2 / +3", "Доход со следующего раунда +1 / +2 / +3");
+            Add(english, russian, "match.refresh", "Refresh", "Обновить");
+            Add(english, russian, "match.available", "Available", "Доступно");
+            Add(english, russian, "ui.help", "?", "?");
+            Add(english, russian, "synergy.helpRules", "Only field copies count. Only the highest reached threshold applies; bonuses do not stack.", "Считаются только копии на поле. Действует наибольший достигнутый порог; бонусы не складываются.");
+            Add(english, russian, "auction.stepHint", "Set a bid below each card. Minimum: 2 coins; 0 means no bid.", "Выберите ставку под картой. Минимум — 2 монеты; 0 — без ставки.");
             EditorUtility.SetDirty(english);
             EditorUtility.SetDirty(russian);
             EditorUtility.SetDirty(english.SharedData);

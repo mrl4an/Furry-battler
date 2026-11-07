@@ -37,6 +37,10 @@ namespace AnimalBattler.Client.Lobby
             public string CardId;
             public int BoardSlot;
             public bool FromBoard;
+            public bool FromShop;
+            public int ShopSlot;
+            public string DefinitionId;
+            public int Copies;
         }
 
         public GameScreen(Action<GameRequest> send, Func<string, string> localize,
@@ -50,7 +54,9 @@ namespace AnimalBattler.Client.Lobby
 
         public void Bind(UIDocument document, string sceneName)
         {
+            CancelDrag();
             CloseCardDetails();
+            HideSynergyHelp();
             _buttonActions.Clear();
             _sceneName = sceneName;
             _root = document.rootVisualElement.Q<VisualElement>("game-screen");
@@ -63,6 +69,9 @@ namespace AnimalBattler.Client.Lobby
                 BindScrollAppearance(scroll);
             _root.Q<Button>("language-button").clicked += _switchLanguage;
             BindCardDetails();
+            BindSynergyHelp();
+            BindDragCancellation();
+            _appliedBackgroundId = null;
             if (_line != null)
             {
                 _line.pickingMode = PickingMode.Ignore;
@@ -97,6 +106,8 @@ namespace AnimalBattler.Client.Lobby
                 _visibleBattleEvent = -1;
                 _battleStartedAt = Time.realtimeSinceStartupAsDouble;
             }
+            CancelDrag();
+            _dropPending = false;
             _state = state;
             _errorKey = null;
             Refresh();
@@ -104,6 +115,9 @@ namespace AnimalBattler.Client.Lobby
 
         public void Hide()
         {
+            CancelDrag();
+            HideSynergyHelp();
+            _dropPending = false;
             CloseCardDetails();
             _state = null;
             _lastBattleKey = null;
@@ -113,6 +127,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void ShowError(string key)
         {
+            _dropPending = false;
             _errorKey = key;
             Refresh();
         }
@@ -120,7 +135,10 @@ namespace AnimalBattler.Client.Lobby
         public void Refresh()
         {
             if (_state == null || _root == null || _sceneName != SceneFor(_state.phase)) return;
+            CancelDrag();
+            HideSynergyHelp();
             CloseCardDetails();
+            ApplyMatchBackground();
             _battleCards.Clear();
             _battleHealth.Clear();
             Array.Clear(_boardTargets, 0, _boardTargets.Length);
@@ -240,23 +258,7 @@ namespace AnimalBattler.Client.Lobby
             SetText("stage-heading", "preparationHeading");
             RenderMatchSidebar();
             SetText("sale-heading", "sell");
-            _root.Q<VisualElement>("sale-zone")?.SetEnabled(false);
-            var results = _root.Q<ScrollView>("auction-results");
-            results.contentContainer.Clear();
-            results.parent.EnableInClassList("hidden", _state.auctionResults == null || _state.auctionResults.Length == 0);
-            _root.Q<Label>("results-heading").text = _state.auctionResults != null && _state.auctionResults.Length > 0
-                ? Format("auctionResultsHeading") : string.Empty;
-            if (_state.auctionResults != null && _state.auctionResults.Length > 0)
-            {
-                foreach (var result in _state.auctionResults)
-                {
-                    var winner = string.IsNullOrEmpty(result.winnerId) ? Format("noWinner") : NameFor(result.winnerId);
-                    var selfFirst = _players.Length > 0 && _players[0].playerId == _state.self.playerId;
-                    results.Add(Text("hint", "auctionResult", CardName(result.cardId), winner,
-                        selfFirst ? result.firstBid : result.secondBid,
-                        selfFirst ? result.secondBid : result.firstBid));
-                }
-            }
+            _root.Q<VisualElement>("sale-zone")?.SetEnabled(!_state.self.ready);
             SetText("shop-heading", "shopHeading");
             var shop = _root.Q<VisualElement>("shop");
             shop.Clear();
@@ -264,25 +266,41 @@ namespace AnimalBattler.Client.Lobby
             {
                 var index = slot;
                 var offer = _state.self.shop != null && slot < _state.self.shop.Length ? _state.self.shop[slot] : null;
+                if (string.IsNullOrEmpty(offer?.cardId)) offer = null;
                 var item = Column("offer");
                 var shopCard = CharacterCard(offer?.cardId, 1, false);
                 shopCard.EnableInClassList("is-frozen", offer?.frozen == true);
+                if (offer != null) BindDrag(shopCard, new DragSource { FromShop = true, ShopSlot = index, DefinitionId = offer.cardId, Copies = 1 });
                 item.Add(shopCard);
                 if (offer != null)
                 {
                     var actions = Row("offer-actions");
                     actions.Add(Button("buy", () => _send(new GameRequest { type = "buy", slot = index }),
                         !_state.self.ready && _state.self.coins >= 3));
-                    actions.Add(Button(offer.frozen ? "unfreeze" : "freeze", () => _send(new GameRequest
+                    var freezeButton = Button(offer.frozen ? "unfreeze" : "freeze", () => _send(new GameRequest
                     {
                         type = "setFrozen", slot = index, frozen = !offer.frozen
-                    }), !_state.self.ready));
+                    }), !_state.self.ready);
+                    freezeButton.text = string.Empty;
+                    freezeButton.tooltip = Format(offer.frozen ? "unfreeze" : "freeze");
+                    freezeButton.AddToClassList("freeze-button");
+                    freezeButton.EnableInClassList("is-frozen", offer.frozen);
+                    var snowflake = new VisualElement { pickingMode = PickingMode.Ignore };
+                    snowflake.AddToClassList("control-icon");
+                    snowflake.AddToClassList("snowflake-icon");
+                    freezeButton.Add(snowflake);
+                    actions.Add(freezeButton);
                     item.Add(actions);
                 }
                 shop.Add(item);
             }
             SetButton("refresh-button", "refreshShop", () => _send(new GameRequest { type = "refreshShop" }),
                 !_state.self.ready && _state.self.coins >= 1);
+            var refresh = _root.Q<Button>("refresh-button");
+            refresh.text = string.Empty;
+            refresh.tooltip = Format("refreshShop");
+            SetText("refresh-caption", "match.refresh");
+            SetText("refresh-price", "ui.number", 1);
             SetText("board-heading", "boardHeading");
             var board = _root.Q<VisualElement>("board");
             board.Clear();
@@ -290,6 +308,7 @@ namespace AnimalBattler.Client.Lobby
             {
                 var index = slot;
                 var card = _state.self.board != null && slot < _state.self.board.Length ? _state.self.board[slot] : null;
+                if (string.IsNullOrEmpty(card?.cardId)) card = null;
                 var target = Column("board-slot");
                 var heading = Row("slot-heading");
                 heading.Add(Text("slot-title", slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot));
@@ -307,14 +326,14 @@ namespace AnimalBattler.Client.Lobby
                 target.Add(cardVisual);
                 if (card != null)
                 {
-                    BindDrag(cardVisual, new DragSource { FromBoard = true, BoardSlot = index, CardId = card.id });
+                    BindDrag(cardVisual, new DragSource { FromBoard = true, BoardSlot = index, CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
                     heading.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
                         !_state.self.ready));
                 }
                 _boardTargets[slot] = target;
                 board.Add(target);
             }
-            SetText("hand-heading", "handHeading");
+            SetText("hand-heading", "ui.number", _state.self.hand?.Length ?? 0);
             var hand = _root.Q<ScrollView>("hand");
             hand.contentContainer.Clear();
             SetButton("hand-previous", "handPrevious", () => hand.horizontalScroller.value -= 120, true);
@@ -323,7 +342,7 @@ namespace AnimalBattler.Client.Lobby
                 var item = Column("hand-item");
                 var cardVisual = CharacterCard(card.cardId, card.copies, false);
                 item.Add(cardVisual);
-                BindDrag(cardVisual, new DragSource { CardId = card.id });
+                BindDrag(cardVisual, new DragSource { CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
                 item.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
                     !_state.self.ready));
                 hand.Add(item);
@@ -417,59 +436,6 @@ namespace AnimalBattler.Client.Lobby
                 (definition?.health ?? 0) + copies - 1);
             visual.Q<Label>("card-copies").text = showCopies ? Format("copies", copies) : string.Empty;
             return visual;
-        }
-
-        private void BindDrag(VisualElement source, DragSource drag)
-        {
-            source.RegisterCallback<PointerDownEvent>(evt =>
-            {
-                if (_state?.phase != "preparation" || _state.self.ready || evt.button != 0) return;
-                CloseCardDetails();
-                _drag = drag;
-                source.CapturePointer(evt.pointerId);
-                _ghost = new Label(CardName(_state.self.hand?.FirstOrDefault(card => card.id == drag.CardId)?.cardId
-                    ?? _state.self.board?.FirstOrDefault(card => card?.id == drag.CardId)?.cardId));
-                _ghost.AddToClassList("drag-ghost");
-                _ghost.pickingMode = PickingMode.Ignore;
-                _root.Add(_ghost);
-                MoveGhost(evt.position);
-                evt.StopPropagation();
-            });
-            source.RegisterCallback<PointerMoveEvent>(evt =>
-            {
-                if (!source.HasPointerCapture(evt.pointerId)) return;
-                MoveGhost(evt.position);
-                evt.StopPropagation();
-            });
-            source.RegisterCallback<PointerUpEvent>(evt =>
-            {
-                if (!source.HasPointerCapture(evt.pointerId)) return;
-                source.ReleasePointer(evt.pointerId);
-                _ghost?.RemoveFromHierarchy();
-                _ghost = null;
-                for (var slot = 0; slot < _boardTargets.Length; slot++)
-                {
-                    if (_boardTargets[slot] == null || !_boardTargets[slot].worldBound.Contains(evt.position)) continue;
-                    if (_drag.FromBoard)
-                    {
-                        if (slot != _drag.BoardSlot) _send(new GameRequest
-                        {
-                            type = "moveCard", sourceSlot = _drag.BoardSlot, targetSlot = slot
-                        });
-                    }
-                    else _send(new GameRequest { type = "placeCard", cardId = _drag.CardId, slot = slot });
-                    break;
-                }
-                evt.StopPropagation();
-            });
-        }
-
-        private void MoveGhost(Vector2 position)
-        {
-            if (_ghost == null) return;
-            var point = position - _root.worldBound.position;
-            _ghost.style.left = point.x + 10;
-            _ghost.style.top = point.y + 10;
         }
 
         private void ShowBattleProgress(int eventIndex)

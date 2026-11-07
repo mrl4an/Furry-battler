@@ -3,13 +3,12 @@
     <ui:VisualElement name="character-card" class="character-card rarity-common" tabindex="0">
         <ui:VisualElement class="character-frame">
             <ui:Label name="character-name" class="character-name full-only" />
-            <ui:VisualElement name="character-art" class="character-art group-pack" />
+            <ui:VisualElement name="character-art" class="character-art group-pack"><ui:VisualElement class="frost-overlay" picking-mode="Ignore" /></ui:VisualElement>
             <ui:VisualElement class="character-class-row full-only">
                 <ui:VisualElement name="detail-class-icon" class="class-icon group-pack" />
                 <ui:Label name="character-group" class="character-group" />
             </ui:VisualElement>
             <ui:Label name="character-ability" class="character-ability full-only" />
-            <ui:VisualElement class="character-progress full-only"><ui:Label name="character-level" /><ui:Label name="character-copy-count" /></ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="character-class" class="class-icon corner-class group-pack" />
         <ui:VisualElement name="character-role" class="role-icon role-support" />
@@ -21,7 +20,6 @@
                 <ui:VisualElement name="merge-1" class="merge-drop" />
                 <ui:VisualElement name="merge-2" class="merge-drop" />
             </ui:VisualElement>
-            <ui:Label name="character-tier" class="character-tier" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

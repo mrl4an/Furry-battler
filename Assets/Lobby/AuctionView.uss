@@ -9,19 +9,17 @@
 .match-screen .language-button { width: 76px; min-width: 76px; height: 44px; margin-left: 0; }
 .match-screen .game-error { font-size: 18px; padding: 6px 12px; background-color: #342D38; margin: 4px 0; }
 .match-layout { flex-direction: row; flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; margin-top: 12px; }
-.synergy-sidebar { width: 252px; flex-shrink: 0; margin-right: 20px; padding: 16px 10px; background-color: rgba(52, 45, 56, 0.92); border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
-.match-screen .synergy-sidebar > .section-title { font-size: 22px; -unity-text-align: middle-center; margin-bottom: 16px; }
+.synergy-sidebar { width: 296px; flex-shrink: 0; margin-right: 20px; padding: 16px 10px; background-color: rgba(52, 45, 56, 0.92); border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
+.match-screen .synergy-sidebar > .section-title { font-size: 22px; -unity-text-align: middle-center; margin-bottom: 6px; }
 .synergy-list { flex-grow: 1; min-height: 0; }
-.synergy-entry { margin: 0 0 12px 0; padding: 10px 8px; background-color: #493E48; border-width: 1px; border-color: #796573; border-radius: 8px; }
+.synergy-entry { margin: 0 0 10px 0; padding: 10px 8px; background-color: #493E48; border-width: 1px; border-color: #796573; border-radius: 8px; }
 .synergy-entry.active { border-left-width: 4px; border-left-color: #63DCC5; background-color: #3D4D49; }
 .synergy-entry.inactive { opacity: 0.85; }
 .synergy-row { flex-direction: row; align-items: center; min-height: 44px; }
-.synergy-row > .class-icon { width: 40px; height: 40px; margin-right: 6px; }
-.synergy-name { font-size: 20px; white-space: normal; flex-grow: 1; flex-shrink: 1; color: #F3E4D1; }
-.synergy-count { color: #63DCC5; font-size: 24px; margin-left: 6px; flex-shrink: 0; }
-.synergy-entry > .merge-drops { margin: 6px 0 2px 44px; }
-.synergy-thresholds { font-size: 17px; color: #D8C9CF; margin: 4px 0 0 44px; }
-.auction-table, .match-table { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-width: 0; min-height: 0; background-color: #342D38; border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
+.synergy-row > .class-icon { width: 34px; height: 34px; margin-right: 6px; }
+.synergy-name { font-size: 18px; white-space: nowrap; flex-grow: 1; flex-shrink: 1; color: #F3E4D1; }
+.synergy-count { color: #63DCC5; font-size: 24px; margin-left: 8px; flex-shrink: 0; }
+.auction-table, .match-table { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-width: 0; min-height: 0; background-color: rgba(41, 31, 36, 0.42); border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
 .opponent-hand-zone, .self-hand-zone { flex-shrink: 0; padding: 10px 24px; min-height: 0; }
 .opponent-hand-zone { height: 228px; border-bottom-width: 1px; border-bottom-color: #796573; }
 .self-hand-zone { height: 280px; border-top-width: 1px; border-top-color: #796573; }
@@ -43,13 +41,23 @@
 .player-portrait { align-items: center; padding: 14px 10px; background-color: rgba(52, 45, 56, 0.94); border-width: 2px; border-color: #796573; border-radius: 10px; }
 .shared-avatar { width: 96px; height: 96px; background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #E9D4B5; border-radius: 50px; border-width: 3px; border-color: #796573; }
 .player-name { color: #F3E4D1; font-size: 22px; white-space: normal; -unity-text-align: middle-center; margin: 8px 0; }
-.player-health { color: #F0A99D; background-color: #291F24; border-radius: 8px; padding: 4px 12px; font-size: 28px; white-space: normal; -unity-text-align: middle-center; }
-.player-coins { color: #DBB773; font-size: 22px; white-space: normal; -unity-text-align: middle-center; margin-top: 12px; }
+.hud-stat { flex-direction: row; align-items: center; justify-content: center; }
+.hud-icon { width: 34px; height: 34px; flex-shrink: 0; margin-right: 8px; background-size: contain; background-position: center; background-repeat: no-repeat; }
+.health-icon { background-image: url("Art/Icons/health.svg"); }
+.coin-icon { background-image: url("Art/Icons/coin.svg"); }
+.health-stat { padding: 5px 12px; background-color: #291F24; border-radius: 8px; }
+.player-health { color: #F3E4D1; font-size: 30px; white-space: nowrap; margin: 0; }
+.coin-stat { margin-top: 12px; }
+.player-coins { color: #DBB773; font-size: 28px; white-space: nowrap; margin: 0; -unity-font: url("Fonts/RussoOne-Regular.ttf"); }
+.available-stat { margin-top: 4px; }
+.available-stat > Label { font-size: 18px; color: #D8C9CF; margin: 0 4px; white-space: nowrap; }
 .auction-ready, .battle-status { background-color: #342D38; border-width: 2px; border-color: #796573; border-radius: 10px; padding: 16px 10px; }
 .match-screen .timer { margin: 0 0 12px 0; min-width: 0; font-size: 30px; color: #F3E4D1; -unity-text-align: middle-center; }
-.match-screen .auction-ready > Button { min-height: 72px; font-size: 30px; background-image: url("Art/PaintedButton.png"); -unity-slice-left: 220; -unity-slice-right: 220; -unity-slice-top: 140; -unity-slice-bottom: 140; -unity-slice-scale: 0.12; background-color: transparent; border-width: 0; }
-.match-screen .auction-ready > Button:hover { -unity-background-image-tint-color: #D1FFF5; }
-.match-screen .auction-ready > Button:active { -unity-background-image-tint-color: #A5CEC2; }
+.match-screen .auction-ready > Button { min-height: 72px; font-size: 30px; background-image: none; background-color: #63DCC5; color: #291F24; border-width: 2px 2px 4px 2px; border-color: #291F24; border-radius: 8px; padding: 8px; }
+.match-screen .auction-ready > Button:hover { background-color: #85E8D5; }
+.match-screen .auction-ready > Button:active { background-color: #43B8A5; border-bottom-width: 2px; }
+.match-screen .auction-ready > Button:focus { border-color: #F3E4D1; }
+.match-screen .auction-ready > Button:disabled { background-color: #46655F; color: #B3C3BE; }
 .auction-ready > .hint, .battle-status > .section-title { -unity-text-align: middle-center; margin-top: 10px; }
 .match-screen .paper-heading { align-self: flex-start; color: #291F24; background-color: #E9D4B5; padding: 4px 12px; border-radius: 3px; font-size: 22px; margin: 0; }
 .preparation-table { padding: 12px 16px; }
@@ -75,10 +83,6 @@
 .match-screen .hand-item .character-card { width: 130px; height: 156px; }
 .match-screen .hand-item > Button { margin-top: 26px; min-height: 28px; font-size: 16px; width: 140px; }
 .match-screen #drag-hint { display: none; }
-.match-screen .results-surface { height: 38px; padding: 2px 0; margin-top: 4px; background-color: transparent; }
-.match-screen .results-surface .section-title { font-size: 17px; }
-.match-screen .results-scroll { height: 34px; }
-.match-screen .results-scroll .hint { font-size: 17px; }
 .sale-zone { padding: 12px; margin-bottom: 12px; border-width: 2px; border-color: #A18B94; border-radius: 8px; background-color: #493E48; }
 .sale-zone > .section-title { -unity-text-align: middle-center; margin: 0; }
 .battle-table { padding: 24px 16px; justify-content: center; }
@@ -95,3 +99,38 @@
 .card-details-layer.touch-details .card-details-scrim { display: flex; }
 .card-details-host { position: absolute; width: 280px; height: 400px; }
 .match-screen .close-card-details { position: absolute; min-width: 120px; height: 44px; }
+
+/* Icon controls keep their existing server commands. */
+.control-icon { width: 28px; height: 28px; flex-shrink: 0; background-size: contain; background-position: center; background-repeat: no-repeat; }
+.refresh-icon { background-image: url("Art/Icons/refresh.svg"); }
+.snowflake-icon { background-image: url("Art/Icons/snowflake.svg"); }
+.match-screen .refresh-button { flex-direction: row; align-items: center; justify-content: center; }
+.refresh-button > Label { margin: 0 5px; color: #291F24; -unity-font: url("Fonts/RussoOne-Regular.ttf"); font-size: 18px; }
+.refresh-button > .refresh-icon { margin-right: 4px; }
+.match-screen .offer-actions > Button { width: 144px; }
+.match-screen .offer-actions > .freeze-button { width: 44px; min-width: 44px; margin-left: 6px; padding: 4px; align-items: center; justify-content: center; }
+.match-screen .freeze-button.is-frozen { background-color: #A6DDEB; border-color: #E7FBFF; }
+.match-screen .freeze-button:disabled { opacity: 0.5; }
+
+.match-backdrop, .match-shade { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.match-backdrop { background-color: #342D38; background-size: cover; background-position: center; background-repeat: no-repeat; }
+.match-shade { background-color: rgba(30, 25, 34, 0.48); }
+.match-screen .synergy-help { width: 26px; min-width: 26px; height: 26px; min-height: 26px; padding: 0; margin: 0 0 0 4px; border-width: 1px; border-radius: 14px; background-color: transparent; color: #E9D4B5; border-color: #B4A2AB; font-size: 18px; flex-shrink: 0; }
+.match-screen .synergy-help:hover, .match-screen .synergy-help:focus { background-color: #493E48; color: #63DCC5; border-color: #63DCC5; }
+.synergy-help-panel { position: absolute; width: 360px; padding: 16px; background-color: #342D38; border-width: 2px; border-color: #C9BDAE; border-radius: 10px; }
+.synergy-help-panel > Label { color: #F3E4D1; white-space: normal; font-size: 20px; margin: 4px 0; }
+.synergy-help-panel > #synergy-help-rules { font-size: 17px; color: #D8C9CF; margin-top: 12px; }
+.hand-zone-mark { flex-direction: row; align-items: center; align-self: flex-start; padding: 3px 10px; background-color: rgba(41, 31, 36, 0.75); border-radius: 8px; }
+.hand-zone-icon { width: 34px; height: 34px; background-image: url("Art/Icons/cards.svg"); background-size: contain; background-repeat: no-repeat; }
+.hand-count { font-size: 22px; color: #E9D4B5; margin: 0 0 0 8px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); }
+.self-mark { border-left-width: 3px; border-left-color: #63DCC5; }
+.opponent-mark { border-left-width: 3px; border-left-color: #D77C6F; }
+.self-hand-zone, .preparation-hand-zone { background-color: rgba(50, 77, 71, 0.22); }
+.opponent-hand-zone { background-color: rgba(92, 54, 61, 0.18); }
+.drag-card-ghost { position: absolute; width: 160px; height: 192px; opacity: 0.9; }
+.drag-source { opacity: 0.35; }
+.match-screen .drop-allowed { background-color: rgba(99, 220, 197, 0.08); }
+.match-screen .drop-hover { background-color: rgba(99, 220, 197, 0.28); }
+.sale-zone { min-height: 80px; justify-content: center; }
+.sale-zone .hud-stat { margin-top: 8px; }
+.sale-zone #sale-price { color: #DBB773; font-size: 26px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); }

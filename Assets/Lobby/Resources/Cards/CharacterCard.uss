@@ -22,15 +22,12 @@
 .character-stat { position: absolute; bottom: -14px; width: 54px; height: 48px; align-items: center; justify-content: center; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .character-attack { left: -24px; bottom: -22px; width: 62px; height: 54px; padding: 0 4px 14px 0; background-image: url("../../Art/Icons/attack-stat-v5.png"); }
 .character-health { right: -18px; padding-top: 5px; background-image: url("../../Art/Icons/health.svg"); }
-.stat-number { -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); -unity-font-style: normal; font-size: 22px; color: #291F24; background-color: rgba(255, 240, 211, 0.9); border-radius: 10px; min-width: 28px; height: 28px; padding: 0 3px; margin: 0; -unity-text-align: middle-center; flex-shrink: 0; white-space: nowrap; }
+.stat-number { -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); -unity-font-style: normal; font-size: 22px; color: #291F24; background-color: transparent; text-shadow: 0 0 3px rgba(255, 245, 222, 0.7); min-width: 28px; height: 28px; padding: 0 3px; margin: 0; -unity-text-align: middle-center; flex-shrink: 0; white-space: nowrap; }
 .stat-number.wide-number { font-size: 17px; }
-/* Add stats-outlined to a card in UI Builder to compare the alternative. */
-.character-card.stats-outlined .stat-number { background-color: transparent; color: #FFF0D3; -unity-text-outline-color: #291F24; -unity-text-outline-width: 1px; }
 .character-merge { position: absolute; top: 206px; left: 32px; right: 32px; align-items: center; }
 .merge-drops { flex-direction: row; }
 .merge-drop { width: 18px; height: 9px; margin: 0 2px; background-color: #746874; border-radius: 7px 7px 7px 1px; }
 .merge-drop.filled { background-color: #63DCC5; }
-.character-tier { -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); background-color: #291F24; padding: 2px 8px; border-radius: 6px; font-size: 15px; color: #E9D4B5; -unity-text-align: middle-center; margin: 1px 0 0 0; }
 .character-card .full-only { display: none; }
 .character-card.detailed-card { width: 280px; height: 400px; }
 .detailed-card .full-only { display: flex; }
@@ -38,12 +35,15 @@
 .detailed-card .character-frame { padding: 8px; }
 .character-name { color: #291F24; background-color: #E9D4B5; -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); font-size: 22px; -unity-font-style: normal; -unity-text-align: middle-center; white-space: normal; margin: 0 0 5px 0; padding: 2px; flex-shrink: 0; }
 .detailed-card .character-art { flex-grow: 0; flex-shrink: 0; height: 138px; }
-.character-class-row { flex-direction: row; align-items: center; flex-shrink: 0; margin: 4px 0; }
-.character-group { font-size: 17px; white-space: normal; flex-shrink: 1; margin: 0 0 0 3px; color: #E9D4B5; }
+.detailed-card.no-ability .character-art { flex-grow: 1; }
+.character-class-row { flex-direction: row; align-items: center; justify-content: center; flex-shrink: 0; margin: 4px 0; }
+.character-group { font-size: 17px; white-space: normal; flex-shrink: 1; margin: 0 0 0 6px; -unity-text-align: middle-center; color: #E9D4B5; }
 .character-ability { flex-grow: 1; min-height: 0; white-space: normal; font-size: 18px; color: #F3E4D1; background-color: #493E48; padding: 5px; margin: 0 0 8px 0; border-width: 1px; border-color: #796573; border-radius: 5px; }
-.character-progress { flex-direction: row; justify-content: space-between; flex-shrink: 0; margin-bottom: 8px; }
-.character-progress > Label { font-size: 16px; color: #E9D4B5; margin: 0; }
 .detailed-card .role-icon { top: 206px; }
 .detailed-card .character-merge { top: 414px; }
 .character-card.empty-character .character-art, .character-card.empty-character .class-icon, .character-card.empty-character .role-icon, .character-card.empty-character .character-stat, .character-card.empty-character .character-merge { display: none; }
 .empty-character > .character-frame { opacity: 0.4; }
+
+/* Frost is confined to the portrait; stats and controls stay readable. */
+.frost-overlay { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none; background-image: url("../../Art/Icons/frost-overlay.svg"); background-size: 100% 100%; background-repeat: no-repeat; }
+.character-card.is-frozen .frost-overlay { display: flex; }

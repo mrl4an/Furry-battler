@@ -559,7 +559,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628227
-    m_Localized: "Adjust bids with \u2212 / +. Minimum bid: 2; 0 cancels."
+    m_Localized: "Set a bid below each card. Minimum: 2 coins; 0 means no bid."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628228
@@ -640,6 +640,50 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1114628247
     m_Localized: "3 / 6 / 10 copies: +1 / +2 / +3 coins per round, based on the previous battle's board."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628248
+    m_Localized: "Combat bonuses affect this class. Thresholds: 3 / 6 / 10 field copies."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628249
+    m_Localized: "Attack +1 / +2 / +4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628250
+    m_Localized: "Health +2 / +4 / +7"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628251
+    m_Localized: "Attack & health +1 / +2 / +3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628252
+    m_Localized: "Own-turn attack +2 / +4 / +7"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628253
+    m_Localized: "Extra poison: \u22121 / \u22122 / \u22123 attack"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628254
+    m_Localized: "Next-round income +1 / +2 / +3"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628255
+    m_Localized: "Refresh"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628256
+    m_Localized: "Available"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628257
+    m_Localized: "?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628258
+    m_Localized: "Only field copies count. Only the highest reached threshold applies; bonuses do not stack."
     m_Metadata:
       m_Items: []
   references:

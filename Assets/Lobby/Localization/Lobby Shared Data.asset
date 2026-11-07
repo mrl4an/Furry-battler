@@ -639,6 +639,50 @@ MonoBehaviour:
     m_Key: synergy.urban
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628248
+    m_Key: synergy.scope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628249
+    m_Key: synergy.short.pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628250
+    m_Key: synergy.short.armored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628251
+    m_Key: synergy.short.forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628252
+    m_Key: synergy.short.feathered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628253
+    m_Key: synergy.short.venomous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628254
+    m_Key: synergy.short.urban
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628255
+    m_Key: match.refresh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628256
+    m_Key: match.available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628257
+    m_Key: ui.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628258
+    m_Key: synergy.helpRules
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
