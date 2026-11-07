@@ -4,7 +4,7 @@
 .match-screen Button { min-height: 44px; font-size: 18px; border-radius: 6px; }
 .match-screen .auction-header { flex-direction: row; align-items: center; height: 68px; flex-shrink: 0; padding: 0 4px; }
 .match-screen .game-title { flex-grow: 1; font-size: 20px; color: #B5A7B0; -unity-text-align: middle-right; margin-right: 24px; }
-.match-screen .phase-banner { min-width: 230px; color: #291F24; background-image: url("Art/NoticePaper.png"); background-color: transparent; -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.12; font-size: 32px; padding: 12px 28px; margin: 0; -unity-text-align: middle-center; }
+.match-screen .phase-banner { min-width: 230px; color: #291F24; background-image: url("Art/NoticePaper.png"); background-color: transparent; -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.12px; font-size: 32px; padding: 12px 28px; margin: 0; -unity-text-align: middle-center; }
 .match-screen .round { font-size: 24px; margin-left: 24px; }
 .match-screen .language-button { width: 76px; min-width: 76px; height: 44px; margin-left: 0; }
 .match-screen .game-error { font-size: 18px; padding: 6px 12px; background-color: #342D38; margin: 4px 0; }
@@ -131,7 +131,7 @@
 .match-screen > .drag-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .match-screen.preparation-screen .player-sidebar { justify-content: space-between; }
 .match-screen.preparation-screen .player-portrait, .match-screen.preparation-screen .auction-ready { flex-shrink: 0; }
-.sale-zone { height: 166px; min-height: 166px; flex-shrink: 0; padding: 10px 12px; margin: 8px 0; align-items: center; justify-content: center; background-image: url("Art/NoticePaper.png"); -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.12; border-width: 2px; border-color: rgba(219, 183, 115, 0.4); border-radius: 8px; }
+.sale-zone { height: 166px; min-height: 166px; flex-shrink: 0; padding: 10px 12px; margin: 8px 0; align-items: center; justify-content: center; background-image: url("Art/NoticePaper.png"); -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.12px; border-width: 2px; border-color: rgba(219, 183, 115, 0.4); border-radius: 8px; }
 .sale-zone > .section-title { color: #291F24; font-size: 24px; margin: 0; -unity-text-align: middle-center; }
 .sale-emblem { width: 48px; height: 48px; margin: 2px 0; background-size: contain; background-repeat: no-repeat; background-position: center; }
 .sale-hint { color: #59404D; font-size: 16px; white-space: normal; -unity-text-align: middle-center; margin: 0; }
