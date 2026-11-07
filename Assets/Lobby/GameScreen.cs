@@ -238,6 +238,9 @@ namespace AnimalBattler.Client.Lobby
         private void RenderPreparation()
         {
             SetText("stage-heading", "preparationHeading");
+            RenderMatchSidebar();
+            SetText("sale-heading", "sell");
+            _root.Q<VisualElement>("sale-zone")?.SetEnabled(false);
             var results = _root.Q<ScrollView>("auction-results");
             results.contentContainer.Clear();
             results.parent.EnableInClassList("hidden", _state.auctionResults == null || _state.auctionResults.Length == 0);
@@ -262,7 +265,9 @@ namespace AnimalBattler.Client.Lobby
                 var index = slot;
                 var offer = _state.self.shop != null && slot < _state.self.shop.Length ? _state.self.shop[slot] : null;
                 var item = Column("offer");
-                item.Add(Card(offer?.cardId, 1, false));
+                var shopCard = CharacterCard(offer?.cardId, 1, false);
+                shopCard.EnableInClassList("is-frozen", offer?.frozen == true);
+                item.Add(shopCard);
                 if (offer != null)
                 {
                     var actions = Row("offer-actions");
@@ -289,7 +294,16 @@ namespace AnimalBattler.Client.Lobby
                 var heading = Row("slot-heading");
                 heading.Add(Text("slot-title", slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot));
                 target.Add(heading);
-                var cardVisual = Card(card?.cardId, card?.copies ?? 1, true);
+                var cardVisual = CharacterCard(card?.cardId, card?.copies ?? 1, card != null);
+                if (card == null)
+                {
+                    var role = slot == 0 ? "attack" : slot == 4 ? "defense" : "support";
+                    var slotIcon = new VisualElement();
+                    slotIcon.AddToClassList("empty-slot-role");
+                    slotIcon.AddToClassList("role-" + role);
+                    slotIcon.pickingMode = PickingMode.Ignore;
+                    cardVisual.Add(slotIcon);
+                }
                 target.Add(cardVisual);
                 if (card != null)
                 {
@@ -307,7 +321,7 @@ namespace AnimalBattler.Client.Lobby
             foreach (var card in _state.self.hand ?? Array.Empty<CardInstanceMessage>())
             {
                 var item = Column("hand-item");
-                var cardVisual = Card(card.cardId, card.copies, true);
+                var cardVisual = CharacterCard(card.cardId, card.copies, false);
                 item.Add(cardVisual);
                 BindDrag(cardVisual, new DragSource { CardId = card.id });
                 item.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
@@ -316,12 +330,14 @@ namespace AnimalBattler.Client.Lobby
             }
             SetButton("hand-next", "handNext", () => hand.horizontalScroller.value += 120, true);
             SetText("drag-hint", "dragHint");
+            hand.tooltip = Format("dragHint");
             ReadyButton();
         }
 
         private void RenderBattle()
         {
             SetText("stage-heading", "battleHeading");
+            RenderMatchSidebar();
             var opening = _state.battle?.openingCards ?? Array.Empty<BattleCardMessage>();
             var selfIndex = _players.Length > 0 && _players[0].playerId == _state.self.playerId ? 0 : 1;
             for (var position = 0; position < 2; position++)
@@ -338,13 +354,12 @@ namespace AnimalBattler.Client.Lobby
                     var holder = Column("board-slot");
                     if (card != null)
                     {
-                        holder.Add(Card(card.cardId, card.copies, true));
-                        var health = Text("battle-health", "battleStats", card.attack, card.health);
-                        holder.Add(health);
+                        var visual = CharacterCard(card.cardId, card.copies, true, false, card.attack, card.health);
+                        holder.Add(visual);
                         _battleCards[card.id] = holder;
-                        _battleHealth[card.id] = health;
+                        _battleHealth[card.id] = visual.Q<Label>("character-health");
                     }
-                    else holder.Add(Card(null, 1, false));
+                    else holder.Add(CharacterCard(null, 1, false));
                     row.Add(holder);
                 }
             }
@@ -409,6 +424,7 @@ namespace AnimalBattler.Client.Lobby
             source.RegisterCallback<PointerDownEvent>(evt =>
             {
                 if (_state?.phase != "preparation" || _state.self.ready || evt.button != 0) return;
+                CloseCardDetails();
                 _drag = drag;
                 source.CapturePointer(evt.pointerId);
                 _ghost = new Label(CardName(_state.self.hand?.FirstOrDefault(card => card.id == drag.CardId)?.cardId
@@ -474,10 +490,10 @@ namespace AnimalBattler.Client.Lobby
                 pair.Value.style.opacity = dead.Contains(pair.Key) ? 0.25f : 1f;
                 if (_battleHealth.TryGetValue(pair.Key, out var label) && health.TryGetValue(pair.Key, out var hp))
                 {
-                    var opening = _state.battle.openingCards.First(card => card.id == pair.Key);
-                    label.text = Format("battleStats", opening.attack, hp);
+                    SetCharacterStat(label, hp);
                 }
             }
+            SyncDetailStats();
         }
 
         private void DrawAttackLine(MeshGenerationContext context)

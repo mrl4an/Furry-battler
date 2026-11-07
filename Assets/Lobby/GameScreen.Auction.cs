@@ -23,6 +23,7 @@ namespace AnimalBattler.Client.Lobby
         private VisualTreeAsset _characterTemplate;
         private VisualElement _detailsLayer;
         private VisualElement _detailsHost;
+        private VisualElement _detailsAnchor;
         private bool _touchDetails;
         private bool _touchInput;
 
@@ -32,12 +33,7 @@ namespace AnimalBattler.Client.Lobby
             SetText("auction-hint", "auction.stepHint");
             SetText("hand-heading", "handHeading");
             SetText("opponent-hand-count", "opponentHandCount", _state.opponent?.handCount ?? 0);
-            SetText("self-name", "firstSide", NameFor(_state.self.playerId));
-            SetText("opponent-name", "firstSide", NameFor(_state.opponent?.playerId));
-            SetText("self-health", "auction.health", _state.self.health);
-            SetText("opponent-health", "auction.health", _state.opponent?.health ?? 0);
-            SetText("self-coins", "auction.coins", _state.self.coins, _state.self.availableCoins);
-            SetText("synergy-heading", "auction.synergies");
+            RenderMatchSidebar();
 
             var bids = _state.self.bids ?? Array.Empty<int>();
             var offers = _state.auction ?? Array.Empty<string>();
@@ -85,8 +81,18 @@ namespace AnimalBattler.Client.Lobby
                 opponentHand.Add(back);
             }
             opponentHand.schedule.Execute(() => opponentHand.scrollOffset = opponentOffset);
-            RenderAuctionSynergies();
             ReadyButton();
+        }
+
+        private void RenderMatchSidebar()
+        {
+            SetText("self-name", "firstSide", NameFor(_state.self.playerId));
+            SetText("opponent-name", "firstSide", NameFor(_state.opponent?.playerId));
+            SetText("self-health", "auction.health", _state.self.health);
+            SetText("opponent-health", "auction.health", _state.opponent?.health ?? 0);
+            SetText("self-coins", "auction.coins", _state.self.coins, _state.self.availableCoins);
+            SetText("synergy-heading", "auction.synergies");
+            RenderAuctionSynergies();
         }
 
         private void BindAuctionButton(Button button, string key, Action action, bool enabled)
@@ -120,7 +126,8 @@ namespace AnimalBattler.Client.Lobby
             }
         }
 
-        private VisualElement CharacterCard(string id, int copies, bool showMerge, bool detailed = false)
+        private VisualElement CharacterCard(string id, int copies, bool showMerge, bool detailed = false,
+            int? attack = null, int? health = null)
         {
             if (_characterTemplate == null) _characterTemplate = Resources.Load<VisualTreeAsset>("Cards/CharacterCard");
             var tree = _characterTemplate.CloneTree();
@@ -149,7 +156,13 @@ namespace AnimalBattler.Client.Lobby
                 : Format("ui.number", definition.attack + copies - 1);
             card.Q<Label>("character-health").text = definition == null ? Format("ui.unknown")
                 : Format("ui.number", definition.health + copies - 1);
+            if (attack.HasValue) SetCharacterStat(card.Q<Label>("character-attack"), attack.Value);
+            if (health.HasValue) SetCharacterStat(card.Q<Label>("character-health"), health.Value);
+            foreach (var number in card.Query<Label>(className: "stat-number").ToList())
+                number.EnableInClassList("wide-number", number.text.Length >= 3);
             card.Q<Label>("character-tier").text = Format("card.level", tier);
+            card.Q<Label>("character-level").text = Format("card.level", tier);
+            card.Q<Label>("character-copy-count").text = Format("copies", copies);
             for (var i = 0; i < 3; i++)
                 card.Q<VisualElement>("merge-" + i).EnableInClassList("filled", i < drops);
             foreach (var name in new[] { "character-class", "detail-class-icon", "character-art" })
@@ -229,12 +242,14 @@ namespace AnimalBattler.Client.Lobby
 
         private void OpenCardDetails(VisualElement anchor, string id, int copies, bool touch)
         {
-            if (_detailsLayer == null || _detailsHost == null) return;
+            if (_detailsLayer == null || _detailsHost == null || _ghost != null) return;
             _touchDetails = touch;
+            _detailsAnchor = anchor;
             _detailsHost.Clear();
             var detail = CharacterCard(id, copies, false, true);
             detail.focusable = false;
             _detailsHost.Add(detail);
+            SyncDetailStats();
             _detailsLayer.RemoveFromClassList("hidden");
             _detailsLayer.EnableInClassList("touch-details", touch);
             foreach (var element in _detailsLayer.Query<VisualElement>().ToList())
@@ -242,25 +257,45 @@ namespace AnimalBattler.Client.Lobby
             _detailsLayer.pickingMode = touch ? PickingMode.Position : PickingMode.Ignore;
             var rootBounds = _root.contentRect;
             var source = _root.WorldToLocal(anchor.worldBound.max);
-            var x = touch ? (rootBounds.width - 224) / 2 : source.x + 24;
-            if (x + 240 > rootBounds.width)
-                x = _root.WorldToLocal(anchor.worldBound.min).x - 248;
-            var y = touch ? (rootBounds.height - 380) / 2 : _root.WorldToLocal(anchor.worldBound.min).y;
-            x = Mathf.Clamp(x, 20, Mathf.Max(20, rootBounds.width - 244));
-            y = Mathf.Clamp(y, 20, Mathf.Max(20, rootBounds.height - 380));
+            var x = touch ? (rootBounds.width - 280) / 2 : source.x + 24;
+            if (x + 304 > rootBounds.width)
+                x = _root.WorldToLocal(anchor.worldBound.min).x - 304;
+            var y = touch ? (rootBounds.height - 468) / 2 : _root.WorldToLocal(anchor.worldBound.min).y;
+            x = Mathf.Clamp(x, 24, Mathf.Max(24, rootBounds.width - 304));
+            y = Mathf.Clamp(y, 24, Mathf.Max(24, rootBounds.height - 468));
             _detailsHost.style.left = x;
             _detailsHost.style.top = y;
             var close = _root.Q<Button>("close-card-details");
             close.text = Format("card.close");
             close.EnableInClassList("hidden", !touch);
-            close.style.left = x + 62;
-            close.style.top = y + 340;
+            close.style.left = x + 80;
+            close.style.top = y + 420;
+        }
+
+        private void SetCharacterStat(Label label, int value)
+        {
+            label.text = Format("ui.number", value);
+            label.EnableInClassList("wide-number", label.text.Length >= 3);
+        }
+
+        private void SyncDetailStats()
+        {
+            if (_detailsAnchor == null || _detailsHost == null) return;
+            foreach (var name in new[] { "character-attack", "character-health" })
+            {
+                var source = _detailsAnchor.Q<Label>(name);
+                var target = _detailsHost.Q<Label>(name);
+                if (source == null || target == null) continue;
+                target.text = source.text;
+                target.EnableInClassList("wide-number", source.ClassListContains("wide-number"));
+            }
         }
 
         private void CloseCardDetails()
         {
             _detailsLayer?.AddToClassList("hidden");
             _detailsHost?.Clear();
+            _detailsAnchor = null;
             _touchDetails = false;
         }
     }

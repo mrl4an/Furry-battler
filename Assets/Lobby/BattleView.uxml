@@ -1,31 +1,80 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
-    <ui:VisualElement name="game-screen" class="game-screen battle-screen">
-        <ui:VisualElement class="game-header">
-            <ui:Label name="game-title" class="game-title" />
+    <ui:Template name="CharacterCard" src="Resources/Cards/CharacterCard.uxml" />
+    <ui:Style src="LobbyView.uss" />
+    <ui:Style src="Resources/Cards/CharacterCard.uss" />
+    <ui:Style src="AuctionView.uss" />
+    <ui:VisualElement name="game-screen" class="game-screen match-screen battle-screen">
+        <ui:VisualElement class="auction-header">
+            <ui:Label name="stage-heading" class="section-title phase-banner" />
             <ui:Label name="round" class="round" />
-            <ui:Label name="timer" class="timer" />
+            <ui:Label name="game-title" class="game-title" />
             <ui:Button name="language-button" class="language-button" />
         </ui:VisualElement>
-        <ui:Label name="stage-heading" class="stage-title" />
-        <ui:VisualElement class="summary-row">
-            <ui:Label name="self-summary" class="game-summary" />
-            <ui:Label name="opponent-summary" class="game-summary" />
-        </ui:VisualElement>
-        <ui:Label name="game-error" class="game-error" />
-        <ui:VisualElement name="page-content" class="page-content">
-            <ui:VisualElement class="surface battle-surface">
-                <ui:Label name="top-side-name" class="slot-title" />
-                <ui:VisualElement name="top-board" class="card-grid board-row" />
+        <ui:Label name="game-error" class="game-error hidden" />
+        <ui:VisualElement class="match-layout">
+            <ui:VisualElement class="synergy-sidebar">
+                <ui:Label name="synergy-heading" class="section-title" />
+                <ui:ScrollView name="synergies" mode="Vertical" class="capsule-scroll synergy-list" horizontal-scroller-visibility="Hidden">
+                    <ui:VisualElement name="synergy-pack" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-pack" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-armored" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-armored" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-forest" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-forest" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-feathered" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-feathered" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-venomous" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-venomous" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-urban" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-urban" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
             </ui:VisualElement>
-            <ui:VisualElement class="surface battle-surface">
-                <ui:Label name="bottom-side-name" class="slot-title" />
-                <ui:VisualElement name="bottom-board" class="card-grid board-row" />
+            <ui:VisualElement name="page-content" class="match-table battle-table">
+                <ui:VisualElement class="battle-zone"><ui:Label name="top-side-name" class="section-title paper-heading" /><ui:VisualElement name="top-board" class="card-grid board-row">
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                </ui:VisualElement></ui:VisualElement>
+                <ui:VisualElement class="battle-divider" picking-mode="Ignore" />
+                <ui:VisualElement class="battle-zone"><ui:Label name="bottom-side-name" class="section-title paper-heading" /><ui:VisualElement name="bottom-board" class="card-grid board-row">
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                        <ui:VisualElement class="board-slot"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                </ui:VisualElement></ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="player-sidebar">
+                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="opponent-name" class="player-name" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement>
+                <ui:VisualElement class="battle-status"><ui:Label name="timer" class="timer" /><ui:Label name="battle-hint" class="section-title" /></ui:VisualElement>
+                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:Label name="self-health" class="player-health" /></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="action-bar">
-            <ui:Label name="battle-hint" class="hint" />
+        <ui:VisualElement name="attack-line" class="attack-line" picking-mode="Ignore" />
+        <ui:VisualElement name="card-details-layer" class="card-details-layer hidden" picking-mode="Ignore">
+            <ui:VisualElement name="card-details-scrim" class="card-details-scrim" />
+            <ui:VisualElement name="card-details-host" class="card-details-host" />
+            <ui:Button name="close-card-details" class="close-card-details hidden" />
         </ui:VisualElement>
-        <ui:VisualElement name="attack-line" class="attack-line" />
     </ui:VisualElement>
 </ui:UXML>

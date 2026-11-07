@@ -9,11 +9,12 @@
                 <ui:Label name="character-group" class="character-group" />
             </ui:VisualElement>
             <ui:Label name="character-ability" class="character-ability full-only" />
+            <ui:VisualElement class="character-progress full-only"><ui:Label name="character-level" /><ui:Label name="character-copy-count" /></ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="character-class" class="class-icon corner-class group-pack" />
         <ui:VisualElement name="character-role" class="role-icon role-support" />
-        <ui:Label name="character-attack" class="character-stat character-attack" />
-        <ui:Label name="character-health" class="character-stat character-health" />
+        <ui:VisualElement class="character-stat character-attack"><ui:Label name="character-attack" class="stat-number" /></ui:VisualElement>
+        <ui:VisualElement class="character-stat character-health"><ui:Label name="character-health" class="stat-number" /></ui:VisualElement>
         <ui:VisualElement name="character-merge" class="character-merge">
             <ui:VisualElement class="merge-drops">
                 <ui:VisualElement name="merge-0" class="merge-drop filled" />

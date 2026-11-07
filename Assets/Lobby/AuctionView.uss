@@ -1,48 +1,97 @@
-.auction-screen { padding: 20px 32px; background-color: #291F24; }
-.auction-header { flex-direction: row; align-items: center; height: 58px; flex-shrink: 0; padding: 0 12px; }
-.auction-header .game-title { font-size: 24px; }
-.auction-header .section-title { margin: 0 30px; }
-.auction-ready > .timer { margin: 0 0 10px 0; min-width: 0; font-size: 24px; -unity-text-align: middle-center; }
-.auction-layout { flex-direction: row; flex-grow: 1; flex-shrink: 1; min-height: 0; margin-top: 12px; }
-.synergy-sidebar { width: 250px; flex-shrink: 0; margin-right: 24px; padding: 20px 12px; background-color: #342D38; border-width: 2px; border-color: #796573; border-radius: 30px 16px 30px 16px; }
-.synergy-sidebar > .section-title { -unity-text-align: middle-center; font-size: 20px; margin-bottom: 18px; }
+/* Shared desktop match composition. Lobby and Result keep their own styles. */
+.match-screen { padding: 16px 24px; background-color: #291F24; color: #F3E4D1; }
+.match-screen Button, .match-screen .section-title, .match-screen .round, .match-screen .timer, .match-screen .player-health, .match-screen .synergy-count, .match-screen .bid-value { -unity-font: url("Fonts/RussoOne-Regular.ttf"); -unity-font-style: normal; }
+.match-screen Button { min-height: 44px; font-size: 18px; border-radius: 6px; }
+.match-screen .auction-header { flex-direction: row; align-items: center; height: 68px; flex-shrink: 0; padding: 0 4px; }
+.match-screen .game-title { flex-grow: 1; font-size: 20px; color: #B5A7B0; -unity-text-align: middle-right; margin-right: 24px; }
+.match-screen .phase-banner { min-width: 230px; color: #291F24; background-image: url("Art/NoticePaper.png"); background-color: transparent; -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.12; font-size: 32px; padding: 12px 28px; margin: 0; -unity-text-align: middle-center; }
+.match-screen .round { font-size: 24px; margin-left: 24px; }
+.match-screen .language-button { width: 76px; min-width: 76px; height: 44px; margin-left: 0; }
+.match-screen .game-error { font-size: 18px; padding: 6px 12px; background-color: #342D38; margin: 4px 0; }
+.match-layout { flex-direction: row; flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; margin-top: 12px; }
+.synergy-sidebar { width: 252px; flex-shrink: 0; margin-right: 20px; padding: 16px 10px; background-color: rgba(52, 45, 56, 0.92); border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
+.match-screen .synergy-sidebar > .section-title { font-size: 22px; -unity-text-align: middle-center; margin-bottom: 16px; }
 .synergy-list { flex-grow: 1; min-height: 0; }
-.synergy-entry { margin: 0 0 14px 0; padding: 8px; background-color: #493E48; border-radius: 9px; }
-.synergy-entry.active { border-left-width: 4px; border-left-color: #63DCC5; }
-.synergy-entry.inactive { opacity: 0.65; }
-.synergy-row { flex-direction: row; align-items: center; }
-.synergy-name { font-size: 15px; white-space: normal; flex-shrink: 1; color: #E9D4B5; }
-.synergy-count { color: #63DCC5; font-size: 17px; margin-left: 8px; }
-.synergy-thresholds { font-size: 13px; color: #C2B3BA; margin: 4px 0 0 3px; }
-.auction-table { flex-grow: 1; flex-shrink: 1; min-width: 0; min-height: 0; background-color: #342D38; border-width: 3px; border-color: #A18B94; border-radius: 80px 48px 80px 48px; overflow: hidden; }
-.opponent-hand-zone, .self-hand-zone { height: 300px; flex-shrink: 0; padding: 12px 28px; min-height: 0; }
-.opponent-hand-zone { border-bottom-width: 2px; border-bottom-color: #796573; }
-.self-hand-zone { border-top-width: 2px; border-top-color: #796573; }
-.self-hand-zone > .section-title { font-size: 16px; margin: 0; }
+.synergy-entry { margin: 0 0 12px 0; padding: 10px 8px; background-color: #493E48; border-width: 1px; border-color: #796573; border-radius: 8px; }
+.synergy-entry.active { border-left-width: 4px; border-left-color: #63DCC5; background-color: #3D4D49; }
+.synergy-entry.inactive { opacity: 0.85; }
+.synergy-row { flex-direction: row; align-items: center; min-height: 44px; }
+.synergy-row > .class-icon { width: 40px; height: 40px; margin-right: 6px; }
+.synergy-name { font-size: 20px; white-space: normal; flex-grow: 1; flex-shrink: 1; color: #F3E4D1; }
+.synergy-count { color: #63DCC5; font-size: 24px; margin-left: 6px; flex-shrink: 0; }
+.synergy-entry > .merge-drops { margin: 6px 0 2px 44px; }
+.synergy-thresholds { font-size: 17px; color: #D8C9CF; margin: 4px 0 0 44px; }
+.auction-table, .match-table { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-width: 0; min-height: 0; background-color: #342D38; border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
+.opponent-hand-zone, .self-hand-zone { flex-shrink: 0; padding: 10px 24px; min-height: 0; }
+.opponent-hand-zone { height: 228px; border-bottom-width: 1px; border-bottom-color: #796573; }
+.self-hand-zone { height: 280px; border-top-width: 1px; border-top-color: #796573; }
+.match-screen .self-hand-zone > .section-title { font-size: 20px; margin: 0; }
+.match-screen .hint { font-size: 17px; color: #D8C9CF; white-space: normal; }
 .auction-hand { flex-grow: 1; min-height: 0; }
-.auction-hand > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 16px 18px 28px 18px; align-items: center; }
-.auction-hand .character-card { margin-right: 36px; }
-.card-back { width: 160px; height: 192px; margin-right: 18px; flex-shrink: 0; background-color: #493E48; background-image: url("Art/RaccoonStamp.png"); background-size: 78% 65%; background-position: center; background-repeat: no-repeat; border-width: 4px; border-color: #A18B94; border-radius: 18px 10px 18px 10px; }
-.auction-offers-zone { flex-grow: 1; min-height: 0; justify-content: center; padding: 10px 20px; }
-.auction-offers-zone > .hint { -unity-text-align: middle-center; margin-bottom: 24px; }
+.auction-hand > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 18px 24px 30px 24px; align-items: center; }
+.auction-hand .character-card { margin-right: 48px; }
+.card-back { width: 100px; height: 132px; margin-right: 16px; flex-shrink: 0; background-color: #493E48; background-image: url("Art/RaccoonStamp.png"); background-size: 78% 65%; background-position: center; background-repeat: no-repeat; border-width: 3px; border-color: #A18B94; border-radius: 12px 6px 12px 6px; }
+.auction-offers-zone { flex-grow: 1; flex-shrink: 1; min-height: 0; justify-content: center; padding: 24px; }
+.auction-offers-zone > .hint { -unity-text-align: middle-center; margin-bottom: 26px; }
 .auction-offers { flex-direction: row; align-items: center; justify-content: space-around; }
 .auction-offer { align-items: center; min-width: 0; flex-shrink: 1; width: 20%; }
 .auction-card-host { width: 160px; height: 192px; flex-shrink: 0; }
-.bid-controls { flex-direction: row; align-items: center; justify-content: center; margin-top: 32px; }
-.bid-controls Button { width: 36px; min-width: 36px; height: 34px; min-height: 34px; padding: 0; font-size: 22px; }
-.bid-value { min-width: 62px; font-size: 20px; color: #DBB773; -unity-text-align: middle-center; }
-.player-sidebar { width: 224px; flex-shrink: 0; margin-left: 24px; justify-content: space-between; padding: 24px 4px; }
-.player-portrait { align-items: center; }
-.shared-avatar { width: 118px; height: 118px; background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #E9D4B5; border-radius: 60px; border-width: 3px; border-color: #796573; }
-.player-name { color: #E9D4B5; font-size: 20px; white-space: normal; -unity-text-align: middle-center; margin: 8px 0; }
-.player-health { color: #D77C6F; font-size: 20px; white-space: normal; -unity-text-align: middle-center; }
-.player-coins { color: #DBB773; font-size: 17px; white-space: normal; -unity-text-align: middle-center; }
-.auction-ready > Button { min-height: 56px; font-size: 20px; }
-.auction-ready > .hint { -unity-text-align: middle-center; }
+.bid-controls { flex-direction: row; align-items: center; justify-content: center; margin-top: 36px; padding: 4px; background-color: #291F24; border-radius: 8px; }
+.match-screen .bid-controls Button { width: 40px; min-width: 40px; height: 40px; min-height: 40px; padding: 0; margin: 0; font-size: 26px; }
+.bid-value { min-width: 66px; font-size: 26px; color: #DBB773; -unity-text-align: middle-center; }
+.player-sidebar { width: 224px; flex-shrink: 0; margin-left: 20px; justify-content: space-between; }
+.player-portrait { align-items: center; padding: 14px 10px; background-color: rgba(52, 45, 56, 0.94); border-width: 2px; border-color: #796573; border-radius: 10px; }
+.shared-avatar { width: 96px; height: 96px; background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #E9D4B5; border-radius: 50px; border-width: 3px; border-color: #796573; }
+.player-name { color: #F3E4D1; font-size: 22px; white-space: normal; -unity-text-align: middle-center; margin: 8px 0; }
+.player-health { color: #F0A99D; background-color: #291F24; border-radius: 8px; padding: 4px 12px; font-size: 28px; white-space: normal; -unity-text-align: middle-center; }
+.player-coins { color: #DBB773; font-size: 22px; white-space: normal; -unity-text-align: middle-center; margin-top: 12px; }
+.auction-ready, .battle-status { background-color: #342D38; border-width: 2px; border-color: #796573; border-radius: 10px; padding: 16px 10px; }
+.match-screen .timer { margin: 0 0 12px 0; min-width: 0; font-size: 30px; color: #F3E4D1; -unity-text-align: middle-center; }
+.match-screen .auction-ready > Button { min-height: 72px; font-size: 30px; background-image: url("Art/PaintedButton.png"); -unity-slice-left: 220; -unity-slice-right: 220; -unity-slice-top: 140; -unity-slice-bottom: 140; -unity-slice-scale: 0.12; background-color: transparent; border-width: 0; }
+.match-screen .auction-ready > Button:hover { -unity-background-image-tint-color: #D1FFF5; }
+.match-screen .auction-ready > Button:active { -unity-background-image-tint-color: #A5CEC2; }
+.auction-ready > .hint, .battle-status > .section-title { -unity-text-align: middle-center; margin-top: 10px; }
+.match-screen .paper-heading { align-self: flex-start; color: #291F24; background-color: #E9D4B5; padding: 4px 12px; border-radius: 3px; font-size: 22px; margin: 0; }
+.preparation-table { padding: 12px 16px; }
+.shop-zone { height: 292px; flex-shrink: 0; }
+.match-screen .shop-row .character-card { width: 144px; height: 174px; }
+.match-screen .section-header { min-height: 44px; margin-bottom: 10px; }
+.match-screen .section-header Button { font-size: 18px; min-height: 40px; padding: 4px 10px; margin: 0; }
+.match-screen .card-grid { flex-direction: row; align-items: center; justify-content: space-around; flex-grow: 1; flex-shrink: 1; min-height: 0; }
+.match-screen .offer, .match-screen .board-slot { align-items: center; justify-content: center; width: 20%; min-width: 0; padding: 0; flex-shrink: 1; }
+.match-screen .offer-actions { flex-direction: row; width: 196px; margin-top: 28px; }
+.match-screen .offer-actions Button { font-size: 15px; min-height: 40px; width: 50%; padding: 2px; }
+.match-screen .board-zone { height: 320px; flex-shrink: 0; padding-top: 8px; border-top-width: 1px; border-top-color: #796573; }
+.match-screen .board-row { padding: 8px 12px 40px 12px; }
+.match-screen .slot-heading { width: 196px; min-height: 32px; margin-bottom: 14px; }
+.match-screen .slot-heading .slot-title { font-size: 17px; -unity-text-align: middle-center; }
+.match-screen .slot-heading Button { min-height: 32px; font-size: 15px; padding: 2px 4px; }
+.match-screen .preparation-hand-zone { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; padding-top: 10px; border-top-width: 1px; border-top-color: #796573; }
+.match-screen .hand-controls { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; margin-top: 4px; }
+.match-screen .hand-controls > Button { width: 32px; min-width: 32px; font-size: 22px; }
+.match-screen .hand-scroll { flex-grow: 1; min-width: 0; min-height: 0; }
+.match-screen .hand-scroll > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 12px 28px 4px 28px; align-items: center; }
+.match-screen .hand-item { width: 188px; height: auto; padding: 0 24px; justify-content: center; align-items: center; }
+.match-screen .hand-item .character-card { width: 130px; height: 156px; }
+.match-screen .hand-item > Button { margin-top: 26px; min-height: 28px; font-size: 16px; width: 140px; }
+.match-screen #drag-hint { display: none; }
+.match-screen .results-surface { height: 38px; padding: 2px 0; margin-top: 4px; background-color: transparent; }
+.match-screen .results-surface .section-title { font-size: 17px; }
+.match-screen .results-scroll { height: 34px; }
+.match-screen .results-scroll .hint { font-size: 17px; }
+.sale-zone { padding: 12px; margin-bottom: 12px; border-width: 2px; border-color: #A18B94; border-radius: 8px; background-color: #493E48; }
+.sale-zone > .section-title { -unity-text-align: middle-center; margin: 0; }
+.battle-table { padding: 24px 16px; justify-content: center; }
+.battle-zone { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; justify-content: center; }
+.match-screen .battle-zone > .section-title { margin: 0 12px 8px 12px; }
+.match-screen .battle-zone > .board-row { flex-grow: 0; flex-shrink: 0; height: 300px; }
+.battle-divider { height: 2px; background-color: #796573; margin: 16px 20px; flex-shrink: 0; }
+.match-screen .battle-zone .character-card { width: 180px; height: 216px; }
+.match-screen .battle-zone .character-merge { top: 230px; }
+.match-screen .board-slot.drop-hover { background-color: rgba(99, 220, 197, 0.16); }
+.empty-slot-role { position: absolute; width: 72px; height: 72px; left: 44px; top: 60px; opacity: 0.35; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .card-details-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .card-details-scrim { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: rgba(20, 15, 20, 0.65); display: none; }
 .card-details-layer.touch-details .card-details-scrim { display: flex; }
-.card-details-host { position: absolute; width: 224px; height: 320px; }
-.close-card-details { position: absolute; min-width: 100px; height: 44px; }
-
-.auction-offers .character-merge { display: none; }
+.card-details-host { position: absolute; width: 280px; height: 400px; }
+.match-screen .close-card-details { position: absolute; min-width: 120px; height: 44px; }
