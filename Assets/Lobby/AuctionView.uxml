@@ -47,23 +47,58 @@
                     <ui:VisualElement name="offers" class="auction-offers">
                         <ui:VisualElement name="offer-0" class="auction-offer">
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
-                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="bid-controls" class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
+                                <ui:VisualElement class="reveal-bid-pair">
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-self-caption" class="reveal-bid-caption" /><ui:Label name="reveal-self-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-1" class="auction-offer">
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
-                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="bid-controls" class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
+                                <ui:VisualElement class="reveal-bid-pair">
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-self-caption" class="reveal-bid-caption" /><ui:Label name="reveal-self-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-2" class="auction-offer">
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
-                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="bid-controls" class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
+                                <ui:VisualElement class="reveal-bid-pair">
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-self-caption" class="reveal-bid-caption" /><ui:Label name="reveal-self-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-3" class="auction-offer">
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
-                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="bid-controls" class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
+                                <ui:VisualElement class="reveal-bid-pair">
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-self-caption" class="reveal-bid-caption" /><ui:Label name="reveal-self-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-4" class="auction-offer">
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
-                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="bid-controls" class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                            <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
+                                <ui:VisualElement class="reveal-bid-pair">
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-self-caption" class="reveal-bid-caption" /><ui:Label name="reveal-self-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                    <ui:VisualElement class="reveal-bid-side"><ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number" /></ui:VisualElement>
+                                </ui:VisualElement>
+                                <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
+                            </ui:VisualElement>
                         </ui:VisualElement>
                     </ui:VisualElement>
                 </ui:VisualElement>
@@ -82,6 +117,7 @@
                 <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="self-health" class="player-health" /></ui:VisualElement><ui:VisualElement class="hud-stat coin-stat"><ui:VisualElement class="hud-icon coin-icon" picking-mode="Ignore" /><ui:Label name="self-coins" class="player-coins" /></ui:VisualElement><ui:VisualElement class="hud-stat available-stat"><ui:Label name="available-caption" /><ui:Label name="available-coins" /></ui:VisualElement></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="auction-reveal-fx" class="auction-reveal-fx" picking-mode="Ignore" />
         <ui:VisualElement name="synergy-help-panel" class="synergy-help-panel hidden" picking-mode="Ignore">
             <ui:Label name="synergy-help-title" class="section-title" picking-mode="Ignore" />
             <ui:Label name="synergy-help-body" picking-mode="Ignore" />

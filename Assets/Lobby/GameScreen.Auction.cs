@@ -41,6 +41,8 @@ namespace AnimalBattler.Client.Lobby
             {
                 var index = slot;
                 var holder = _root.Q<VisualElement>("offer-" + slot);
+                holder.Q<VisualElement>("bid-controls").RemoveFromClassList("hidden");
+                holder.Q<VisualElement>("reveal-bids").AddToClassList("hidden");
                 var host = holder.Q<VisualElement>("card-host");
                 host.Clear();
                 var id = slot < offers.Length ? offers[slot] : null;

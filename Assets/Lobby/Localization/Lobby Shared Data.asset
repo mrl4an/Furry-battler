@@ -711,6 +711,42 @@ MonoBehaviour:
     m_Key: ui.statDelta
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628266
+    m_Key: auction.revealTitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628267
+    m_Key: auction.revealHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628268
+    m_Key: auction.revealTimerHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628269
+    m_Key: auction.revealBusy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628270
+    m_Key: auction.noBid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628271
+    m_Key: auction.unclaimed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628272
+    m_Key: auction.tied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628273
+    m_Key: auction.youWon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628274
+    m_Key: auction.opponentWon
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

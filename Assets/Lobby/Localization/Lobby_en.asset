@@ -714,6 +714,42 @@ MonoBehaviour:
     m_Localized: "{0:+0;\u22120;0}"
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628266
+    m_Localized: "Auction results"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628267
+    m_Localized: "Bids revealed"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628268
+    m_Localized: "Preparation timer is running"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628269
+    m_Localized: "Awarding"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628270
+    m_Localized: "\u2014"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628271
+    m_Localized: "No bids"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628272
+    m_Localized: "Tie"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628273
+    m_Localized: "Your card"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628274
+    m_Localized: "Opponent's card"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

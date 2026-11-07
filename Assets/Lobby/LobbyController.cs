@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Net.WebSockets;
@@ -23,6 +24,9 @@ namespace AnimalBattler.Client.Lobby
         private static LobbyController _instance;
         [SerializeField] private string configuredServerUrl;
         [SerializeField] private VisualTreeAsset cardTemplate;
+        [SerializeField] private AudioSource uiAudio;
+        private readonly Dictionary<string, AudioClip> _auctionSounds = new Dictionary<string, AudioClip>();
+        private bool _audioWarningIssued;
         private readonly ConcurrentQueue<Action> _mainThreadActions = new ConcurrentQueue<Action>();
         private readonly SemaphoreSlim _sendGate = new SemaphoreSlim(1, 1);
         private UIDocument _document;
@@ -90,7 +94,8 @@ namespace AnimalBattler.Client.Lobby
             _initialScene = gameObject.scene;
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
-            _gameScreen = new GameScreen(SendGameRequest, Localized, SwitchLanguage, cardTemplate);
+            _gameScreen = new GameScreen(SendGameRequest, Localized, SwitchLanguage, cardTemplate,
+                scene => SceneManager.LoadScene(scene), PlayAuctionSound);
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode _) => BindScene(scene);
@@ -356,6 +361,27 @@ namespace AnimalBattler.Client.Lobby
 #endif
         }
 
+        private void PlayAuctionSound(string name)
+        {
+            if (uiAudio == null)
+            {
+                if (!_audioWarningIssued) Debug.LogWarning("UI AudioSource is not assigned on ClientSession.");
+                _audioWarningIssued = true;
+                return;
+            }
+            if (!_auctionSounds.TryGetValue(name, out var clip))
+            {
+                clip = Resources.Load<AudioClip>("Audio/Auction/" + name);
+                _auctionSounds[name] = clip;
+                if (clip == null) Debug.LogWarning("Auction sound asset is missing: " + name);
+            }
+            if (clip != null)
+            {
+                uiAudio.spatialBlend = 0;
+                uiAudio.PlayOneShot(clip);
+            }
+        }
+
         private void SendGameRequest(GameRequest request)
         {
             if (_connecting || string.IsNullOrEmpty(_roomCode)) return;
@@ -426,9 +452,7 @@ namespace AnimalBattler.Client.Lobby
             {
                 _matchOpponentId = message.opponent?.playerId;
                 _gameScreen.SetMatch(message);
-                var target = message.phase == "auction" ? "Auction"
-                    : message.phase == "preparation" ? "Preparation"
-                    : message.phase == "battle" ? "Battle" : "Result";
+                var target = _gameScreen.PresentationScene;
                 if (SceneManager.GetActiveScene().name != target) SceneManager.LoadScene(target);
                 return;
             }

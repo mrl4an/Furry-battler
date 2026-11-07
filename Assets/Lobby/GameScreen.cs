@@ -19,6 +19,9 @@ namespace AnimalBattler.Client.Lobby
         private readonly VisualElement[] _boardTargets = new VisualElement[5];
         private readonly Action _switchLanguage;
         private readonly VisualTreeAsset _cardTemplate;
+        private readonly Action<string> _requestScene;
+        private readonly Action<string> _playAuctionSound;
+        public string PresentationScene => _state == null ? null : SceneFor(_state.phase);
         private string _sceneName;
         private ServerMessage _state;
         private RoomPlayer[] _players = Array.Empty<RoomPlayer>();
@@ -41,12 +44,14 @@ namespace AnimalBattler.Client.Lobby
         }
 
         public GameScreen(Action<GameRequest> send, Func<string, string> localize,
-            Action switchLanguage, VisualTreeAsset cardTemplate)
+            Action switchLanguage, VisualTreeAsset cardTemplate, Action<string> requestScene, Action<string> playAuctionSound)
         {
             _send = send;
             _localize = localize;
             _switchLanguage = switchLanguage;
             _cardTemplate = cardTemplate;
+            _requestScene = requestScene;
+            _playAuctionSound = playAuctionSound;
         }
 
         public void Bind(UIDocument document, string sceneName)
@@ -90,6 +95,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void SetMatch(ServerMessage state)
         {
+            CaptureAuctionReveal(_state, state);
             CapturePreparationChanges(_state, state);
             var battleKey = state.phase == "battle" ? state.round + ":" + state.endsAtUtc : null;
             if (battleKey != _lastBattleKey)
@@ -107,6 +113,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void Hide()
         {
+            CancelAuctionReveal();
             CancelDrag();
             HideSynergyHelp();
             _dropPending = false;
@@ -149,6 +156,13 @@ namespace AnimalBattler.Client.Lobby
             error.text = string.IsNullOrEmpty(_errorKey) ? string.Empty : Format(_errorKey);
             error.EnableInClassList("hidden", string.IsNullOrEmpty(_errorKey));
 
+            if (_auctionRevealActive)
+            {
+                RenderAuctionReveal();
+                Tick();
+                return;
+            }
+
             switch (_state.phase)
             {
                 case "auction": RenderAuction(); break;
@@ -172,9 +186,10 @@ namespace AnimalBattler.Client.Lobby
 
             TickBattlePlayback();
             TickStatAnimations();
+            TickAuctionReveal();
         }
 
-        private static string SceneFor(string phase) => phase == "auction" ? "Auction"
+        private string SceneFor(string phase) => _auctionRevealActive && phase == "preparation" ? "Auction" : phase == "auction" ? "Auction"
             : phase == "preparation" ? "Preparation" : phase == "battle" ? "Battle" : "Result";
 
         private static void BindScrollAppearance(ScrollView scroll)

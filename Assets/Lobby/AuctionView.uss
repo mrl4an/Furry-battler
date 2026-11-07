@@ -149,3 +149,29 @@
 .battle-route { position: absolute; overflow: hidden; opacity: 0; }
 .battle-route-art { position: absolute; left: 0; background-size: 100% 100%; background-repeat: no-repeat; }
 .battle-impact { position: absolute; width: 96px; height: 96px; opacity: 0; background-size: contain; background-repeat: no-repeat; }
+
+/* Results use the same five anchors; all motion lives outside flex layout. */
+.match-screen > .auction-reveal-fx { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.reveal-bids { width: 190px; margin-top: 30px; align-items: center; flex-shrink: 0; }
+.reveal-bid-pair { flex-direction: row; justify-content: center; background-color: rgba(41, 31, 36, 0.9); border-radius: 8px; padding: 4px; }
+.reveal-bid-side { width: 88px; align-items: center; }
+.reveal-bid-caption { color: #D8C9CF; font-size: 14px; margin: 0; }
+.reveal-bid-number { color: #E9D4B5; font-size: 28px; margin: 0; height: 38px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); text-shadow: 0 0 5px rgba(41, 31, 36, 0.8); }
+.reveal-bid-number.reveal-winning { color: #FFE7A2; text-shadow: 0 0 8px rgba(219, 183, 115, 0.8); }
+.reveal-bid-number.reveal-tied { color: #DBB773; }
+.reveal-bid-number.reveal-losing { color: #95868F; opacity: 0.55; }
+.reveal-lot-status { height: 28px; font-size: 16px; color: #E9D4B5; margin: 4px 0 0 0; -unity-text-align: middle-center; white-space: nowrap; }
+.auction-revealing .auction-offers-zone > .hint { margin-bottom: 16px; }
+.auction-revealing .available-stat { visibility: hidden; }
+.auction-reveal-fx .character-card { margin: 0; }
+.auction-award-self > .character-frame { border-color: #FFE7A2; }
+.auction-award-opponent > .character-frame { background-color: #493E48; background-image: url("Art/RaccoonStamp.png"); background-size: 78% 65%; background-repeat: no-repeat; background-position: center; }
+.auction-award-opponent .character-art, .auction-award-opponent .class-icon, .auction-award-opponent .role-icon, .auction-award-opponent .character-stat, .auction-award-opponent .character-merge { visibility: hidden; }
+.auction-card-trail { background-size: cover; background-position: center; border-radius: 10px; background-color: #796573; }
+.auction-compensation { background-size: contain; background-position: center; background-repeat: no-repeat; }
+.auction-clash-self, .auction-clash-opponent { background-color: #FFE7A2; border-width: 2px; border-color: #DBB773; border-radius: 8px; }
+.auction-clash-opponent { background-color: #F0A18F; }
+.auction-sparks { background-image: url("Resources/Auction/sparks.svg"); background-size: contain; background-repeat: no-repeat; }
+.auction-rim { background-image: url("Resources/Auction/rim.svg"); background-size: 100% 100%; background-repeat: no-repeat; }
+.auction-sweep { position: absolute; top: -28px; bottom: -28px; width: 28px; background-color: rgba(255, 241, 201, 0.35); rotate: 18deg; }
+.auction-reveal-fx .auction-coin-delta { position: absolute; color: #FFE7A2; -unity-font: url("Fonts/RussoOne-Regular.ttf"); font-size: 28px; text-shadow: 0 0 5px rgba(41, 31, 36, 0.9); -unity-text-align: middle-center; }

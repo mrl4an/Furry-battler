@@ -241,6 +241,15 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "sale.dropHint", "Drop a card here", "Перетащите карту сюда");
             Add(english, russian, "result.heading", "Match complete", "Матч завершён");
             Add(english, russian, "result.you", "You", "Вы");
+            Add(english, russian, "auction.revealTitle", "Auction results", "Итоги торгов");
+            Add(english, russian, "auction.revealHint", "Bids revealed", "Ставки открыты");
+            Add(english, russian, "auction.revealTimerHint", "Preparation timer is running", "Время подготовки уже идёт");
+            Add(english, russian, "auction.revealBusy", "Awarding", "Выдача карт");
+            Add(english, russian, "auction.noBid", "—", "—");
+            Add(english, russian, "auction.unclaimed", "No bids", "Без ставок");
+            Add(english, russian, "auction.tied", "Tie", "Жребий");
+            Add(english, russian, "auction.youWon", "Your card", "Ваша карта");
+            Add(english, russian, "auction.opponentWon", "Opponent's card", "Карта соперника");
             Add(english, russian, "result.opponent", "Opponent", "Соперник");
             Add(english, russian, "ui.statDelta", "{0:+0;−0;0}", "{0:+0;−0;0}");
             EditorUtility.SetDirty(english);
