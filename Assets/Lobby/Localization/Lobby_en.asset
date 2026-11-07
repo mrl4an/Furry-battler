@@ -702,6 +702,14 @@ MonoBehaviour:
     m_Localized: "Opponent"
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628263
+    m_Localized: "Play with bot"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628264
+    m_Localized: "Bot"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

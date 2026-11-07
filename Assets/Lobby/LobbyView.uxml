@@ -27,6 +27,7 @@
                 <ui:VisualElement class="paper-sheet lobby-actions invitation">
                     <ui:VisualElement name="entry" class="entry">
                         <ui:Button name="create-button" class="primary-button" />
+                        <ui:Button name="bot-button" class="secondary-button" />
                         <ui:VisualElement class="invite-divider">
                             <ui:VisualElement class="ink-rule" picking-mode="Ignore" />
                             <ui:Label name="or-label" class="field-label centered" />

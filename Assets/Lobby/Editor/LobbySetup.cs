@@ -102,6 +102,8 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "orLabel", "or", "или");
             Add(english, russian, "roomHeading", "Your room", "Ваша комната");
             Add(english, russian, "createButton", "Create room", "Создать комнату");
+            Add(english, russian, "botButton", "Play with bot", "Играть с ботом");
+            Add(english, russian, "botName", "Bot", "Бот");
             Add(english, russian, "joinButton", "Join room", "Войти в комнату");
             Add(english, russian, "copyButton", "Copy invite", "Копировать приглашение");
             Add(english, russian, "leaveButton", "Leave room", "Покинуть комнату");

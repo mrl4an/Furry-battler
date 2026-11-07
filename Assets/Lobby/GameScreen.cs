@@ -500,8 +500,11 @@ namespace AnimalBattler.Client.Lobby
             return value == key ? id ?? string.Empty : value;
         }
 
-        private string NameFor(string id) => _players.FirstOrDefault(player => player.playerId == id)?.nickname
-            ?? Format("playerFallback");
+        private string NameFor(string id)
+        {
+            var player = _players.FirstOrDefault(participant => participant.playerId == id);
+            return player?.isBot == true ? Format("botName") : player?.nickname ?? Format("playerFallback");
+        }
 
         private string Format(string key, params object[] args)
         {

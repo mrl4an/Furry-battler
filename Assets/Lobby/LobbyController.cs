@@ -36,6 +36,7 @@ namespace AnimalBattler.Client.Lobby
         private VisualElement _entry;
         private VisualElement _room;
         private Button _createButton;
+        private Button _botButton;
         private Button _joinButton;
         private Button _copyButton;
         private Button _leaveButton;
@@ -56,6 +57,7 @@ namespace AnimalBattler.Client.Lobby
         private bool _connecting;
         private bool _intentionalClose;
         private bool _createRequested;
+        private bool _botRequested;
         private string _requestedCode;
         private StringTable _strings;
         private string _serverAddress;
@@ -123,6 +125,7 @@ namespace AnimalBattler.Client.Lobby
             _entry = root.Q<VisualElement>("entry");
             _room = root.Q<VisualElement>("room");
             _createButton = root.Q<Button>("create-button");
+            _botButton = root.Q<Button>("bot-button");
             _joinButton = root.Q<Button>("join-button");
             _copyButton = root.Q<Button>("copy-button");
             _leaveButton = root.Q<Button>("leave-button");
@@ -133,6 +136,7 @@ namespace AnimalBattler.Client.Lobby
             _nicknameInput.SetValueWithoutNotify(_nickname);
             _roomPlayers = root.Q<Label>("room-players");
             _createButton.clicked += () => StartConnection(true);
+            _botButton.clicked += () => StartConnection(true, withBot: true);
             _joinButton.clicked += () => StartConnection(false);
             _copyButton.clicked += CopyInvite;
             _leaveButton.clicked += LeaveRoom;
@@ -216,6 +220,7 @@ namespace AnimalBattler.Client.Lobby
             root.Q<Label>("or-label").text = Localized("orLabel");
             root.Q<Label>("room-heading").text = Localized("roomHeading");
             _createButton.text = Localized("createButton").ToUpperInvariant();
+            _botButton.text = Localized("botButton").ToUpperInvariant();
             _joinButton.text = Localized("joinButton").ToUpperInvariant();
             _copyButton.text = Localized("copyButton");
             _leaveButton.text = Localized("leaveButton");
@@ -243,7 +248,7 @@ namespace AnimalBattler.Client.Lobby
                 _status.text = Localized(key);
         }
 
-        private void StartConnection(bool create)
+        private void StartConnection(bool create, bool withBot = false)
         {
             if (_connecting || !string.IsNullOrEmpty(_roomCode)) return;
             if (!Uri.TryCreate(_serverUrl.value.Trim(), UriKind.Absolute, out var endpoint)
@@ -265,12 +270,14 @@ namespace AnimalBattler.Client.Lobby
             _pendingNickname = nickname;
 
             _createRequested = create;
+            _botRequested = withBot;
             _serverAddress = _serverUrl.value;
             _inviteCode = _roomCodeInput.value;
             _requestedCode = code;
             _connecting = true;
             _intentionalClose = false;
             _createButton.SetEnabled(false);
+            _botButton.SetEnabled(false);
             _joinButton.SetEnabled(false);
             _nicknameInput.SetEnabled(false);
             SetStatus("connecting");
@@ -339,7 +346,8 @@ namespace AnimalBattler.Client.Lobby
 
         public void OnSocketOpened()
         {
-            var request = _createRequested ? "{\"type\":\"createRoom\"}"
+            var request = _botRequested ? "{\"type\":\"createBotRoom\"}"
+                : _createRequested ? "{\"type\":\"createRoom\"}"
                 : JsonUtility.ToJson(new JoinRequest { type = "joinRoom", roomCode = _requestedCode });
 #if UNITY_WEBGL && !UNITY_EDITOR
             AnimalBattlerSocketSend(request);
@@ -441,7 +449,7 @@ namespace AnimalBattler.Client.Lobby
                 _gameScreen.Hide();
             }
             _gameScreen.SetPlayers(message.players);
-            if (SceneManager.GetActiveScene().name == "Result" && _playerCount == 2
+            if ((SceneManager.GetActiveScene().name == "Result" || _botRequested) && _playerCount == 2
                 && !string.IsNullOrEmpty(_matchOpponentId)) return;
             if (SceneManager.GetActiveScene().name != "Lobby") SceneManager.LoadScene("Lobby");
             ShowLobbyState();
@@ -490,7 +498,7 @@ namespace AnimalBattler.Client.Lobby
             foreach (var player in _roomPlayersSnapshot ?? Array.Empty<RoomPlayer>())
             {
                 if (names.Length > 0) names.Append("\n");
-                names.Append(player.nickname);
+                names.Append(player.isBot ? Localized("botName") : player.nickname);
                 names.Append(" — ");
                 names.Append(Localized(player.ready ? "readyStatus" : "notReadyStatus"));
                 if (player.playerId != _playerId) continue;
@@ -511,6 +519,7 @@ namespace AnimalBattler.Client.Lobby
             _entry.EnableInClassList("hidden", !string.IsNullOrEmpty(_roomCode));
             _room.EnableInClassList("hidden", string.IsNullOrEmpty(_roomCode));
             _createButton.SetEnabled(!_connecting);
+            _botButton.SetEnabled(!_connecting);
             _joinButton.SetEnabled(!_connecting);
             _roomReadyButton.SetEnabled(_playerCount == 2);
             _nicknameInput.SetEnabled(!_connecting);

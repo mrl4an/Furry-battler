@@ -699,6 +699,14 @@ MonoBehaviour:
     m_Key: result.opponent
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628263
+    m_Key: botButton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628264
+    m_Key: botName
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -34,6 +34,7 @@
 .session-screen .nickname-row TextField { min-width: 180px; }
 .session-screen .nickname-row Button { min-height: 44px; font-size: 17px; margin: 8px 0 0 0; padding: 6px 10px; }
 .session-screen.lobby-screen #create-button { min-height: 100px; font-size: 38px; }
+.session-screen.lobby-screen #bot-button { min-height: 64px; font-size: 28px; margin-top: 12px; white-space: normal; }
 .session-screen .invite-divider { margin: 24px 0 16px 0; }
 .session-screen .ink-rule { background-color: #796573; }
 .session-screen .invite-divider .centered { -unity-font: url("Fonts/RussoOne-Regular.ttf"); color: #C2B3BA; font-size: 22px; }
