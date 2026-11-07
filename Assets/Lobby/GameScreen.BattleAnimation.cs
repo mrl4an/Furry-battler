@@ -214,7 +214,7 @@ namespace AnimalBattler.Client.Lobby
                 var asset = Resources.Load<VectorImage>("Battle/Routes/" + route);
                 _routeAvailable = asset != null;
                 _routeArt.style.backgroundImage = asset == null ? new StyleBackground(StyleKeyword.None) : new StyleBackground(asset);
-                if (asset == null) Debug.LogWarning("Battle route asset is missing: " + route);
+                if (asset == null) Debug.LogWarning("Battle route could not be loaded as VectorImage. Check the asset and SVG import type: " + route);
             }
             var width = Math.Abs(a.x - b.x) < 1 ? 140 : Math.Abs(a.x - b.x) / 0.8f;
             var height = Math.Max(1, Math.Abs(a.y - b.y) / 0.8f);
