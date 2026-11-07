@@ -153,21 +153,60 @@ TextField, IntegerField { color: var(--cream); min-height: 40px; font-size: 16px
 .auction-screen .empty-card .card-art { display: none; }
 .results-scroll .unity-scroller--horizontal { height: 8px; min-height: 8px; margin: 0; }
 .results-scroll .unity-scroller--horizontal .unity-base-slider__dragger { height: 6px; }
-/* Lobby-only courtyard and framed paper/ink composition. */
-.lobby-screen { background-image: url("Art/LobbyCourtyard.png"); background-size: cover; background-position: center; background-repeat: no-repeat; -unity-background-image-tint-color: #C1B3BF; padding: 16px 36px; }
-.lobby-panel { max-width: 1080px; padding: 20px 24px; background-color: rgba(52, 45, 56, 0.97); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 5px; border-top-color: #796573; border-right-color: #291F24; border-bottom-color: #291F24; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; }
-.lobby-panel .header { padding-bottom: 10px; border-bottom-width: 1px; border-bottom-color: #796573; }
-.lobby-panel .title { font-size: 32px; }
-.lobby-panel .subtitle { margin: 10px 0 16px 0; }
-.lobby-panel .connection-section { width: 42%; background-color: #403541; padding: 12px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
-.lobby-panel .lobby-actions { width: 58%; border-left-width: 0; padding-left: 24px; }
-.lobby-panel .connection-section .section-title { color: var(--gold); margin-bottom: 8px; }
-.lobby-panel .field-label { font-size: 14px; margin: 4px 0; }
-.lobby-panel .nickname-row { align-items: center; }
-.lobby-panel .nickname-row TextField { flex-shrink: 1; }
-.lobby-panel .nickname-row Button { font-size: 13px; padding: 2px 6px; flex-shrink: 0; }
-.nickname-hint { color: var(--muted); font-size: 13px; white-space: normal; margin: 4px 0 12px 0; }
-.lobby-panel .entry > .primary-button { min-height: 64px; font-size: 20px; }
-.lobby-panel .entry .centered { margin: 12px 0; color: var(--muted); }
-.lobby-panel .status { border-top-width: 1px; border-top-color: #796573; padding-top: 8px; margin-top: 12px; }
-.lobby-panel .room-code { background-color: #291F24; padding: 6px 12px; border-bottom-width: 2px; border-bottom-color: var(--teal); }
+/* Noticeboard lobby: text and controls remain live over sliced artwork. */
+.lobby-screen { background-image: url("Art/LobbyCourtyard.png"); background-size: cover; background-position: center; background-repeat: no-repeat; -unity-background-image-tint-color: #F2E0D8; padding: 12px 36px; color: #291F24; }
+.noticeboard { width: 100%; max-width: 1060px; height: 100%; max-height: 650px; padding: 8px 16px; }
+.board-timber { position: absolute; top: 70px; bottom: 24px; left: 0; right: 0; background-color: #60424A; border-top-width: 7px; border-bottom-width: 9px; border-left-width: 8px; border-right-width: 8px; border-top-color: #291F24; border-bottom-color: #291F24; border-left-color: #291F24; border-right-color: #291F24; }
+.timber-plank { flex-grow: 1; background-color: #62474D; border-bottom-width: 5px; border-bottom-color: #35272D; border-top-width: 2px; border-top-color: #8B6264; }
+.paper-sheet { background-image: url("Art/NoticePaper.png"); background-color: transparent; -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.2; }
+.board-header { flex-direction: row; align-items: center; flex-shrink: 0; height: 116px; margin-bottom: 10px; }
+.title-sign { flex-grow: 1; height: 100%; padding: 16px 40px; justify-content: center; }
+.lobby-screen .title { -unity-font: url("Fonts/RubikDirt-Regular.ttf"); -unity-font-style: normal; font-size: 48px; color: #291F24; -unity-text-align: middle-center; white-space: normal; }
+.lobby-screen Button, .lobby-screen .field-label, .lobby-screen .section-title { -unity-font: url("Fonts/RussoOne-Regular.ttf"); -unity-font-style: normal; }
+.lobby-screen Button { background-color: transparent; background-image: url("Art/NoticePaper.png"); -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.09; -unity-background-image-tint-color: #F3CF93; border-top-width: 0; border-bottom-width: 0; border-left-width: 0; border-right-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; min-height: 48px; padding: 8px 16px; color: #291F24; transition-property: translate, -unity-background-image-tint-color; transition-duration: 0.1s; }
+.lobby-screen Button:hover { background-color: transparent; -unity-background-image-tint-color: #FFF4DE; translate: 0 -2px; }
+.lobby-screen Button:active { translate: 1px 2px; -unity-background-image-tint-color: #D6B886; }
+.lobby-screen Button:focus { border-bottom-width: 2px; border-bottom-color: #327D71; }
+.lobby-screen Button:disabled { -unity-background-image-tint-color: #B0A293; color: #65565B; translate: 0 0; }
+.lobby-screen .language-button { width: 70px; min-width: 70px; height: 66px; margin-left: 8px; font-size: 24px; }
+.lobby-screen .lobby-body { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; margin: 0 2px; }
+.lobby-screen .connection-section { width: 33%; padding: 22px 24px 24px 24px; min-height: 0; }
+.lobby-screen .lobby-actions { width: 67%; border-left-width: 0; padding: 32px 36px 28px 36px; min-height: 0; margin-left: 8px; flex-shrink: 1; justify-content: center; }
+.lobby-screen .connection-section .section-title { color: #291F24; font-size: 21px; -unity-text-align: middle-center; white-space: normal; margin-bottom: 4px; }
+.raccoon-stamp { background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-position: center; background-repeat: no-repeat; width: 100%; height: 100px; min-height: 0; flex-shrink: 1; margin: 0 0 6px 0; }
+.lobby-screen .field-label { color: #291F24; font-size: 18px; margin: 4px 0 2px 0; white-space: normal; }
+.lobby-screen #server-label { font-size: 16px; margin-top: 8px; }
+.lobby-screen .nickname-row { align-items: center; flex-shrink: 0; }
+.lobby-screen .nickname-row TextField { flex-shrink: 1; }
+.lobby-screen .nickname-row Button { font-size: 11px; min-height: 36px; padding: 4px 8px; margin-left: 4px; }
+.lobby-screen TextField { color: #291F24; min-height: 42px; margin: 0; flex-shrink: 0; }
+.lobby-screen .unity-base-text-field__input, .lobby-screen .unity-text-field__input, .lobby-screen #unity-text-input { -unity-font: url("Fonts/RussoOne-Regular.ttf"); background-color: rgba(255, 245, 222, 0.55); color: #291F24; font-size: 20px; min-height: 40px; padding: 4px 9px; border-top-width: 2px; border-right-width: 2px; border-bottom-width: 3px; border-left-width: 2px; border-top-color: #59404D; border-right-color: #59404D; border-bottom-color: #291F24; border-left-color: #59404D; border-top-left-radius: 3px; border-top-right-radius: 5px; border-bottom-left-radius: 5px; border-bottom-right-radius: 2px; }
+.lobby-screen #server-url #unity-text-input { -unity-font: url("Fonts/NotoSans-Regular.ttf"); font-size: 14px; }
+.lobby-screen #unity-text-input:focus { border-top-color: #327D71; border-right-color: #327D71; border-bottom-color: #327D71; border-left-color: #327D71; }
+.lobby-screen .entry { justify-content: center; }
+.lobby-screen .primary-button { background-image: url("Art/PaintedButton.png"); -unity-slice-left: 220; -unity-slice-right: 220; -unity-slice-top: 140; -unity-slice-bottom: 140; -unity-slice-scale: 0.18; -unity-background-image-tint-color: white; color: #291F24; min-height: 72px; font-size: 25px; padding: 12px 24px; }
+.lobby-screen #create-button { min-height: 112px; font-size: 33px; }
+.lobby-screen .primary-button:hover { -unity-background-image-tint-color: #D1FFF5; }
+.lobby-screen .primary-button:active { -unity-background-image-tint-color: #A5CEC2; }
+.lobby-screen .primary-button:disabled { -unity-background-image-tint-color: #8C9992; color: #54464C; }
+.invite-divider { flex-direction: row; align-items: center; margin: 14px 10px 10px 10px; }
+.ink-rule { flex-grow: 1; height: 2px; background-color: #59404D; }
+.lobby-screen .invite-divider .centered { -unity-font: url("Fonts/RussoOne-Regular.ttf"); color: #59404D; font-size: 17px; margin: 0 12px; }
+.lobby-screen .join-row { align-items: center; }
+.lobby-screen #room-code { flex-grow: 1; flex-shrink: 1; min-width: 0; }
+.lobby-screen #join-button { width: 152px; flex-shrink: 0; min-height: 62px; font-size: 27px; margin: 0 0 0 12px; }
+.lobby-screen .status-tag { -unity-font: url("Fonts/RussoOne-Regular.ttf"); align-self: center; color: #291F24; font-size: 16px; margin-top: 6px; padding: 10px 30px; min-height: 42px; max-width: 90%; -unity-text-align: middle-center; white-space: normal; flex-shrink: 0; -unity-slice-scale: 0.08; }
+.lobby-screen .room-code { -unity-font: url("Fonts/RubikDirt-Regular.ttf"); color: #59404D; background-color: rgba(255, 245, 222, 0.5); font-size: 30px; padding: 4px 12px; margin: 4px 0; }
+.lobby-screen #room-players { color: #59404D; -unity-font: url("Fonts/RussoOne-Regular.ttf"); font-size: 16px; }
+.lobby-screen .room-actions Button { font-size: 13px; min-height: 44px; }
+.lobby-screen #room-ready-button { min-height: 64px; font-size: 22px; }
+.lobby-compact .board-header { height: 92px; margin-bottom: 4px; }
+.lobby-compact .title { font-size: 40px; }
+.lobby-compact .connection-section { padding: 18px 24px; }
+.lobby-compact .raccoon-stamp { height: 68px; margin-bottom: 2px; }
+.lobby-compact .connection-section .section-title { font-size: 18px; }
+.lobby-compact .lobby-actions { padding: 24px 30px; }
+.lobby-compact .field-label { font-size: 16px; }
+.lobby-compact #create-button { min-height: 90px; font-size: 29px; }
+.lobby-compact .invite-divider { margin-top: 10px; margin-bottom: 6px; }
+.lobby-compact .status-tag { min-height: 36px; padding: 6px 24px; }

@@ -93,6 +93,8 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "subtitle", "Create a room or join a friend", "Создайте комнату или присоединитесь к другу");
             Add(english, russian, "serverLabel", "Server WebSocket address", "Адрес WebSocket-сервера");
             Add(english, russian, "connectionHeading", "Before the match", "Перед матчем");
+            Add(english, russian, "playerPassHeading", "Player pass", "Пропуск игрока");
+            Add(english, russian, "serverShortLabel", "Server", "Сервер");
             Add(english, russian, "nicknameLabel", "Nickname", "Никнейм");
             Add(english, russian, "nicknameHint", "A random name is ready. You can replace it with your own.",
                 "Случайное имя уже выбрано. Можно заменить его своим.");

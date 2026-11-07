@@ -1,0 +1,48 @@
+.auction-screen { padding: 20px 32px; background-color: #291F24; }
+.auction-header { flex-direction: row; align-items: center; height: 58px; flex-shrink: 0; padding: 0 12px; }
+.auction-header .game-title { font-size: 24px; }
+.auction-header .section-title { margin: 0 30px; }
+.auction-header .timer { min-width: 150px; font-size: 22px; }
+.auction-layout { flex-direction: row; flex-grow: 1; flex-shrink: 1; min-height: 0; margin-top: 12px; }
+.synergy-sidebar { width: 250px; flex-shrink: 0; margin-right: 24px; padding: 20px 12px; background-color: #342D38; border-width: 2px; border-color: #796573; border-radius: 30px 16px 30px 16px; }
+.synergy-sidebar > .section-title { -unity-text-align: middle-center; font-size: 20px; margin-bottom: 18px; }
+.synergy-list { flex-grow: 1; min-height: 0; }
+.synergy-entry { margin: 0 0 14px 0; padding: 8px; background-color: #493E48; border-radius: 9px; }
+.synergy-entry.active { border-left-width: 4px; border-left-color: #63DCC5; }
+.synergy-entry.inactive { opacity: 0.65; }
+.synergy-row { flex-direction: row; align-items: center; }
+.synergy-name { font-size: 15px; white-space: normal; flex-shrink: 1; color: #E9D4B5; }
+.synergy-count { color: #63DCC5; font-size: 17px; margin-left: 8px; }
+.synergy-thresholds { font-size: 13px; color: #C2B3BA; margin: 4px 0 0 3px; }
+.auction-table { flex-grow: 1; flex-shrink: 1; min-width: 0; min-height: 0; background-color: #342D38; border-width: 3px; border-color: #A18B94; border-radius: 80px 48px 80px 48px; overflow: hidden; }
+.opponent-hand-zone, .self-hand-zone { height: 300px; flex-shrink: 0; padding: 12px 28px; min-height: 0; }
+.opponent-hand-zone { border-bottom-width: 2px; border-bottom-color: #796573; }
+.self-hand-zone { border-top-width: 2px; border-top-color: #796573; }
+.self-hand-zone > .section-title { font-size: 16px; margin: 0; }
+.auction-hand { flex-grow: 1; min-height: 0; }
+.auction-hand > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 16px 18px 20px 18px; align-items: center; }
+.auction-hand .character-card { margin-right: 36px; }
+.card-back { width: 160px; height: 192px; margin-right: 18px; flex-shrink: 0; background-color: #493E48; background-image: url("Art/RaccoonStamp.png"); background-size: 78% 65%; background-position: center; background-repeat: no-repeat; border-width: 4px; border-color: #A18B94; border-radius: 18px 10px 18px 10px; }
+.auction-offers-zone { flex-grow: 1; min-height: 0; justify-content: center; padding: 10px 20px; }
+.auction-offers-zone > .hint { -unity-text-align: middle-center; margin-bottom: 24px; }
+.auction-offers { flex-direction: row; align-items: center; justify-content: space-around; }
+.auction-offer { align-items: center; min-width: 0; flex-shrink: 1; width: 20%; }
+.auction-card-host { width: 160px; height: 192px; flex-shrink: 0; }
+.bid-controls { flex-direction: row; align-items: center; justify-content: center; margin-top: 24px; }
+.bid-controls Button { width: 36px; min-width: 36px; height: 34px; min-height: 34px; padding: 0; font-size: 22px; }
+.bid-value { min-width: 62px; font-size: 20px; color: #DBB773; -unity-text-align: middle-center; }
+.player-sidebar { width: 224px; flex-shrink: 0; margin-left: 24px; justify-content: space-between; padding: 24px 4px; }
+.player-portrait { align-items: center; }
+.shared-avatar { width: 118px; height: 118px; background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #E9D4B5; border-radius: 60px; border-width: 3px; border-color: #796573; }
+.player-name { color: #E9D4B5; font-size: 20px; white-space: normal; -unity-text-align: middle-center; margin: 8px 0; }
+.player-health { color: #D77C6F; font-size: 20px; white-space: normal; -unity-text-align: middle-center; }
+.player-coins { color: #DBB773; font-size: 17px; white-space: normal; -unity-text-align: middle-center; }
+.auction-ready > Button { min-height: 56px; font-size: 20px; }
+.auction-ready > .hint { -unity-text-align: middle-center; }
+.card-details-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.card-details-scrim { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: rgba(20, 15, 20, 0.65); display: none; }
+.card-details-layer.touch-details .card-details-scrim { display: flex; }
+.card-details-host { position: absolute; width: 224px; height: 320px; }
+.close-card-details { position: absolute; min-width: 100px; height: 44px; }
+
+.auction-offers .character-merge { display: none; }

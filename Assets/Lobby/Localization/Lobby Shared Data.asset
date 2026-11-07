@@ -531,6 +531,114 @@ MonoBehaviour:
     m_Key: nicknameHint
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628221
+    m_Key: playerPassHeading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628222
+    m_Key: serverShortLabel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628223
+    m_Key: ui.number
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628224
+    m_Key: ui.unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628225
+    m_Key: auction.health
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628226
+    m_Key: auction.coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628227
+    m_Key: auction.stepHint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628228
+    m_Key: auction.synergies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628229
+    m_Key: auction.thresholds
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628230
+    m_Key: auction.minus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628231
+    m_Key: auction.plus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628232
+    m_Key: auction.decreaseBid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628233
+    m_Key: auction.increaseBid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628234
+    m_Key: auction.hiddenCard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628235
+    m_Key: card.noAbility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628236
+    m_Key: card.level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628237
+    m_Key: card.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628238
+    m_Key: card.recommendation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628239
+    m_Key: role.attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628240
+    m_Key: role.defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628241
+    m_Key: role.support
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628242
+    m_Key: synergy.pack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628243
+    m_Key: synergy.armored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628244
+    m_Key: synergy.forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628245
+    m_Key: synergy.feathered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628246
+    m_Key: synergy.venomous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628247
+    m_Key: synergy.urban
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

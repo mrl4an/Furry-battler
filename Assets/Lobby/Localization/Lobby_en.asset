@@ -534,6 +534,114 @@ MonoBehaviour:
     m_Localized: "A random name is ready. You can replace it with your own."
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628221
+    m_Localized: "Player pass"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628222
+    m_Localized: "Server"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628223
+    m_Localized: "{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628224
+    m_Localized: "?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628225
+    m_Localized: "HP: {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628226
+    m_Localized: "Coins: {0}\nAvailable: {1}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628227
+    m_Localized: "Adjust bids with \u2212 / +. Minimum bid: 2; 0 cancels."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628228
+    m_Localized: "Synergies"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628229
+    m_Localized: "3 / 6 / 10"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628230
+    m_Localized: "\u2212"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628231
+    m_Localized: "+"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628232
+    m_Localized: "Decrease or cancel bid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628233
+    m_Localized: "Increase bid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628234
+    m_Localized: "Hidden opponent card"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628235
+    m_Localized: "No ability"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628236
+    m_Localized: "LVL {0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628237
+    m_Localized: "Close"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628238
+    m_Localized: "Recommended role: {0}. Cards can be placed in any slot."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628239
+    m_Localized: "Attack"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628240
+    m_Localized: "Defense"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628241
+    m_Localized: "Support"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628242
+    m_Localized: "3 / 6 / 10 copies: +1 / +2 / +4 attack to each Pack ally."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628243
+    m_Localized: "3 / 6 / 10 copies: +2 / +4 / +7 health to each Armored ally."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628244
+    m_Localized: "3 / 6 / 10 copies: +1 / +2 / +3 attack and health to each Forest ally."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628245
+    m_Localized: "3 / 6 / 10 copies: +2 / +4 / +7 attack on each Feathered ally's own turn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628246
+    m_Localized: "3 / 6 / 10 copies: poison reduces attack by an extra 1 / 2 / 3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628247
+    m_Localized: "3 / 6 / 10 copies: +1 / +2 / +3 coins per round, based on the previous battle's board."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

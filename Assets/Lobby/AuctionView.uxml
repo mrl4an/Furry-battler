@@ -1,28 +1,98 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
+    <ui:Template name="CharacterCard" src="Resources/Cards/CharacterCard.uxml" />
+    <ui:Style src="LobbyView.uss" />
+    <ui:Style src="AuctionView.uss" />
+    <ui:Style src="Resources/Cards/CharacterCard.uss" />
     <ui:VisualElement name="game-screen" class="game-screen auction-screen">
-        <ui:VisualElement class="game-header">
+        <ui:VisualElement class="auction-header">
             <ui:Label name="game-title" class="game-title" />
+            <ui:Label name="stage-heading" class="section-title" />
             <ui:Label name="round" class="round" />
             <ui:Label name="timer" class="timer" />
             <ui:Button name="language-button" class="language-button" />
         </ui:VisualElement>
-        <ui:VisualElement class="summary-row">
-            <ui:Label name="self-summary" class="game-summary" />
-            <ui:Label name="opponent-summary" class="game-summary" />
-        </ui:VisualElement>
-        <ui:Label name="game-error" class="game-error" />
-        <ui:VisualElement name="page-content" class="page-content">
-            <ui:VisualElement class="surface auction-surface">
-                <ui:Label name="stage-heading" class="section-title" />
-                <ui:Label name="auction-hint" class="hint" />
-                <ui:Label name="opponent-hand-count" class="hint" />
-                <ui:VisualElement name="offers" class="card-grid offer-scroll" />
+        <ui:Label name="game-error" class="game-error hidden" />
+        <ui:VisualElement class="auction-layout">
+            <ui:VisualElement class="synergy-sidebar">
+                <ui:Label name="synergy-heading" class="section-title" />
+                <ui:ScrollView name="synergies" mode="Vertical" class="capsule-scroll synergy-list" horizontal-scroller-visibility="Hidden">
+                    <ui:VisualElement name="synergy-pack" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-pack" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-armored" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-armored" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-forest" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-forest" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-feathered" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-feathered" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-venomous" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-venomous" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="synergy-urban" class="synergy-entry inactive">
+                        <ui:VisualElement class="synergy-row"><ui:VisualElement class="class-icon group-urban" /><ui:Label name="synergy-name" class="synergy-name" /><ui:Label name="synergy-count" class="synergy-count" /></ui:VisualElement>
+                        <ui:VisualElement class="merge-drops"><ui:VisualElement name="threshold-0" class="merge-drop" /><ui:VisualElement name="threshold-1" class="merge-drop" /><ui:VisualElement name="threshold-2" class="merge-drop" /></ui:VisualElement>
+                        <ui:Label name="synergy-thresholds" class="synergy-thresholds" />
+                    </ui:VisualElement>
+                </ui:ScrollView>
+            </ui:VisualElement>
+            <ui:VisualElement class="auction-table">
+                <ui:VisualElement class="opponent-hand-zone">
+                    <ui:Label name="opponent-hand-count" class="hint" />
+                    <ui:ScrollView name="opponent-hand" mode="Horizontal" class="capsule-scroll auction-hand" vertical-scroller-visibility="Hidden" />
+                </ui:VisualElement>
+                <ui:VisualElement class="auction-offers-zone">
+                    <ui:Label name="auction-hint" class="hint" />
+                    <ui:VisualElement name="offers" class="auction-offers">
+                        <ui:VisualElement name="offer-0" class="auction-offer">
+                            <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="offer-1" class="auction-offer">
+                            <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="offer-2" class="auction-offer">
+                            <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="offer-3" class="auction-offer">
+                            <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                        </ui:VisualElement>
+                        <ui:VisualElement name="offer-4" class="auction-offer">
+                            <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
+                            <ui:VisualElement class="bid-controls"><ui:Button name="bid-minus" /><ui:Label name="bid-value" class="bid-value" /><ui:Button name="bid-plus" /></ui:VisualElement>
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="self-hand-zone">
+                    <ui:Label name="hand-heading" class="section-title" />
+                    <ui:ScrollView name="auction-hand" mode="Horizontal" class="capsule-scroll auction-hand" vertical-scroller-visibility="Hidden" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="player-sidebar">
+                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="opponent-name" class="player-name" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement>
+                <ui:VisualElement class="auction-ready"><ui:Button name="ready-button" class="primary-button" /><ui:Label name="ready-status" class="hint" /></ui:VisualElement>
+                <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:Label name="self-health" class="player-health" /><ui:Label name="self-coins" class="player-coins" /></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement class="action-bar">
-            <ui:Label name="ready-status" class="hint" />
-            <ui:Button name="ready-button" class="game-button primary-button" />
+        <ui:VisualElement name="card-details-layer" class="card-details-layer hidden" picking-mode="Ignore">
+            <ui:VisualElement name="card-details-scrim" class="card-details-scrim" />
+            <ui:VisualElement name="card-details-host" class="card-details-host" />
+            <ui:Button name="close-card-details" class="close-card-details hidden" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

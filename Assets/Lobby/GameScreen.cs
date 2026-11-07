@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace AnimalBattler.Client.Lobby
 {
-    internal sealed class GameScreen
+    internal sealed partial class GameScreen
     {
         private VisualElement _root;
         private readonly Action<GameRequest> _send;
@@ -50,6 +50,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void Bind(UIDocument document, string sceneName)
         {
+            CloseCardDetails();
             _buttonActions.Clear();
             _sceneName = sceneName;
             _root = document.rootVisualElement.Q<VisualElement>("game-screen");
@@ -61,6 +62,7 @@ namespace AnimalBattler.Client.Lobby
             foreach (var scroll in _root.Query<ScrollView>(className: "capsule-scroll").ToList())
                 BindScrollAppearance(scroll);
             _root.Q<Button>("language-button").clicked += _switchLanguage;
+            BindCardDetails();
             if (_line != null)
             {
                 _line.pickingMode = PickingMode.Ignore;
@@ -102,6 +104,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void Hide()
         {
+            CloseCardDetails();
             _state = null;
             _lastBattleKey = null;
             _errorKey = null;
@@ -117,6 +120,7 @@ namespace AnimalBattler.Client.Lobby
         public void Refresh()
         {
             if (_state == null || _root == null || _sceneName != SceneFor(_state.phase)) return;
+            CloseCardDetails();
             _battleCards.Clear();
             _battleHealth.Clear();
             Array.Clear(_boardTargets, 0, _boardTargets.Length);
@@ -228,32 +232,7 @@ namespace AnimalBattler.Client.Lobby
 
         private void RenderAuction()
         {
-            SetText("stage-heading", "auctionHeading");
-            SetText("auction-hint", "auctionHint");
-            SetText("opponent-hand-count", "opponentHandCount", _state.opponent?.handCount ?? 0);
-            var list = _root.Q<VisualElement>("offers");
-            list.Clear();
-            var bids = _state.self?.bids ?? Array.Empty<int>();
-            var offers = _state.auction ?? Array.Empty<string>();
-            for (var slot = 0; slot < 5; slot++)
-            {
-                var index = slot;
-                var container = Column("offer");
-                var cardId = slot < offers.Length ? offers[slot] : null;
-                container.Add(Card(cardId, 1, false));
-                if (!string.IsNullOrEmpty(cardId))
-                {
-                    var field = new IntegerField(Format("bidLabel")) { value = slot < bids.Length ? bids[slot] : 0 };
-                    field.SetEnabled(!_state.self.ready);
-                    container.Add(field);
-                    container.Add(Button("setBid", () => _send(new GameRequest
-                    {
-                        type = "setBid", slot = index, amount = field.value
-                    }), !_state.self.ready));
-                }
-                list.Add(container);
-            }
-            ReadyButton();
+            RenderAuctionLayout();
         }
 
         private void RenderPreparation()

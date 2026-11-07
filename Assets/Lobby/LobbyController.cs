@@ -62,6 +62,7 @@ namespace AnimalBattler.Client.Lobby
         private string _inviteCode;
         private string _nickname;
         private string _pendingNickname;
+        private bool _localizationReady;
 #if !UNITY_WEBGL || UNITY_EDITOR
         private ClientWebSocket _socket;
 #endif
@@ -94,6 +95,7 @@ namespace AnimalBattler.Client.Lobby
 
         private void BindScene(Scene scene)
         {
+            if (!_localizationReady) return;
             UIDocument document = null;
             foreach (var rootObject in scene.GetRootGameObjects())
             {
@@ -110,6 +112,9 @@ namespace AnimalBattler.Client.Lobby
                 return;
             }
             var root = _document.rootVisualElement;
+            var lobbyRoot = root.Q<VisualElement>("root");
+            lobbyRoot.RegisterCallback<GeometryChangedEvent>(evt =>
+                lobbyRoot.EnableInClassList("lobby-compact", evt.newRect.height < 640));
             _serverUrl = root.Q<TextField>("server-url");
             _roomCodeInput = root.Q<TextField>("room-code");
             _status = root.Q<Label>("status");
@@ -157,10 +162,11 @@ namespace AnimalBattler.Client.Lobby
         private IEnumerator Start()
         {
             if (_instance != this) yield break;
-            BindScene(_initialScene);
             yield return LocalizationSettings.InitializationOperation;
             LocalizationSettings.SelectedLocaleChanged += OnLocaleChanged;
             yield return LoadStrings();
+            _localizationReady = true;
+            BindScene(_initialScene);
             if (!string.IsNullOrWhiteSpace(_roomCodeInput.value)) StartConnection(false);
         }
 
@@ -200,17 +206,17 @@ namespace AnimalBattler.Client.Lobby
                 return;
             }
             var root = _document.rootVisualElement;
-            root.Q<Label>("title").text = Localized("title");
+            root.Q<Label>("title").text = Localized("title").ToUpperInvariant();
             root.Q<Label>("subtitle").text = Localized("subtitle");
-            root.Q<Label>("server-label").text = Localized("serverLabel");
+            root.Q<Label>("server-label").text = Localized("serverShortLabel");
             root.Q<Label>("nickname-label").text = Localized("nicknameLabel");
             root.Q<Label>("nickname-hint").text = Localized("nicknameHint");
-            root.Q<Label>("connection-heading").text = Localized("connectionHeading");
+            root.Q<Label>("connection-heading").text = Localized("playerPassHeading").ToUpperInvariant();
             root.Q<Label>("code-label").text = Localized("codeLabel");
             root.Q<Label>("or-label").text = Localized("orLabel");
             root.Q<Label>("room-heading").text = Localized("roomHeading");
-            _createButton.text = Localized("createButton");
-            _joinButton.text = Localized("joinButton");
+            _createButton.text = Localized("createButton").ToUpperInvariant();
+            _joinButton.text = Localized("joinButton").ToUpperInvariant();
             _copyButton.text = Localized("copyButton");
             _leaveButton.text = Localized("leaveButton");
             _languageButton.text = LocalizationSettings.SelectedLocale?.Identifier.Code == "ru" ? "EN" : "RU";

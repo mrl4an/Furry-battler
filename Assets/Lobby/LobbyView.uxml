@@ -1,28 +1,40 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
     <ui:VisualElement name="root" class="screen lobby-screen">
-        <ui:VisualElement class="panel lobby-panel">
-            <ui:VisualElement class="header">
-                <ui:Label name="title" class="title" />
+        <ui:VisualElement class="noticeboard">
+            <ui:VisualElement class="board-timber" picking-mode="Ignore">
+                <ui:VisualElement class="timber-plank" picking-mode="Ignore" />
+                <ui:VisualElement class="timber-plank" picking-mode="Ignore" />
+                <ui:VisualElement class="timber-plank" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:VisualElement class="board-header">
+                <ui:VisualElement class="paper-sheet title-sign">
+                    <ui:Label name="title" class="title" />
+                </ui:VisualElement>
                 <ui:Button name="language-button" class="language-button" />
             </ui:VisualElement>
-            <ui:Label name="subtitle" class="subtitle" />
+            <ui:Label name="subtitle" class="hidden" />
             <ui:VisualElement class="lobby-body">
-                <ui:VisualElement class="connection-section">
+                <ui:VisualElement class="paper-sheet connection-section player-pass">
                     <ui:Label name="connection-heading" class="section-title" />
+                    <ui:VisualElement class="raccoon-stamp" picking-mode="Ignore" />
                     <ui:Label name="nickname-label" class="field-label" />
                     <ui:VisualElement class="nickname-row">
                         <ui:TextField name="nickname-input" max-length="20" />
                         <ui:Button name="nickname-button" class="secondary-button" />
                     </ui:VisualElement>
-                    <ui:Label name="nickname-hint" class="nickname-hint" />
+                    <ui:Label name="nickname-hint" class="hidden" />
                     <ui:Label name="server-label" class="field-label" />
                     <ui:TextField name="server-url" />
                 </ui:VisualElement>
-                <ui:VisualElement class="lobby-actions">
+                <ui:VisualElement class="paper-sheet lobby-actions invitation">
                     <ui:VisualElement name="entry" class="entry">
                         <ui:Button name="create-button" class="primary-button" />
-                        <ui:Label name="or-label" class="field-label centered" />
+                        <ui:VisualElement class="invite-divider">
+                            <ui:VisualElement class="ink-rule" picking-mode="Ignore" />
+                            <ui:Label name="or-label" class="field-label centered" />
+                            <ui:VisualElement class="ink-rule" picking-mode="Ignore" />
+                        </ui:VisualElement>
                         <ui:Label name="code-label" class="field-label" />
                         <ui:VisualElement class="join-row">
                             <ui:TextField name="room-code" max-length="8" />
@@ -42,7 +54,7 @@
                     </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:Label name="status" class="status" />
+            <ui:Label name="status" class="paper-sheet status status-tag" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
