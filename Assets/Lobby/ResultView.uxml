@@ -1,21 +1,39 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
-    <ui:VisualElement name="game-screen" class="game-screen result-screen">
-        <ui:VisualElement class="game-header">
-            <ui:Label name="game-title" class="game-title" />
+    <ui:Style src="LobbyView.uss" />
+    <ui:Style src="AuctionView.uss" />
+    <ui:Style src="SessionView.uss" />
+    <ui:VisualElement name="game-screen" class="game-screen match-screen session-screen result-screen">
+        <ui:VisualElement name="match-backdrop" class="match-backdrop" picking-mode="Ignore" />
+        <ui:VisualElement class="match-shade" picking-mode="Ignore" />
+        <ui:VisualElement class="auction-header">
+            <ui:Label name="stage-heading" class="section-title phase-banner" />
             <ui:Label name="round" class="round" />
+            <ui:Label name="game-title" class="game-title" />
             <ui:Button name="language-button" class="language-button" />
         </ui:VisualElement>
-        <ui:VisualElement class="summary-row">
-            <ui:Label name="self-summary" class="game-summary" />
-            <ui:Label name="opponent-summary" class="game-summary" />
-        </ui:VisualElement>
-        <ui:Label name="game-error" class="game-error" />
-        <ui:VisualElement name="page-content" class="page-content">
-            <ui:VisualElement class="result-panel">
-                <ui:Label name="result" class="result" />
-                <ui:Button name="rematch-button" class="game-button primary-button" />
-                <ui:Button name="leave-button" class="game-button" />
+        <ui:Label name="game-error" class="game-error hidden" />
+        <ui:VisualElement name="page-content" class="page-content result-content">
+            <ui:VisualElement class="result-panel session-panel">
+                <ui:VisualElement class="result-title-paper"><ui:Label name="result" class="result" /></ui:VisualElement>
+                <ui:VisualElement class="result-showcase">
+                    <ui:VisualElement class="player-portrait result-player">
+                        <ui:Label name="result-you" class="result-side-caption" />
+                        <ui:VisualElement class="shared-avatar" />
+                        <ui:Label name="self-name" class="player-name" />
+                        <ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="self-health" class="player-health" /></ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:VisualElement class="result-emblem" picking-mode="Ignore"><ui:VisualElement class="result-stamp" picking-mode="Ignore" /></ui:VisualElement>
+                    <ui:VisualElement class="player-portrait result-player">
+                        <ui:Label name="result-opponent" class="result-side-caption" />
+                        <ui:VisualElement class="shared-avatar" />
+                        <ui:Label name="opponent-name" class="player-name" />
+                        <ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="result-actions">
+                    <ui:Button name="rematch-button" class="game-button primary-button" />
+                    <ui:Button name="leave-button" class="game-button" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

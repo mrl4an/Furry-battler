@@ -390,6 +390,16 @@ namespace AnimalBattler.Client.Lobby
         {
             var result = _state.isDraw ? "draw" : _state.winnerId == _state.self.playerId ? "victory" : "defeat";
             SetText("result", result);
+            SetText("stage-heading", "result.heading");
+            SetText("result-you", "result.you");
+            SetText("result-opponent", "result.opponent");
+            SetText("self-name", "firstSide", NameFor(_state.self.playerId));
+            SetText("opponent-name", "firstSide", NameFor(_state.opponent?.playerId));
+            SetText("self-health", "ui.number", _state.self.health);
+            SetText("opponent-health", "ui.number", _state.opponent?.health ?? 0);
+            _root.EnableInClassList("result-victory", result == "victory");
+            _root.EnableInClassList("result-defeat", result == "defeat");
+            _root.EnableInClassList("result-draw", result == "draw");
             SetButton("rematch-button", _state.rematchReady ? "rematchWaiting" : "rematch", () =>
                 _send(new GameRequest { type = "acceptRematch" }), !_state.rematchReady);
             SetButton("leave-button", "leaveAfterMatch", () =>

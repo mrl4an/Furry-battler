@@ -1,0 +1,66 @@
+/* Lobby and match result share the established courtyard interface. */
+.session-screen { -unity-font: url("Fonts/NotoSans-Regular.ttf"); color: #F3E4D1; font-size: 24px; }
+.session-screen Button, .session-screen .section-title, .session-screen .field-label, .session-screen .title, .session-screen .result { -unity-font: url("Fonts/RussoOne-Regular.ttf"); -unity-font-style: normal; }
+.session-screen Button { background-image: none; background-color: #E9D4B5; color: #291F24; min-height: 56px; padding: 8px 16px; border-width: 2px 2px 4px 2px; border-color: #291F24; border-radius: 8px; font-size: 24px; translate: 0 0; }
+.session-screen Button:hover { background-color: #F3E4D1; background-image: none; border-color: #63DCC5; translate: 0 0; }
+.session-screen Button:active { background-color: #C2AA8D; border-bottom-width: 2px; translate: 0 0; }
+.session-screen Button:focus { border-color: #63DCC5; }
+.session-screen Button:disabled { background-color: #514650; color: #AA9DA5; border-color: #665964; translate: 0 0; }
+.session-screen .primary-button { background-image: none; background-color: #63DCC5; color: #291F24; font-size: 30px; min-height: 76px; }
+.session-screen .primary-button:hover { background-color: #85E8D5; }
+.session-screen .primary-button:active { background-color: #43B8A5; }
+.session-screen .primary-button:focus { border-color: #F3E4D1; }
+.session-screen .primary-button:disabled { background-color: #46655F; color: #B3C3BE; }
+.session-screen .language-button { width: 76px; min-width: 76px; height: 48px; min-height: 48px; font-size: 22px; padding: 4px; }
+.session-screen.lobby-screen { padding: 24px 48px; background-image: url("Art/LobbyCourtyard.png"); -unity-background-image-tint-color: white; }
+.session-lobby-shade { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: rgba(30, 25, 34, 0.48); }
+.session-screen .noticeboard { width: 100%; max-width: 1440px; height: 100%; max-height: 920px; padding: 16px; }
+.session-screen .paper-sheet { background-image: none; background-color: rgba(52, 45, 56, 0.94); border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
+.session-screen .board-header { height: 112px; margin-bottom: 20px; }
+.session-screen .title-sign { background-color: transparent; background-image: url("Art/NoticePaper.png"); -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.16px; border-width: 0; padding: 20px 40px; margin-right: 24px; }
+.session-screen.lobby-screen .title { -unity-font: url("Fonts/RussoOne-Regular.ttf"); font-size: 50px; color: #291F24; }
+.session-screen .lobby-body { flex-grow: 1; min-height: 0; margin: 0; }
+.session-screen .connection-section { width: 38%; padding: 28px; }
+.session-screen .lobby-actions { width: 62%; padding: 32px 40px; margin-left: 20px; border-left-width: 2px; border-left-color: #796573; }
+.session-screen .connection-section .section-title { color: #291F24; background-color: #E9D4B5; border-radius: 3px; padding: 7px 12px; font-size: 24px; margin: 0 0 16px 0; }
+.session-screen .raccoon-stamp { width: 150px; height: 150px; align-self: center; margin: 0 0 16px 0; flex-shrink: 0; }
+.session-screen .field-label { color: #E9D4B5; font-size: 22px; margin: 12px 0 6px 0; white-space: normal; }
+.session-screen.lobby-screen #server-label { color: #C2B3BA; font-size: 20px; margin-top: 24px; }
+.session-screen TextField { min-height: 56px; margin: 0; }
+.session-screen.lobby-screen .unity-base-text-field__input, .session-screen.lobby-screen .unity-text-field__input, .session-screen.lobby-screen #unity-text-input { -unity-font: url("Fonts/NotoSans-Regular.ttf"); color: #F3E4D1; background-color: #291F24; font-size: 26px; min-height: 52px; padding: 8px 12px; border-width: 2px; border-color: #796573; border-radius: 6px; }
+.session-screen.lobby-screen #server-url #unity-text-input { -unity-font: url("Fonts/NotoSans-Regular.ttf"); font-size: 20px; }
+.session-screen.lobby-screen #unity-text-input:focus { border-color: #63DCC5; }
+.session-screen .nickname-row { flex-wrap: wrap; }
+.session-screen .nickname-row TextField { min-width: 180px; }
+.session-screen .nickname-row Button { min-height: 44px; font-size: 17px; margin: 8px 0 0 0; padding: 6px 10px; }
+.session-screen.lobby-screen #create-button { min-height: 100px; font-size: 38px; }
+.session-screen .invite-divider { margin: 24px 0 16px 0; }
+.session-screen .ink-rule { background-color: #796573; }
+.session-screen .invite-divider .centered { -unity-font: url("Fonts/RussoOne-Regular.ttf"); color: #C2B3BA; font-size: 22px; }
+.session-screen .join-row { align-items: center; }
+.session-screen.lobby-screen #join-button { width: 190px; min-height: 60px; font-size: 26px; margin-left: 16px; }
+.session-screen .room .section-title { color: #E9D4B5; font-size: 26px; -unity-text-align: middle-center; }
+.session-screen .room-code { -unity-font: url("Fonts/RussoOne-Regular.ttf"); color: #63DCC5; background-color: #291F24; font-size: 42px; padding: 12px; margin: 12px 0; border-radius: 8px; }
+.session-screen.lobby-screen #room-players { -unity-font: url("Fonts/NotoSans-Regular.ttf"); color: #F3E4D1; font-size: 22px; white-space: normal; }
+.session-screen.lobby-screen #room-ready-button { min-height: 76px; font-size: 30px; margin-top: 20px; }
+.session-screen .room-actions { margin-top: 12px; }
+.session-screen .room-actions Button { min-height: 54px; font-size: 20px; }
+.session-screen .status-tag { -unity-font: url("Fonts/NotoSans-Regular.ttf"); width: 100%; max-width: 100%; color: #F3E4D1; background-color: rgba(52, 45, 56, 0.96); font-size: 20px; min-height: 56px; margin-top: 20px; padding: 12px 20px; -unity-text-align: middle-center; }
+.session-screen .result-content { justify-content: center; align-items: center; margin: 0; }
+.session-screen .result-panel { width: 1160px; max-width: 92%; padding: 32px 40px; background-color: rgba(52, 45, 56, 0.96); border-width: 2px; border-color: #796573; border-radius: 12px 6px 12px 6px; }
+.session-screen .result-title-paper { align-self: center; width: 80%; padding: 18px 32px; background-image: url("Art/NoticePaper.png"); -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.16px; }
+.session-screen .result { color: #291F24; font-size: 56px; margin: 0; white-space: normal; -unity-text-align: middle-center; }
+.result-showcase { flex-direction: row; align-items: center; justify-content: space-around; margin: 24px 0; }
+.session-screen .result-player { width: 280px; height: 360px; padding: 20px 16px; justify-content: center; }
+.session-screen .result-player .shared-avatar { width: 120px; height: 120px; border-radius: 64px; }
+.session-screen .result-player .player-name { min-height: 68px; font-size: 26px; justify-content: center; margin: 12px 0; }
+.result-side-caption { color: #C2B3BA; font-size: 20px; margin: 0 0 12px 0; -unity-text-align: middle-center; }
+.result-emblem { width: 200px; height: 200px; flex-shrink: 0; align-items: center; justify-content: center; background-color: #E9D4B5; border-width: 5px; border-color: #DBB773; border-radius: 104px; }
+.result-stamp { width: 158px; height: 158px; background-image: url("Art/RaccoonStamp.png"); background-size: contain; background-position: center; background-repeat: no-repeat; }
+.result-victory .result-emblem { border-color: #63DCC5; }
+.result-defeat .result-emblem { border-color: #D77C6F; }
+.result-draw .result-emblem { border-color: #DBB773; }
+.result-victory .result-title-paper { -unity-background-image-tint-color: #D7F0DF; }
+.result-defeat .result-title-paper { -unity-background-image-tint-color: #F0D1C5; }
+.result-actions { flex-direction: row; justify-content: center; }
+.session-screen .result-actions Button { width: 46%; min-width: 0; margin: 0 8px; min-height: 76px; font-size: 27px; }

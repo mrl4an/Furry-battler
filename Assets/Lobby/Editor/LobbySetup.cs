@@ -237,6 +237,9 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "synergy.helpRules", "Only field copies count. Only the highest reached threshold applies; bonuses do not stack.", "Считаются только копии на поле. Действует наибольший достигнутый порог; бонусы не складываются.");
             Add(english, russian, "auction.stepHint", "Set a bid below each card. Minimum: 2 coins; 0 means no bid.", "Выберите ставку под картой. Минимум — 2 монеты; 0 — без ставки.");
             Add(english, russian, "sale.dropHint", "Drop a card here", "Перетащите карту сюда");
+            Add(english, russian, "result.heading", "Match complete", "Матч завершён");
+            Add(english, russian, "result.you", "You", "Вы");
+            Add(english, russian, "result.opponent", "Opponent", "Соперник");
             EditorUtility.SetDirty(english);
             EditorUtility.SetDirty(russian);
             EditorUtility.SetDirty(english.SharedData);

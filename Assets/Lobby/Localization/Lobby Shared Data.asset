@@ -687,6 +687,18 @@ MonoBehaviour:
     m_Key: sale.dropHint
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628260
+    m_Key: result.heading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628261
+    m_Key: result.you
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628262
+    m_Key: result.opponent
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

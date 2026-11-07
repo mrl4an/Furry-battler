@@ -1,12 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Style src="project://database/Assets/Lobby/LobbyView.uss" />
-    <ui:VisualElement name="root" class="screen lobby-screen">
+    <ui:Style src="SessionView.uss" />
+    <ui:VisualElement name="root" class="screen session-screen lobby-screen">
+        <ui:VisualElement class="session-lobby-shade" picking-mode="Ignore" />
         <ui:VisualElement class="noticeboard">
-            <ui:VisualElement class="board-timber" picking-mode="Ignore">
-                <ui:VisualElement class="timber-plank" picking-mode="Ignore" />
-                <ui:VisualElement class="timber-plank" picking-mode="Ignore" />
-                <ui:VisualElement class="timber-plank" picking-mode="Ignore" />
-            </ui:VisualElement>
             <ui:VisualElement class="board-header">
                 <ui:VisualElement class="paper-sheet title-sign">
                     <ui:Label name="title" class="title" />

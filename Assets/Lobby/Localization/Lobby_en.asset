@@ -690,6 +690,18 @@ MonoBehaviour:
     m_Localized: "Drop a card here"
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628260
+    m_Localized: "Match complete"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628261
+    m_Localized: "You"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628262
+    m_Localized: "Opponent"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
