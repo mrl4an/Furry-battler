@@ -20,7 +20,7 @@
 .self-hand-zone { border-top-width: 2px; border-top-color: #796573; }
 .self-hand-zone > .section-title { font-size: 16px; margin: 0; }
 .auction-hand { flex-grow: 1; min-height: 0; }
-.auction-hand > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 16px 18px 20px 18px; align-items: center; }
+.auction-hand > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 16px 18px 28px 18px; align-items: center; }
 .auction-hand .character-card { margin-right: 36px; }
 .card-back { width: 160px; height: 192px; margin-right: 18px; flex-shrink: 0; background-color: #493E48; background-image: url("Art/RaccoonStamp.png"); background-size: 78% 65%; background-position: center; background-repeat: no-repeat; border-width: 4px; border-color: #A18B94; border-radius: 18px 10px 18px 10px; }
 .auction-offers-zone { flex-grow: 1; min-height: 0; justify-content: center; padding: 10px 20px; }
@@ -28,7 +28,7 @@
 .auction-offers { flex-direction: row; align-items: center; justify-content: space-around; }
 .auction-offer { align-items: center; min-width: 0; flex-shrink: 1; width: 20%; }
 .auction-card-host { width: 160px; height: 192px; flex-shrink: 0; }
-.bid-controls { flex-direction: row; align-items: center; justify-content: center; margin-top: 24px; }
+.bid-controls { flex-direction: row; align-items: center; justify-content: center; margin-top: 32px; }
 .bid-controls Button { width: 36px; min-width: 36px; height: 34px; min-height: 34px; padding: 0; font-size: 22px; }
 .bid-value { min-width: 62px; font-size: 20px; color: #DBB773; -unity-text-align: middle-center; }
 .player-sidebar { width: 224px; flex-shrink: 0; margin-left: 24px; justify-content: space-between; padding: 24px 4px; }
