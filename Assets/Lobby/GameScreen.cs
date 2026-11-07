@@ -68,6 +68,12 @@ namespace AnimalBattler.Client.Lobby
             });
             foreach (var scroll in _root.Query<ScrollView>(className: "capsule-scroll").ToList())
                 BindScrollAppearance(scroll);
+            if (sceneName == "Preparation")
+            {
+                var hand = _root.Q<ScrollView>("hand");
+                hand.contentViewport.RegisterCallback<GeometryChangedEvent>(evt =>
+                    hand.contentContainer.style.minWidth = evt.newRect.width);
+            }
             _root.Q<Button>("language-button").clicked += _switchLanguage;
             BindCardDetails();
             BindSynergyHelp();
@@ -321,8 +327,6 @@ namespace AnimalBattler.Client.Lobby
                 if (card != null)
                 {
                     BindDrag(cardVisual, new DragSource { FromBoard = true, BoardSlot = index, CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
-                    heading.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
-                        !_state.self.ready));
                 }
                 _boardTargets[slot] = cardVisual;
                 board.Add(target);
@@ -338,8 +342,6 @@ namespace AnimalBattler.Client.Lobby
                 AnimatePreparationCard(cardVisual, card);
                 item.Add(cardVisual);
                 BindDrag(cardVisual, new DragSource { CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
-                item.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
-                    !_state.self.ready));
                 hand.Add(item);
             }
             SetButton("hand-next", "handNext", () => hand.horizontalScroller.value += 120, true);

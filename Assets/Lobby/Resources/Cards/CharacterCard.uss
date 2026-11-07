@@ -22,8 +22,8 @@
 .character-stat { position: absolute; bottom: -14px; width: 54px; height: 48px; align-items: center; justify-content: center; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .character-attack { left: -24px; bottom: -22px; width: 62px; height: 54px; padding: 0 4px 14px 0; background-image: url("../../Art/Icons/attack-stat-v5.png"); }
 .character-health { right: -18px; padding-top: 5px; background-image: url("../../Art/Icons/health.svg"); }
-.stat-number { -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); -unity-font-style: normal; font-size: 22px; color: #291F24; background-color: transparent; text-shadow: 0 0 3px rgba(255, 245, 222, 0.7); min-width: 28px; height: 28px; padding: 0 3px; margin: 0; -unity-text-align: middle-center; flex-shrink: 0; white-space: nowrap; }
-.stat-number.wide-number { font-size: 17px; }
+.stat-number { -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); -unity-font-style: bold; font-size: 24px; color: #291F24; background-color: transparent; text-shadow: 0 0 3px rgba(255, 245, 222, 0.7); min-width: 28px; height: 30px; padding: 0 3px; margin: 0; -unity-text-align: middle-center; flex-shrink: 0; white-space: nowrap; }
+.stat-number.wide-number { font-size: 19px; }
 .character-merge { position: absolute; top: 206px; left: 32px; right: 32px; align-items: center; }
 .merge-drops { flex-direction: row; }
 .merge-drop { width: 18px; height: 9px; margin: 0 2px; background-color: #746874; border-radius: 7px 7px 7px 1px; }
