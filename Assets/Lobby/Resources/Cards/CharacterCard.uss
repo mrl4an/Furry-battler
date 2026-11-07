@@ -61,3 +61,9 @@
 .stat-number.stat-loss, .stat-delta.stat-loss { color: #F0A18F; }
 .stat-number.stat-poison, .stat-delta.stat-poison { color: #C7A6E6; }
 .stat-number.stat-expired, .stat-delta.stat-expired { color: #DBB773; }
+.character-shadow { position: absolute; left: -14px; right: -14px; top: 8px; bottom: -20px; background-image: url("../Battle/card-shadow.svg"); background-size: 100% 100%; background-repeat: no-repeat; }
+.empty-character > .character-shadow { display: none; }
+.battle-fallen .character-art { opacity: 0.48; }
+.battle-fallen > .character-frame { border-color: #796573; }
+.battle-victor > .character-frame { border-color: #FFE7A2; }
+.preparation-tier-up > .character-frame { border-color: #FFE7A2; }

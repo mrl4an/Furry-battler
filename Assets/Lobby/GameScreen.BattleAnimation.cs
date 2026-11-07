@@ -21,6 +21,7 @@ namespace AnimalBattler.Client.Lobby
 
         private void ResetBattlePlayback()
         {
+            ResetBattleEffects();
             HideBattleRoute();
             _battleStep = -1;
             _battlePhase = -1;
@@ -41,6 +42,7 @@ namespace AnimalBattler.Client.Lobby
             _routeReveal = _root.Q<VisualElement>("attack-line");
             _routeArt = _root.Q<VisualElement>("attack-line-art");
             _battleImpact = _root.Q<VisualElement>("battle-impact");
+            InitializeBattleEffects();
             if (_battleImpact != null)
                 _battleImpact.style.backgroundImage = new StyleBackground(Resources.Load<VectorImage>("Battle/impact"));
             foreach (var card in _state.battle?.openingCards ?? Array.Empty<BattleCardMessage>()) _battleDefinitions[card.id] = card;
@@ -74,7 +76,9 @@ namespace AnimalBattler.Client.Lobby
                     _battleStep = index;
                     UpdateBattleHighlights(null, 1);
                     HideBattleRoute();
+                    foreach (var accent in _battleAccents) accent.Art.style.opacity = 0;
                 }
+                DrawBattleFinale(events.Length == 0 ? Mathf.Clamp01((float)elapsed / 0.8f) : 1, index, events.Length > 0 || _battleSeek);
                 _battleSeek = false;
                 SyncDetailStats();
                 return;
@@ -117,6 +121,8 @@ namespace AnimalBattler.Client.Lobby
                 foreach (var id in exchangeEvent.deadCardIds ?? Array.Empty<string>()) _battleDead.Add(id);
             UpdateBattleHighlights(exchangeEvent, progress);
             DrawBattleRoute(exchangeEvent, progress);
+            DrawExchangeAccents(exchangeEvent, progress, index, skipped);
+            DrawBattleFinale(index == events.Length - 1 ? Mathf.InverseLerp(0.78f, 1, progress) : 0, index, skipped);
             _battleSeek = false;
             SyncDetailStats(true, pace);
         }
@@ -183,13 +189,18 @@ namespace AnimalBattler.Client.Lobby
                     * (1 - Mathf.SmoothStep(0, 1, Mathf.InverseLerp(0.72f, 0.92f, progress)));
                 var scale = attacker ? 1 + emphasis * 0.08f : 1f;
                 pair.Value.style.scale = new Scale(new Vector3(scale, scale, 1));
-                var impact = target && progress >= 0.54f && progress < 0.68f
+                var tookDamage = exchange != null && (target && (exchange.attackDamage > 0 || exchange.extraDamageToTarget > 0)
+                    || attacker && (exchange.counterDamage > 0 || exchange.extraDamageToAttacker > 0));
+                var impact = tookDamage && progress >= 0.54f && progress < 0.68f
                     ? Mathf.Sin((progress - 0.54f) / 0.14f * Mathf.PI * 4) * 3 : 0;
-                pair.Value.style.translate = new Translate(impact, 0, 0);
-                var diedHere = exchange != null && (attacker || target)
+                var diedHere = exchange != null
                     && Array.IndexOf(exchange.deadCardIds ?? Array.Empty<string>(), pair.Key) >= 0;
                 var deathFade = diedHere ? Mathf.SmoothStep(0, 1, Mathf.InverseLerp(0.60f, 0.82f, progress)) : 1f;
-                pair.Value.style.opacity = _battleDead.Contains(pair.Key) ? Mathf.Lerp(1, 0.25f, deathFade) : 1f;
+                var fallen = _battleDead.Contains(pair.Key);
+                pair.Value.EnableInClassList("battle-fallen", fallen && deathFade > 0.1f);
+                pair.Value.style.opacity = fallen ? Mathf.Lerp(1, 0.62f, deathFade) : 1f;
+                pair.Value.style.translate = new Translate(impact, fallen ? 12 * deathFade : 0, 0);
+                pair.Value.style.rotate = new Rotate(new Angle(fallen ? -3 * deathFade : 0, AngleUnit.Degree));
             }
         }
 

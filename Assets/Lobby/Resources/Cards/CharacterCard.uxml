@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Style src="CharacterCard.uss" />
     <ui:VisualElement name="character-card" class="character-card rarity-common" tabindex="0">
+        <ui:VisualElement class="character-shadow" picking-mode="Ignore" />
         <ui:VisualElement class="character-battle-glow" picking-mode="Ignore" />
         <ui:VisualElement class="character-frame">
             <ui:Label name="character-name" class="character-name full-only" />

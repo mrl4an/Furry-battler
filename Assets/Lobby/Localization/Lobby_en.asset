@@ -559,7 +559,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628227
-    m_Localized: "Set a bid below each card. Minimum: 2 coins; 0 means no bid."
+    m_Localized: "Click the tray: 2 coins to start, then +1. The arrow returns your bid."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628228
@@ -748,6 +748,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1114628274
     m_Localized: "Opponent's card"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628275
+    m_Localized: "Place 2 coins, then add 1 per click"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628276
+    m_Localized: "Return the entire bid"
     m_Metadata:
       m_Items: []
   references:

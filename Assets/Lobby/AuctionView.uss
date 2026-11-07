@@ -44,7 +44,7 @@
 .hud-stat { flex-direction: row; align-items: center; justify-content: center; }
 .hud-icon { width: 34px; height: 34px; flex-shrink: 0; margin-right: 8px; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .health-icon { background-image: url("Art/Icons/health.svg"); }
-.coin-icon { background-image: url("Art/Icons/coin-painted-v1.png"); }
+.coin-icon { background-image: url("Art/Icons/coin-common-v3.png"); -unity-background-image-tint-color: white; }
 .health-stat { padding: 5px 12px; background-color: #291F24; border-radius: 8px; }
 .player-health { color: #F3E4D1; font-size: 30px; white-space: nowrap; margin: 0; }
 .coin-stat { margin-top: 12px; }
@@ -84,6 +84,7 @@
 .match-screen .hand-item .character-card { width: 144px; height: 174px; }
 .match-screen #drag-hint { display: none; }
 .battle-table { padding: 24px 16px; justify-content: center; }
+.match-screen .battle-table { background-color: rgba(41, 31, 36, 0.58); }
 .battle-zone { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; justify-content: center; }
 .match-screen .battle-zone > .section-title { margin: 0 12px 8px 12px; }
 .match-screen .battle-zone > .board-row { flex-grow: 0; flex-shrink: 0; height: 300px; }
@@ -125,6 +126,11 @@
 .self-hand-zone, .preparation-hand-zone { background-color: rgba(50, 77, 71, 0.22); }
 .opponent-hand-zone { background-color: rgba(92, 54, 61, 0.18); }
 .drag-card-ghost { opacity: 0.9; }
+.drag-card-ghost > .character-shadow { top: 14px; bottom: -30px; }
+.preparation-fx { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.preparation-effect-art { position: absolute; opacity: 0; background-size: contain; background-position: center; background-repeat: no-repeat; }
+.preparation-wallet-delta { position: absolute; margin: 0; color: #FFE7A2; font-size: 26px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); -unity-text-align: middle-center; text-shadow: 0 0 5px rgba(41, 31, 36, 0.9); }
+.preparation-wallet-delta.preparation-spend { color: #E9D4B5; }
 .drag-source { opacity: 0.35; }
 
 /* The drag overlay is outside flex flow; inline card positioning wins template styles. */
@@ -149,12 +155,13 @@
 .battle-route { position: absolute; overflow: hidden; opacity: 0; }
 .battle-route-art { position: absolute; left: 0; background-size: 100% 100%; background-repeat: no-repeat; }
 .battle-impact { position: absolute; width: 96px; height: 96px; opacity: 0; background-size: contain; background-repeat: no-repeat; }
+.battle-accent-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.battle-accent { position: absolute; background-size: contain; background-repeat: no-repeat; background-position: center; }
+.battle-player-delta { position: absolute; width: 100px; height: 46px; margin: 0; color: #F0A18F; font-size: 30px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); -unity-text-align: middle-center; text-shadow: 0 0 5px rgba(41, 31, 36, 0.95); }
 
 /* Results use the same five anchors; all motion lives outside flex layout. */
 .match-screen > .auction-reveal-fx { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .reveal-bids { width: 190px; margin-top: 30px; align-items: center; flex-shrink: 0; }
-.reveal-bid-pair { flex-direction: row; justify-content: center; background-color: rgba(41, 31, 36, 0.9); border-radius: 8px; padding: 4px; }
-.reveal-bid-side { width: 88px; align-items: center; }
 .reveal-bid-caption { color: #D8C9CF; font-size: 14px; margin: 0; }
 .reveal-bid-number { color: #E9D4B5; font-size: 28px; margin: 0; height: 38px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); text-shadow: 0 0 5px rgba(41, 31, 36, 0.8); }
 .reveal-bid-number.reveal-winning { color: #FFE7A2; text-shadow: 0 0 8px rgba(219, 183, 115, 0.8); }
@@ -175,3 +182,48 @@
 .auction-rim { background-image: url("Resources/Auction/rim.svg"); background-size: 100% 100%; background-repeat: no-repeat; }
 .auction-sweep { position: absolute; top: -28px; bottom: -28px; width: 28px; background-color: rgba(255, 241, 201, 0.35); rotate: 18deg; }
 .auction-reveal-fx .auction-coin-delta { position: absolute; color: #FFE7A2; -unity-font: url("Fonts/RussoOne-Regular.ttf"); font-size: 28px; text-shadow: 0 0 5px rgba(41, 31, 36, 0.9); -unity-text-align: middle-center; }
+
+/* Painted betting plaques; the refund control is centered below its own plaque. */
+.auction-screen .opponent-hand-zone { height: 140px; }
+.auction-screen .self-hand-zone { height: 300px; }
+.auction-screen .opponent-hand-zone .card-back { width: 48px; height: 60px; }
+.auction-screen .opponent-hand-zone .unity-scroll-view__content-container { padding-top: 8px; padding-bottom: 12px; }
+.auction-screen .auction-offers-zone > .hint { margin-bottom: 6px; }
+.auction-screen .reveal-lot-status { height: 24px; }
+.match-screen .bid-controls { width: 184px; padding: 0; margin-top: 26px; background-color: transparent; flex-direction: column; align-items: center; }
+.match-screen .bet-tray, .match-screen .bid-controls > .bet-tray { position: relative; width: 184px; min-width: 184px; height: 72px; min-height: 72px; padding: 6px 12px; flex-shrink: 0; flex-direction: row; align-items: center; justify-content: center; background-image: url("Art/bet-frame-v2.png"); background-size: 100% 100%; background-repeat: no-repeat; background-color: transparent; border-width: 0; border-radius: 0; margin: 0; -unity-background-image-tint-color: white; }
+.match-screen .bid-controls > .bet-tray:hover, .match-screen .bid-controls > .bet-tray:focus { background-color: transparent; -unity-background-image-tint-color: #FFF2D5; }
+.match-screen .bid-controls > .bet-tray:disabled { opacity: 0.65; }
+.bet-coins { width: 104px; height: 56px; flex-shrink: 0; }
+.match-screen .bet-value { min-width: 44px; height: 38px; margin: 0; padding: 0; font-size: 28px; color: #FFF2D5; -unity-text-align: middle-center; -unity-font: url("Fonts/RussoOne-Regular.ttf"); }
+.match-screen .bet-tray.bet-empty .bet-coins { width: 64px; height: 56px; }
+.match-screen .bet-tray.bet-empty .bet-value { display: none; }
+.match-screen .bet-tray.bet-empty.bet-revealed .bet-coins { width: 104px; height: 56px; }
+.match-screen .bet-tray.bet-empty.bet-revealed .bet-value { display: flex; }
+.match-screen .bid-controls > .bid-refund { position: relative; left: auto; top: auto; width: 112px; min-width: 112px; height: 42px; min-height: 42px; margin: 6px 0 0 0; padding: 4px; border-width: 0; border-radius: 0; background-color: transparent; background-image: url("Art/bet-frame-v2.png"); background-size: 100% 100%; background-repeat: no-repeat; align-items: center; justify-content: center; }
+.match-screen .bid-controls > .bid-refund:hover, .match-screen .bid-controls > .bid-refund:focus { background-color: transparent; -unity-background-image-tint-color: #FFF2D5; }
+.bid-refund-icon { width: 36px; height: 30px; background-image: url("Resources/Auction/refund-arrow.svg"); background-size: contain; background-position: center; background-repeat: no-repeat; }
+.bid-refund-empty { visibility: hidden; }
+.opponent-bet { width: 184px; align-items: center; margin-bottom: 18px; }
+.match-screen .reveal-bids { width: 184px; margin-top: 24px; }
+.reveal-bid-caption { height: 18px; margin: 0; }
+.opponent-bet .bet-tray { -unity-background-image-tint-color: #F0D9D1; }
+.session-atmosphere { position: absolute; left: 0; right: 0; top: 0; bottom: 0; overflow: hidden; }
+.session-mote, .session-celebration { position: absolute; background-size: contain; background-repeat: no-repeat; }
+.session-mote { width: 16px; height: 22px; background-image: url("Resources/Ambience/leaf.svg"); }
+.session-celebration { width: 380px; height: 380px; background-image: url("Resources/Auction/sparks.svg"); }
+.match-screen .timer.timer-urgent { color: #F0A18F; }
+/* Stronger local contrast also covers the auction and preparation. */
+.match-screen .auction-table, .match-screen.preparation-screen .match-table { background-color: rgba(41, 31, 36, 0.68); }
+.match-screen .match-shade { background-color: rgba(30, 25, 34, 0.56); }
+
+.match-screen .reveal-bid-number.reveal-losing { color: #95868F; }
+.match-screen .reveal-bid-number.reveal-tied { color: #DBB773; }
+.match-screen .reveal-bid-number.reveal-winning { color: #FFF2D5; }
+
+/* An empty bet is a placement hint, using the same opacity as board role hints. */
+.bet-coin-face { position: absolute; width: 48px; height: 48px; background-size: contain; background-position: center; background-repeat: no-repeat; }
+.bet-hint-coin { width: 52px; height: 52px; opacity: 0.35; }
+.match-screen .bet-tray.bet-empty { background-image: none; background-color: rgba(41, 31, 36, 0.12); border-width: 2px; border-color: rgba(99, 220, 197, 0.32); border-radius: 12px 6px 12px 6px; }
+.match-screen .bid-controls > .bet-tray.bet-empty:hover, .match-screen .bid-controls > .bet-tray.bet-empty:focus { background-color: rgba(41, 31, 36, 0.24); border-color: rgba(99, 220, 197, 0.85); }
+.bet-tray.bet-empty:hover .bet-hint-coin, .bet-tray.bet-empty:focus .bet-hint-coin { opacity: 0.6; }

@@ -104,15 +104,18 @@ namespace AnimalBattler.Client.Lobby
                 host.Add(card);
                 var panel = offer.Q<VisualElement>("reveal-bids");
                 panel.EnableInClassList("hidden", lot == null);
+                offer.Q<VisualElement>("opponent-bet").EnableInClassList("hidden", lot == null);
                 if (lot == null) continue;
+                RenderBetCoins(offer.Q<VisualElement>("reveal-self-coins"), lot.SelfBid, true);
+                RenderBetCoins(offer.Q<VisualElement>("reveal-opponent-coins"), lot.OpponentBid, true);
                 lot.Card = card;
                 lot.SelfNumber = offer.Q<Label>("reveal-self-bid");
                 lot.OpponentNumber = offer.Q<Label>("reveal-opponent-bid");
                 lot.Status = offer.Q<Label>("reveal-lot-status");
                 offer.Q<Label>("reveal-self-caption").text = Format("result.you");
                 offer.Q<Label>("reveal-opponent-caption").text = Format("result.opponent");
-                lot.SelfNumber.text = Format(lot.SelfBid == 0 ? "auction.noBid" : "ui.number", lot.SelfBid);
-                lot.OpponentNumber.text = Format(lot.OpponentBid == 0 ? "auction.noBid" : "ui.number", lot.OpponentBid);
+                lot.SelfNumber.text = Format("ui.number", lot.SelfBid);
+                lot.OpponentNumber.text = Format("ui.number", lot.OpponentBid);
                 lot.Status.text = string.Empty;
             }
             RebuildRevealHands(0);
@@ -260,19 +263,19 @@ namespace AnimalBattler.Client.Lobby
                 lot.Card.style.scale = new Scale(Vector3.one * (1 - fade * 0.65f));
                 lot.Card.style.translate = new Translate(0, fade * 48, 0);
                 lot.Card.Q<VisualElement>("character-art").style.unityBackgroundImageTintColor = Color.Lerp(Color.white, new Color(0.55f, 0.52f, 0.54f), progress);
-                if (!_revealMainSound && progress >= 0.2f) { _playAuctionSound?.Invoke("empty-lot"); _revealMainSound = true; }
+                if (!_revealMainSound && progress >= 0.2f) { _playUiSound?.Invoke("Auction/empty-lot"); _revealMainSound = true; }
                 return;
             }
             if (lot.Tied && !winnerShown)
             {
                 lot.Card.style.rotate = new Rotate(new Angle(Mathf.Sin(progress * 60) * 4, AngleUnit.Degree));
                 AnimateClash(lot, progress);
-                if (!_revealClashSound) { _playAuctionSound?.Invoke("tie-clash"); _revealClashSound = true; }
+                if (!_revealClashSound) { _playUiSound?.Invoke("Auction/tie-clash"); _revealClashSound = true; }
             }
             if (lot.SelfWon && winnerShown && progress < payoff) AnimateWinnerRim(lot, progress / payoff);
             if (!_revealMainSound && progress >= payoff)
             {
-                _playAuctionSound?.Invoke(lot.SelfWon ? "self-win" : "opponent-win");
+                _playUiSound?.Invoke(lot.SelfWon ? "Auction/self-win" : "Auction/opponent-win");
                 _revealMainSound = true;
             }
             if (progress < payoff) return;
@@ -280,7 +283,7 @@ namespace AnimalBattler.Client.Lobby
             AnimateAwardFlight(lot, Mathf.InverseLerp(payoff, 0.90f, progress));
             if (!_revealLandSound && progress >= 0.90f)
             {
-                _playAuctionSound?.Invoke("card-land");
+                _playUiSound?.Invoke("Auction/card-land");
                 _revealLandSound = true;
             }
             if (_auctionRim != null) _auctionRim.style.opacity = 0;
@@ -293,7 +296,7 @@ namespace AnimalBattler.Client.Lobby
             if (lot.Tied)
             {
                 AnimateCompensation(lot, Mathf.InverseLerp(0.64f, 0.94f, progress));
-                if (!_revealCoinSound && progress >= 0.94f) { _playAuctionSound?.Invoke("compensation"); _revealCoinSound = true; }
+                if (!_revealCoinSound && progress >= 0.94f) { _playUiSound?.Invoke("Auction/compensation"); _revealCoinSound = true; }
             }
         }
 

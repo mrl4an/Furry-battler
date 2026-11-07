@@ -18,7 +18,7 @@ namespace AnimalBattler.Client.Editor
             }
             foreach (var path in new[]
             {
-                "Assets/Lobby/Art/Icons/coin-painted-v1.png",
+                "Assets/Lobby/Art/Icons/coin-common-v3.png",
                 "Assets/Lobby/Art/Icons/attack-stat-v5.png",
                 "Assets/Lobby/Resources/Characters/armadillo.png",
                 "Assets/Lobby/Resources/Backgrounds/courtyard-arch.png"

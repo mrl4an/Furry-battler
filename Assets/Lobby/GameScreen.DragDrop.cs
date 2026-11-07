@@ -17,7 +17,7 @@ namespace AnimalBattler.Client.Lobby
         {
             _root.RegisterCallback<KeyDownEvent>(evt =>
             {
-                if (evt.keyCode == KeyCode.Escape) CancelDrag();
+                if (evt.keyCode == KeyCode.Escape) CancelDrag(true);
             }, TrickleDown.TrickleDown);
             _root.RegisterCallback<DetachFromPanelEvent>(evt =>
             {
@@ -31,6 +31,7 @@ namespace AnimalBattler.Client.Lobby
             {
                 if (_state?.phase != "preparation" || _state.self.ready || _dropPending || evt.button != 0) return;
                 if (drag.FromShop && _state.self.coins < 3) return;
+                ClearPreparationEffects();
                 CancelDrag();
                 CloseCardDetails();
                 HideSynergyHelp();
@@ -49,6 +50,7 @@ namespace AnimalBattler.Client.Lobby
                 if (!_dragging)
                 {
                     _dragging = true;
+                    _dragLiftStarted = Time.realtimeSinceStartupAsDouble;
                     CloseCardDetails();
                     _ghost = CharacterCard(drag.DefinitionId, drag.Copies, false);
                     _ghost.focusable = false;
@@ -77,7 +79,7 @@ namespace AnimalBattler.Client.Lobby
                 if (_dragSource != source || _dragPointerId != evt.pointerId) return;
                 var request = _dragging ? DropRequest(evt.position) : null;
                 var wasDragging = _dragging;
-                CancelDrag();
+                CancelDrag(request == null && wasDragging);
                 if (request != null && !_dropPending)
                 {
                     _dropPending = true;
@@ -87,11 +89,11 @@ namespace AnimalBattler.Client.Lobby
             });
             source.RegisterCallback<PointerCancelEvent>(evt =>
             {
-                if (_dragSource == source && _dragPointerId == evt.pointerId) CancelDrag();
+                if (_dragSource == source && _dragPointerId == evt.pointerId) CancelDrag(true);
             });
             source.RegisterCallback<PointerCaptureOutEvent>(evt =>
             {
-                if (_dragSource == source && _dragPointerId == evt.pointerId) CancelDrag();
+                if (_dragSource == source && _dragPointerId == evt.pointerId) CancelDrag(true);
             });
         }
 
@@ -155,7 +157,7 @@ namespace AnimalBattler.Client.Lobby
             _ghost.style.top = Mathf.Clamp(point.y, 20, Mathf.Max(20, layer.contentRect.height - height - 24));
         }
 
-        private void CancelDrag()
+        private void CancelDrag(bool animateReturn = false)
         {
             var source = _dragSource;
             var pointerId = _dragPointerId;
@@ -164,8 +166,13 @@ namespace AnimalBattler.Client.Lobby
             _dragging = false;
             source?.RemoveFromClassList("drag-source");
             if (source != null && pointerId >= 0 && source.HasPointerCapture(pointerId)) source.ReleasePointer(pointerId);
-            ForgetStatLabels(_ghost);
-            _ghost?.RemoveFromHierarchy();
+            if (animateReturn && _ghost != null && source?.panel != null && _state?.phase == "preparation")
+                ReturnDragGhost(_ghost, source);
+            else
+            {
+                ForgetStatLabels(_ghost);
+                _ghost?.RemoveFromHierarchy();
+            }
             _ghost = null;
             if (_root == null) return;
             _root.Query<VisualElement>(className: "drop-allowed").ForEach(element => element.RemoveFromClassList("drop-allowed"));

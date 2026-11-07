@@ -27,6 +27,8 @@ namespace AnimalBattler.Client.Lobby
         {
             public VisualElement Card;
             public double Started;
+            public float Strength;
+            public float Duration;
         }
 
         private void CapturePreparationChanges(ServerMessage previous, ServerMessage current)
@@ -49,7 +51,9 @@ namespace AnimalBattler.Client.Lobby
             SetCharacterStat(health, definition.health + oldCopies - 1);
             AnimateStat(attack, definition.attack + card.copies - 1);
             AnimateStat(health, definition.health + card.copies - 1);
-            _cardPulses.Add(new CardPulse { Card = visual, Started = Time.realtimeSinceStartupAsDouble });
+            var tierUp = (oldCopies >= 6 ? 3 : oldCopies >= 3 ? 2 : 1) < card.tier;
+            _cardPulses.Add(new CardPulse { Card = visual, Started = Time.realtimeSinceStartupAsDouble,
+                Strength = tierUp ? 0.14f : 0.07f, Duration = tierUp ? 0.6f : 0.38f });
         }
 
         private void AnimateStat(Label number, int value, bool poison = false, float pace = 1f)
@@ -92,8 +96,8 @@ namespace AnimalBattler.Client.Lobby
             for (var i = _cardPulses.Count - 1; i >= 0; i--)
             {
                 var pulse = _cardPulses[i];
-                var progress = Mathf.Clamp01((float)(now - pulse.Started) / 0.45f);
-                var scale = 1 + Mathf.Sin(progress * Mathf.PI) * 0.07f;
+                var progress = Mathf.Clamp01((float)(now - pulse.Started) / pulse.Duration);
+                var scale = 1 + Mathf.Sin(progress * Mathf.PI) * pulse.Strength;
                 pulse.Card.style.scale = new Scale(new Vector3(scale, scale, 1));
                 if (progress >= 1) _cardPulses.RemoveAt(i);
             }

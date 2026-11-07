@@ -49,20 +49,26 @@ namespace AnimalBattler.Client.Lobby
                 host.Add(CharacterCard(id, 1, false));
                 var bid = slot < bids.Length ? bids[slot] : 0;
                 holder.Q<Label>("bid-value").text = Format("ui.number", bid);
-                var minus = holder.Q<Button>("bid-minus");
-                var plus = holder.Q<Button>("bid-plus");
+                holder.Q<VisualElement>("opponent-bet").AddToClassList("hidden");
+                RenderBetCoins(holder.Q<VisualElement>("bid-coins"), bid);
+                var refund = holder.Q<Button>("bid-refund");
+                var place = holder.Q<Button>("bid-place");
                 var enabled = !string.IsNullOrEmpty(id) && !_state.self.ready;
                 void SendBid(int amount)
                 {
-                    minus.SetEnabled(false);
-                    plus.SetEnabled(false);
+                    refund.SetEnabled(false);
+                    place.SetEnabled(false);
                     _send(new GameRequest { type = "setBid", slot = index, amount = amount });
                 }
-                BindAuctionButton(minus, "auction.minus", () => SendBid(bid <= 2 ? 0 : bid - 1), enabled && bid > 0);
-                BindAuctionButton(plus, "auction.plus", () => SendBid(bid == 0 ? 2 : bid + 1),
+                BindAuctionButton(refund, "auction.refundBid", () => SendBid(0), enabled && bid > 0);
+                refund.text = string.Empty;
+                refund.tooltip = Format("auction.refundBid");
+                refund.EnableInClassList("bid-refund-empty", bid == 0);
+                BindAuctionButton(place, "auction.placeBid", () => SendBid(bid == 0 ? 2 : bid + 1),
                     enabled && _state.self.availableCoins >= (bid == 0 ? 2 : 1));
-                minus.tooltip = Format("auction.decreaseBid");
-                plus.tooltip = Format("auction.increaseBid");
+                place.text = string.Empty;
+                place.tooltip = Format("auction.placeBid");
+
             }
 
             var hand = _root.Q<ScrollView>("auction-hand");
@@ -98,6 +104,32 @@ namespace AnimalBattler.Client.Lobby
 
             SetText("synergy-heading", "auction.synergies");
             RenderAuctionSynergies();
+        }
+
+        private static void RenderBetCoins(VisualElement host, int amount, bool revealed = false)
+        {
+            host.Clear();
+            host.parent.EnableInClassList("bet-empty", amount == 0);
+            host.parent.EnableInClassList("bet-revealed", revealed);
+            var count = amount == 0 ? 1 : Math.Min(amount, 3);
+            for (var i = 0; i < count; i++)
+            {
+                var coin = new VisualElement { pickingMode = PickingMode.Ignore };
+                coin.AddToClassList("coin-icon");
+                coin.AddToClassList("bet-coin-face");
+                if (amount == 0)
+                {
+                    coin.AddToClassList("bet-hint-coin");
+                    coin.style.left = revealed ? 26 : 6;
+                    coin.style.top = 2;
+                }
+                else
+                {
+                    coin.style.left = (104 - (48 + (count - 1) * 10)) / 2f + i * 10;
+                    coin.style.top = 8 - i * 3;
+                }
+                host.Add(coin);
+            }
         }
 
         private void BindAuctionButton(Button button, string key, Action action, bool enabled)

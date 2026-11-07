@@ -20,7 +20,7 @@ namespace AnimalBattler.Client.Lobby
         private readonly Action _switchLanguage;
         private readonly VisualTreeAsset _cardTemplate;
         private readonly Action<string> _requestScene;
-        private readonly Action<string> _playAuctionSound;
+        private readonly Action<string> _playUiSound;
         public string PresentationScene => _state == null ? null : SceneFor(_state.phase);
         private string _sceneName;
         private ServerMessage _state;
@@ -44,14 +44,14 @@ namespace AnimalBattler.Client.Lobby
         }
 
         public GameScreen(Action<GameRequest> send, Func<string, string> localize,
-            Action switchLanguage, VisualTreeAsset cardTemplate, Action<string> requestScene, Action<string> playAuctionSound)
+            Action switchLanguage, VisualTreeAsset cardTemplate, Action<string> requestScene, Action<string> playUiSound)
         {
             _send = send;
             _localize = localize;
             _switchLanguage = switchLanguage;
             _cardTemplate = cardTemplate;
             _requestScene = requestScene;
-            _playAuctionSound = playAuctionSound;
+            _playUiSound = playUiSound;
         }
 
         public void Bind(UIDocument document, string sceneName)
@@ -62,6 +62,7 @@ namespace AnimalBattler.Client.Lobby
             _buttonActions.Clear();
             _sceneName = sceneName;
             _root = document.rootVisualElement.Q<VisualElement>("game-screen");
+            BindSessionEffects();
             _root.RegisterCallback<GeometryChangedEvent>(evt =>
             {
                 _root.EnableInClassList("compact", evt.newRect.height < 680);
@@ -101,11 +102,14 @@ namespace AnimalBattler.Client.Lobby
 
         public void SetMatch(ServerMessage state)
         {
+            CaptureSessionEffects(_state, state);
             CaptureAuctionReveal(_state, state);
+            CapturePreparationEffects(_state, state);
             CapturePreparationChanges(_state, state);
             var battleKey = state.phase == "battle" ? state.round + ":" + state.endsAtUtc : null;
             if (battleKey != _lastBattleKey)
             {
+                CaptureBattlePresentation(_state, state);
                 _lastBattleKey = battleKey;
                 ResetBattlePlayback();
                 _battleStartedAt = Time.realtimeSinceStartupAsDouble;
@@ -119,6 +123,9 @@ namespace AnimalBattler.Client.Lobby
 
         public void Hide()
         {
+            ClearSessionEffects();
+            ClearPreparationEffects();
+            _preparationChanges.Clear();
             CancelAuctionReveal();
             CancelDrag();
             HideSynergyHelp();
@@ -145,6 +152,8 @@ namespace AnimalBattler.Client.Lobby
             HideSynergyHelp();
             CloseCardDetails();
             ApplyMatchBackground();
+            ClearPreparationEffects();
+            _preparationCards.Clear();
             ClearStatAnimations();
             _battleCards.Clear();
             Array.Clear(_boardTargets, 0, _boardTargets.Length);
@@ -192,6 +201,8 @@ namespace AnimalBattler.Client.Lobby
 
             TickBattlePlayback();
             TickStatAnimations();
+            TickPreparationEffects();
+            TickSessionEffects();
             TickAuctionReveal();
         }
 
@@ -269,6 +280,7 @@ namespace AnimalBattler.Client.Lobby
                 var item = Column("offer");
                 var shopCard = CharacterCard(offer?.cardId, 1, false);
                 shopCard.EnableInClassList("is-frozen", offer?.frozen == true);
+                _preparationOffers[slot] = shopCard;
                 if (offer != null) BindDrag(shopCard, new DragSource { FromShop = true, ShopSlot = index, DefinitionId = offer.cardId, Copies = 1 });
                 item.Add(shopCard);
                 if (offer != null)
@@ -323,6 +335,7 @@ namespace AnimalBattler.Client.Lobby
                     cardVisual.Add(slotIcon);
                 }
                 if (card != null) AnimatePreparationCard(cardVisual, card);
+                if (card != null) _preparationCards[card.id] = cardVisual;
                 target.Add(cardVisual);
                 if (card != null)
                 {
@@ -340,6 +353,7 @@ namespace AnimalBattler.Client.Lobby
                 var item = Column("hand-item");
                 var cardVisual = CharacterCard(card.cardId, card.copies, false);
                 AnimatePreparationCard(cardVisual, card);
+                _preparationCards[card.id] = cardVisual;
                 item.Add(cardVisual);
                 BindDrag(cardVisual, new DragSource { CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
                 hand.Add(item);
@@ -347,6 +361,7 @@ namespace AnimalBattler.Client.Lobby
             SetButton("hand-next", "handNext", () => hand.horizontalScroller.value += 120, true);
             SetText("drag-hint", "dragHint");
             hand.tooltip = Format("dragHint");
+            StartPreparationEffects();
             ReadyButton();
         }
 

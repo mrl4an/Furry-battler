@@ -25,7 +25,7 @@ namespace AnimalBattler.Client.Lobby
         [SerializeField] private string configuredServerUrl;
         [SerializeField] private VisualTreeAsset cardTemplate;
         [SerializeField] private AudioSource uiAudio;
-        private readonly Dictionary<string, AudioClip> _auctionSounds = new Dictionary<string, AudioClip>();
+        private readonly Dictionary<string, AudioClip> _uiSounds = new Dictionary<string, AudioClip>();
         private bool _audioWarningIssued;
         private readonly ConcurrentQueue<Action> _mainThreadActions = new ConcurrentQueue<Action>();
         private readonly SemaphoreSlim _sendGate = new SemaphoreSlim(1, 1);
@@ -95,7 +95,7 @@ namespace AnimalBattler.Client.Lobby
             DontDestroyOnLoad(gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
             _gameScreen = new GameScreen(SendGameRequest, Localized, SwitchLanguage, cardTemplate,
-                scene => SceneManager.LoadScene(scene), PlayAuctionSound);
+                scene => SceneManager.LoadScene(scene), PlayUiSound);
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode _) => BindScene(scene);
@@ -361,7 +361,7 @@ namespace AnimalBattler.Client.Lobby
 #endif
         }
 
-        private void PlayAuctionSound(string name)
+        private void PlayUiSound(string name)
         {
             if (uiAudio == null)
             {
@@ -369,11 +369,11 @@ namespace AnimalBattler.Client.Lobby
                 _audioWarningIssued = true;
                 return;
             }
-            if (!_auctionSounds.TryGetValue(name, out var clip))
+            if (!_uiSounds.TryGetValue(name, out var clip))
             {
-                clip = Resources.Load<AudioClip>("Audio/Auction/" + name);
-                _auctionSounds[name] = clip;
-                if (clip == null) Debug.LogWarning("Auction sound asset is missing: " + name);
+                clip = Resources.Load<AudioClip>("Audio/" + name);
+                _uiSounds[name] = clip;
+                if (clip == null) Debug.LogWarning("UI sound asset is missing: " + name);
             }
             if (clip != null)
             {

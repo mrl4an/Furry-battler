@@ -90,6 +90,7 @@
             <ui:Label name="synergy-help-body" picking-mode="Ignore" />
             <ui:Label name="synergy-help-rules" picking-mode="Ignore" />
         </ui:VisualElement>
+        <ui:VisualElement name="preparation-fx" class="preparation-fx" picking-mode="Ignore" />
         <ui:VisualElement name="card-details-layer" class="card-details-layer hidden" picking-mode="Ignore">
             <ui:VisualElement name="card-details-scrim" class="card-details-scrim" />
             <ui:VisualElement name="card-details-host" class="card-details-host" />

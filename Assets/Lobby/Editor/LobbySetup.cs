@@ -237,10 +237,12 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "match.available", "Available", "Доступно");
             Add(english, russian, "ui.help", "?", "?");
             Add(english, russian, "synergy.helpRules", "Only field copies count. Only the highest reached threshold applies; bonuses do not stack.", "Считаются только копии на поле. Действует наибольший достигнутый порог; бонусы не складываются.");
-            Add(english, russian, "auction.stepHint", "Set a bid below each card. Minimum: 2 coins; 0 means no bid.", "Выберите ставку под картой. Минимум — 2 монеты; 0 — без ставки.");
+            Add(english, russian, "auction.stepHint", "Click the tray: 2 coins to start, then +1. The arrow returns your bid.", "Нажмите на площадку: сначала 2 монеты, затем +1. Стрелка возвращает ставку.");
             Add(english, russian, "sale.dropHint", "Drop a card here", "Перетащите карту сюда");
             Add(english, russian, "result.heading", "Match complete", "Матч завершён");
             Add(english, russian, "result.you", "You", "Вы");
+            Add(english, russian, "auction.placeBid", "Place 2 coins, then add 1 per click", "Поставить 2 монеты, затем добавлять по 1");
+            Add(english, russian, "auction.refundBid", "Return the entire bid", "Вернуть всю ставку");
             Add(english, russian, "auction.revealTitle", "Auction results", "Итоги торгов");
             Add(english, russian, "auction.revealHint", "Bids revealed", "Ставки открыты");
             Add(english, russian, "auction.revealTimerHint", "Preparation timer is running", "Время подготовки уже идёт");
