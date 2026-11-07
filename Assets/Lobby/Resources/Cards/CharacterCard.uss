@@ -42,8 +42,10 @@
 .detailed-card .role-icon { top: 206px; }
 .detailed-card .character-merge { top: 414px; }
 .character-card.empty-character .character-art, .character-card.empty-character .class-icon, .character-card.empty-character .role-icon, .character-card.empty-character .character-stat, .character-card.empty-character .character-merge { display: none; }
-.empty-character > .character-frame { opacity: 0.4; }
+.empty-character > .character-frame { opacity: 1; background-color: rgba(41, 31, 36, 0.12); border-color: rgba(99, 220, 197, 0.32); }
 
 /* Frost is confined to the portrait; stats and controls stay readable. */
 .frost-overlay { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: none; background-image: url("../../Art/Icons/frost-overlay.svg"); background-size: 100% 100%; background-repeat: no-repeat; }
 .character-card.is-frozen .frost-overlay { display: flex; }
+
+.character-card.slot-drop-hover > .character-frame { border-color: rgba(99, 220, 197, 0.95); }

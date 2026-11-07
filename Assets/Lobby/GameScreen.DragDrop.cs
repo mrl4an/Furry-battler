@@ -9,6 +9,7 @@ namespace AnimalBattler.Client.Lobby
         private VisualElement _dragSource;
         private int _dragPointerId = -1;
         private Vector2 _dragStart;
+        private Vector2 _dragOffset;
         private bool _dragging;
         private bool _dropPending;
 
@@ -37,6 +38,7 @@ namespace AnimalBattler.Client.Lobby
                 _dragSource = source;
                 _dragPointerId = evt.pointerId;
                 _dragStart = evt.position;
+                _dragOffset = source.WorldToLocal(evt.position);
                 source.CapturePointer(evt.pointerId);
                 evt.StopPropagation();
             });
@@ -51,12 +53,19 @@ namespace AnimalBattler.Client.Lobby
                     _ghost = CharacterCard(drag.DefinitionId, drag.Copies, false);
                     _ghost.focusable = false;
                     _ghost.AddToClassList("drag-card-ghost");
+                    _ghost.style.position = Position.Absolute;
+                    _ghost.style.width = source.resolvedStyle.width;
+                    _ghost.style.height = source.resolvedStyle.height;
+                    _ghost.style.marginLeft = 0;
+                    _ghost.style.marginRight = 0;
+                    _ghost.style.marginTop = 0;
+                    _ghost.style.marginBottom = 0;
                     _ghost.pickingMode = PickingMode.Ignore;
                     _ghost.Query<VisualElement>().ForEach(element => element.pickingMode = PickingMode.Ignore);
-                    _root.Add(_ghost);
+                    (_root.Q<VisualElement>("drag-layer") ?? _root).Add(_ghost);
                     source.AddToClassList("drag-source");
                     var salePrice = _root.Q<VisualElement>("sale-price-row");
-                    salePrice?.EnableInClassList("hidden", drag.FromShop);
+                    salePrice?.EnableInClassList("sale-price-hidden", drag.FromShop);
                     SetText("sale-price", "ui.number", drag.Copies >= 6 ? 3 : drag.Copies >= 3 ? 2 : 1);
                 }
                 MoveGhost(evt.position);
@@ -125,8 +134,7 @@ namespace AnimalBattler.Client.Lobby
                 var target = _boardTargets[slot];
                 if (target == null) continue;
                 var allowed = CanDropOnBoard(slot);
-                target.EnableInClassList("drop-allowed", allowed);
-                target.EnableInClassList("drop-hover", allowed && target.worldBound.Contains(position));
+                target.EnableInClassList("slot-drop-hover", allowed && target.worldBound.Contains(position));
             }
             var sale = _root.Q<VisualElement>("sale-zone");
             sale?.EnableInClassList("drop-allowed", !_drag.FromShop);
@@ -139,9 +147,12 @@ namespace AnimalBattler.Client.Lobby
         private void MoveGhost(Vector2 position)
         {
             if (_ghost == null) return;
-            var point = _root.WorldToLocal(position);
-            _ghost.style.left = Mathf.Clamp(point.x - 60, 28, Mathf.Max(28, _root.contentRect.width - 200));
-            _ghost.style.top = Mathf.Clamp(point.y - 50, 20, Mathf.Max(20, _root.contentRect.height - 230));
+            var layer = _ghost.parent;
+            var point = layer.WorldToLocal(position) - _dragOffset;
+            var width = _ghost.style.width.value.value;
+            var height = _ghost.style.height.value.value;
+            _ghost.style.left = Mathf.Clamp(point.x, 28, Mathf.Max(28, layer.contentRect.width - width - 24));
+            _ghost.style.top = Mathf.Clamp(point.y, 20, Mathf.Max(20, layer.contentRect.height - height - 24));
         }
 
         private void CancelDrag()
@@ -158,7 +169,8 @@ namespace AnimalBattler.Client.Lobby
             if (_root == null) return;
             _root.Query<VisualElement>(className: "drop-allowed").ForEach(element => element.RemoveFromClassList("drop-allowed"));
             _root.Query<VisualElement>(className: "drop-hover").ForEach(element => element.RemoveFromClassList("drop-hover"));
-            _root.Q<VisualElement>("sale-price-row")?.AddToClassList("hidden");
+            _root.Query<VisualElement>(className: "slot-drop-hover").ForEach(element => element.RemoveFromClassList("slot-drop-hover"));
+            _root.Q<VisualElement>("sale-price-row")?.AddToClassList("sale-price-hidden");
         }
     }
 }

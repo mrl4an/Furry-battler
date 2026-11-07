@@ -44,7 +44,7 @@
 .hud-stat { flex-direction: row; align-items: center; justify-content: center; }
 .hud-icon { width: 34px; height: 34px; flex-shrink: 0; margin-right: 8px; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .health-icon { background-image: url("Art/Icons/health.svg"); }
-.coin-icon { background-image: url("Art/Icons/coin.svg"); }
+.coin-icon { background-image: url("Art/Icons/coin-painted-v1.png"); }
 .health-stat { padding: 5px 12px; background-color: #291F24; border-radius: 8px; }
 .player-health { color: #F3E4D1; font-size: 30px; white-space: nowrap; margin: 0; }
 .coin-stat { margin-top: 12px; }
@@ -83,8 +83,6 @@
 .match-screen .hand-item .character-card { width: 130px; height: 156px; }
 .match-screen .hand-item > Button { margin-top: 26px; min-height: 28px; font-size: 16px; width: 140px; }
 .match-screen #drag-hint { display: none; }
-.sale-zone { padding: 12px; margin-bottom: 12px; border-width: 2px; border-color: #A18B94; border-radius: 8px; background-color: #493E48; }
-.sale-zone > .section-title { -unity-text-align: middle-center; margin: 0; }
 .battle-table { padding: 24px 16px; justify-content: center; }
 .battle-zone { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; justify-content: center; }
 .match-screen .battle-zone > .section-title { margin: 0 12px 8px 12px; }
@@ -92,7 +90,6 @@
 .battle-divider { height: 2px; background-color: #796573; margin: 16px 20px; flex-shrink: 0; }
 .match-screen .battle-zone .character-card { width: 180px; height: 216px; }
 .match-screen .battle-zone .character-merge { top: 230px; }
-.match-screen .board-slot.drop-hover { background-color: rgba(99, 220, 197, 0.16); }
 .empty-slot-role { position: absolute; width: 72px; height: 72px; left: 44px; top: 60px; opacity: 0.35; background-size: contain; background-position: center; background-repeat: no-repeat; }
 .card-details-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .card-details-scrim { position: absolute; left: 0; right: 0; top: 0; bottom: 0; background-color: rgba(20, 15, 20, 0.65); display: none; }
@@ -127,10 +124,22 @@
 .opponent-mark { border-left-width: 3px; border-left-color: #D77C6F; }
 .self-hand-zone, .preparation-hand-zone { background-color: rgba(50, 77, 71, 0.22); }
 .opponent-hand-zone { background-color: rgba(92, 54, 61, 0.18); }
-.drag-card-ghost { position: absolute; width: 160px; height: 192px; opacity: 0.9; }
+.drag-card-ghost { opacity: 0.9; }
 .drag-source { opacity: 0.35; }
-.match-screen .drop-allowed { background-color: rgba(99, 220, 197, 0.08); }
-.match-screen .drop-hover { background-color: rgba(99, 220, 197, 0.28); }
-.sale-zone { min-height: 80px; justify-content: center; }
-.sale-zone .hud-stat { margin-top: 8px; }
-.sale-zone #sale-price { color: #DBB773; font-size: 26px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); }
+
+/* The drag overlay is outside flex flow; inline card positioning wins template styles. */
+.match-screen > .drag-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.match-screen.preparation-screen .player-sidebar { justify-content: space-between; }
+.match-screen.preparation-screen .player-portrait, .match-screen.preparation-screen .auction-ready { flex-shrink: 0; }
+.sale-zone { height: 166px; min-height: 166px; flex-shrink: 0; padding: 10px 12px; margin: 8px 0; align-items: center; justify-content: center; background-image: url("Art/NoticePaper.png"); -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.12; border-width: 2px; border-color: rgba(219, 183, 115, 0.4); border-radius: 8px; }
+.sale-zone > .section-title { color: #291F24; font-size: 24px; margin: 0; -unity-text-align: middle-center; }
+.sale-emblem { width: 48px; height: 48px; margin: 2px 0; background-size: contain; background-repeat: no-repeat; background-position: center; }
+.sale-hint { color: #59404D; font-size: 16px; white-space: normal; -unity-text-align: middle-center; margin: 0; }
+.sale-zone .hud-stat { height: 32px; min-height: 32px; margin-top: 2px; }
+.sale-zone .hud-icon { width: 24px; height: 24px; }
+.sale-zone #sale-price { color: #291F24; font-size: 24px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); margin: 0; }
+.sale-price-hidden { visibility: hidden; }
+.sale-zone.drop-hover { border-color: #63DCC5; -unity-background-image-tint-color: #D1FFF5; }
+.sale-zone:disabled { opacity: 0.5; }
+.match-screen .preparation-hand-zone { border-width: 2px; border-color: transparent; border-top-color: #796573; }
+.match-screen .preparation-hand-zone.drop-hover { border-color: rgba(99, 220, 197, 0.85); }

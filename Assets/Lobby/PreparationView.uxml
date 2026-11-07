@@ -70,8 +70,13 @@
             </ui:VisualElement>
             <ui:VisualElement class="player-sidebar">
                 <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="opponent-name" class="player-name" /><ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement></ui:VisualElement>
+                <ui:VisualElement name="sale-zone" class="sale-zone">
+                    <ui:Label name="sale-heading" class="section-title" />
+                    <ui:VisualElement class="sale-emblem coin-icon" picking-mode="Ignore" />
+                    <ui:Label name="sale-hint" class="sale-hint" />
+                    <ui:VisualElement name="sale-price-row" class="hud-stat sale-price-hidden"><ui:VisualElement class="hud-icon coin-icon" picking-mode="Ignore" /><ui:Label name="sale-price" /></ui:VisualElement>
+                </ui:VisualElement>
                 <ui:VisualElement class="auction-ready">
-                    <ui:VisualElement name="sale-zone" class="sale-zone"><ui:Label name="sale-heading" class="section-title" /><ui:VisualElement name="sale-price-row" class="hud-stat hidden"><ui:VisualElement class="hud-icon coin-icon" picking-mode="Ignore" /><ui:Label name="sale-price" /></ui:VisualElement></ui:VisualElement>
                     <ui:Label name="timer" class="timer" />
                     <ui:Button name="ready-button" class="primary-button" />
                     <ui:Label name="ready-status" class="hint" />
@@ -79,6 +84,7 @@
                 <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="self-health" class="player-health" /></ui:VisualElement><ui:VisualElement class="hud-stat coin-stat"><ui:VisualElement class="hud-icon coin-icon" picking-mode="Ignore" /><ui:Label name="self-coins" class="player-coins" /></ui:VisualElement><ui:VisualElement class="hud-stat available-stat"><ui:Label name="available-caption" /><ui:Label name="available-coins" /></ui:VisualElement></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
+        <ui:VisualElement name="drag-layer" class="drag-layer" picking-mode="Ignore" />
         <ui:VisualElement name="synergy-help-panel" class="synergy-help-panel hidden" picking-mode="Ignore">
             <ui:Label name="synergy-help-title" class="section-title" picking-mode="Ignore" />
             <ui:Label name="synergy-help-body" picking-mode="Ignore" />

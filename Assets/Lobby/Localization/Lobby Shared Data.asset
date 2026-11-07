@@ -683,6 +683,10 @@ MonoBehaviour:
     m_Key: synergy.helpRules
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628259
+    m_Key: sale.dropHint
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

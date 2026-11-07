@@ -258,6 +258,7 @@ namespace AnimalBattler.Client.Lobby
             SetText("stage-heading", "preparationHeading");
             RenderMatchSidebar();
             SetText("sale-heading", "sell");
+            SetText("sale-hint", "sale.dropHint");
             _root.Q<VisualElement>("sale-zone")?.SetEnabled(!_state.self.ready);
             SetText("shop-heading", "shopHeading");
             var shop = _root.Q<VisualElement>("shop");
@@ -330,7 +331,7 @@ namespace AnimalBattler.Client.Lobby
                     heading.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
                         !_state.self.ready));
                 }
-                _boardTargets[slot] = target;
+                _boardTargets[slot] = cardVisual;
                 board.Add(target);
             }
             SetText("hand-heading", "ui.number", _state.self.hand?.Length ?? 0);

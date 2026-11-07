@@ -686,6 +686,10 @@ MonoBehaviour:
     m_Localized: "Only field copies count. Only the highest reached threshold applies; bonuses do not stack."
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628259
+    m_Localized: "Drop a card here"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
