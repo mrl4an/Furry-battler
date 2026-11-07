@@ -143,3 +143,9 @@
 .sale-zone:disabled { opacity: 0.5; }
 .match-screen .preparation-hand-zone { border-width: 2px; border-color: transparent; border-top-color: #796573; }
 .match-screen .preparation-hand-zone.drop-hover { border-color: rgba(99, 220, 197, 0.85); }
+
+/* Battle effects stay outside the row layout. SVG routes are revealed from their source. */
+.match-screen > .battle-fx-layer { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.battle-route { position: absolute; overflow: hidden; opacity: 0; }
+.battle-route-art { position: absolute; left: 0; background-size: 100% 100%; background-repeat: no-repeat; }
+.battle-impact { position: absolute; width: 96px; height: 96px; opacity: 0; background-size: contain; background-repeat: no-repeat; }

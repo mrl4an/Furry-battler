@@ -710,6 +710,10 @@ MonoBehaviour:
     m_Localized: "Bot"
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628265
+    m_Localized: "{0:+0;\u22120;0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

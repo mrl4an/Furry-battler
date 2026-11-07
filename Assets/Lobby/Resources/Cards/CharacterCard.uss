@@ -49,3 +49,15 @@
 .character-card.is-frozen .frost-overlay { display: flex; }
 
 .character-card.slot-drop-hover > .character-frame { border-color: rgba(99, 220, 197, 0.95); }
+
+/* Prepared vector halos distinguish attack readiness from the marked target. */
+.character-battle-glow { position: absolute; left: -28px; right: -28px; top: -28px; bottom: -28px; display: none; background-size: 100% 100%; background-repeat: no-repeat; }
+.character-card.battle-attacker > .character-battle-glow { display: flex; background-image: url("../Battle/attacker-glow.svg"); }
+.character-card.battle-target > .character-battle-glow { display: flex; background-image: url("../Battle/target-glow.svg"); }
+.character-card.battle-attacker > .character-frame { border-color: #63DCC5; }
+.character-card.battle-target > .character-frame { border-color: #F0A18F; }
+.stat-delta { position: absolute; left: -24px; top: -24px; width: 96px; margin: 0; -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); font-size: 26px; -unity-text-align: middle-center; text-shadow: 0 0 4px rgba(41, 31, 36, 0.9); }
+.stat-number.stat-gain, .stat-delta.stat-gain { color: #63DCC5; }
+.stat-number.stat-loss, .stat-delta.stat-loss { color: #F0A18F; }
+.stat-number.stat-poison, .stat-delta.stat-poison { color: #C7A6E6; }
+.stat-number.stat-expired, .stat-delta.stat-expired { color: #DBB773; }

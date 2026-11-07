@@ -83,6 +83,13 @@ namespace AnimalBattler.Client.Lobby
         public int health;
     }
 
+    [Serializable] public sealed class BattleStatMessage
+    {
+        public string id;
+        public int attack;
+        public int health;
+    }
+
     [Serializable] public sealed class BattleEventMessage
     {
         public int turn;
@@ -99,12 +106,16 @@ namespace AnimalBattler.Client.Lobby
         public int attackerHealthAfter;
         public int targetHealthAfter;
         public string[] deadCardIds;
+        public BattleStatMessage[] statsBefore;
+        public BattleStatMessage[] statsOnHit;
+        public BattleStatMessage[] statsAfter;
     }
 
     [Serializable] public sealed class BattleMessage
     {
         public int winnerIndex;
         public BattleCardMessage[] openingCards;
+        public BattleCardMessage[] unbuffedCards;
         public BattleEventMessage[] events;
     }
 

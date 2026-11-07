@@ -164,6 +164,7 @@ namespace AnimalBattler.Client.Lobby
             _dragging = false;
             source?.RemoveFromClassList("drag-source");
             if (source != null && pointerId >= 0 && source.HasPointerCapture(pointerId)) source.ReleasePointer(pointerId);
+            ForgetStatLabels(_ghost);
             _ghost?.RemoveFromHierarchy();
             _ghost = null;
             if (_root == null) return;

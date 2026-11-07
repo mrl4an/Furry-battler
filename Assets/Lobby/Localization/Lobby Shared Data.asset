@@ -707,6 +707,10 @@ MonoBehaviour:
     m_Key: botName
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628265
+    m_Key: ui.statDelta
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -60,7 +60,10 @@
                 <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:VisualElement class="hud-stat health-stat"><ui:VisualElement class="hud-icon health-icon" picking-mode="Ignore" /><ui:Label name="self-health" class="player-health" /></ui:VisualElement></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement name="attack-line" class="attack-line" picking-mode="Ignore" />
+        <ui:VisualElement name="battle-fx-layer" class="battle-fx-layer" picking-mode="Ignore">
+            <ui:VisualElement name="attack-line" class="battle-route" picking-mode="Ignore"><ui:VisualElement name="attack-line-art" class="battle-route-art" picking-mode="Ignore" /></ui:VisualElement>
+            <ui:VisualElement name="battle-impact" class="battle-impact" picking-mode="Ignore" />
+        </ui:VisualElement>
         <ui:VisualElement name="synergy-help-panel" class="synergy-help-panel hidden" picking-mode="Ignore">
             <ui:Label name="synergy-help-title" class="section-title" picking-mode="Ignore" />
             <ui:Label name="synergy-help-body" picking-mode="Ignore" />

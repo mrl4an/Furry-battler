@@ -15,10 +15,8 @@ namespace AnimalBattler.Client.Lobby
         private readonly Func<string, string> _localize;
         private readonly Dictionary<string, CardDefinitionMessage> _catalog = new Dictionary<string, CardDefinitionMessage>();
         private readonly Dictionary<string, VisualElement> _battleCards = new Dictionary<string, VisualElement>();
-        private readonly Dictionary<string, Label> _battleHealth = new Dictionary<string, Label>();
         private readonly Dictionary<Button, Action> _buttonActions = new Dictionary<Button, Action>();
         private readonly VisualElement[] _boardTargets = new VisualElement[5];
-        private VisualElement _line;
         private readonly Action _switchLanguage;
         private readonly VisualTreeAsset _cardTemplate;
         private string _sceneName;
@@ -27,7 +25,6 @@ namespace AnimalBattler.Client.Lobby
         private DragSource _drag;
         private VisualElement _ghost;
         private Label _timer;
-        private int _visibleBattleEvent = -1;
         private double _battleStartedAt;
         private string _lastBattleKey;
         private string _errorKey;
@@ -60,7 +57,6 @@ namespace AnimalBattler.Client.Lobby
             _buttonActions.Clear();
             _sceneName = sceneName;
             _root = document.rootVisualElement.Q<VisualElement>("game-screen");
-            _line = _root.Q<VisualElement>("attack-line");
             _root.RegisterCallback<GeometryChangedEvent>(evt =>
             {
                 _root.EnableInClassList("compact", evt.newRect.height < 680);
@@ -72,11 +68,6 @@ namespace AnimalBattler.Client.Lobby
             BindSynergyHelp();
             BindDragCancellation();
             _appliedBackgroundId = null;
-            if (_line != null)
-            {
-                _line.pickingMode = PickingMode.Ignore;
-                _line.generateVisualContent += DrawAttackLine;
-            }
         }
 
         public void SetPlayers(RoomPlayer[] players)
@@ -99,11 +90,12 @@ namespace AnimalBattler.Client.Lobby
 
         public void SetMatch(ServerMessage state)
         {
+            CapturePreparationChanges(_state, state);
             var battleKey = state.phase == "battle" ? state.round + ":" + state.endsAtUtc : null;
             if (battleKey != _lastBattleKey)
             {
                 _lastBattleKey = battleKey;
-                _visibleBattleEvent = -1;
+                ResetBattlePlayback();
                 _battleStartedAt = Time.realtimeSinceStartupAsDouble;
             }
             CancelDrag();
@@ -122,7 +114,8 @@ namespace AnimalBattler.Client.Lobby
             _state = null;
             _lastBattleKey = null;
             _errorKey = null;
-            _line?.MarkDirtyRepaint();
+            ClearStatAnimations();
+            ResetBattlePlayback();
         }
 
         public void ShowError(string key)
@@ -139,8 +132,8 @@ namespace AnimalBattler.Client.Lobby
             HideSynergyHelp();
             CloseCardDetails();
             ApplyMatchBackground();
+            ClearStatAnimations();
             _battleCards.Clear();
-            _battleHealth.Clear();
             Array.Clear(_boardTargets, 0, _boardTargets.Length);
             SetText("game-title", "gameTitle");
             SetText("round", "round", _state.round);
@@ -163,8 +156,6 @@ namespace AnimalBattler.Client.Lobby
                 case "battle": RenderBattle(); break;
                 case "finished": RenderFinished(); break;
             }
-            if (_state.phase == "battle" && _state.battle?.events != null)
-                ShowBattleProgress(_visibleBattleEvent);
             Tick();
         }
 
@@ -179,22 +170,8 @@ namespace AnimalBattler.Client.Lobby
             }
             else if (_timer != null) _timer.text = string.Empty;
 
-            if (_state.phase != "battle" || _state.battle?.events == null) return;
-            var elapsed = Time.realtimeSinceStartupAsDouble - _battleStartedAt;
-            var eventIndex = _state.battle.events.Length;
-            var passed = 0.0;
-            for (var i = 0; i < _state.battle.events.Length; i++)
-            {
-                var length = passed < 30 ? 3.0 : passed < 60 ? 1.5 : 0.75;
-                if (elapsed < passed + length) { eventIndex = i; break; }
-                passed += length;
-            }
-            if (eventIndex != _visibleBattleEvent)
-            {
-                _visibleBattleEvent = eventIndex;
-                ShowBattleProgress(eventIndex);
-            }
-            _line?.MarkDirtyRepaint();
+            TickBattlePlayback();
+            TickStatAnimations();
         }
 
         private static string SceneFor(string phase) => phase == "auction" ? "Auction"
@@ -324,6 +301,7 @@ namespace AnimalBattler.Client.Lobby
                     slotIcon.pickingMode = PickingMode.Ignore;
                     cardVisual.Add(slotIcon);
                 }
+                if (card != null) AnimatePreparationCard(cardVisual, card);
                 target.Add(cardVisual);
                 if (card != null)
                 {
@@ -342,6 +320,7 @@ namespace AnimalBattler.Client.Lobby
             {
                 var item = Column("hand-item");
                 var cardVisual = CharacterCard(card.cardId, card.copies, false);
+                AnimatePreparationCard(cardVisual, card);
                 item.Add(cardVisual);
                 BindDrag(cardVisual, new DragSource { CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
                 item.Add(Button("sell", () => _send(new GameRequest { type = "sellCard", cardId = card.id }),
@@ -376,14 +355,14 @@ namespace AnimalBattler.Client.Lobby
                     {
                         var visual = CharacterCard(card.cardId, card.copies, true, false, card.attack, card.health);
                         holder.Add(visual);
-                        _battleCards[card.id] = holder;
-                        _battleHealth[card.id] = visual.Q<Label>("character-health");
+                        _battleCards[card.id] = visual;
                     }
                     else holder.Add(CharacterCard(null, 1, false));
                     row.Add(holder);
                 }
             }
             SetText("battle-hint", "battleHint");
+            InitializeBattleCards();
         }
 
         private void RenderFinished()
@@ -447,50 +426,6 @@ namespace AnimalBattler.Client.Lobby
                 (definition?.health ?? 0) + copies - 1);
             visual.Q<Label>("card-copies").text = showCopies ? Format("copies", copies) : string.Empty;
             return visual;
-        }
-
-        private void ShowBattleProgress(int eventIndex)
-        {
-            var events = _state.battle.events;
-            var health = new Dictionary<string, int>();
-            var dead = new HashSet<string>();
-            foreach (var card in _state.battle.openingCards ?? Array.Empty<BattleCardMessage>())
-                health[card.id] = card.health;
-            for (var i = 0; i < events.Length && i < eventIndex; i++)
-            {
-                health[events[i].attackerId] = events[i].attackerHealthAfter;
-                health[events[i].targetId] = events[i].targetHealthAfter;
-                foreach (var id in events[i].deadCardIds ?? Array.Empty<string>()) dead.Add(id);
-            }
-            foreach (var pair in _battleCards)
-            {
-                pair.Value.style.opacity = dead.Contains(pair.Key) ? 0.25f : 1f;
-                if (_battleHealth.TryGetValue(pair.Key, out var label) && health.TryGetValue(pair.Key, out var hp))
-                {
-                    SetCharacterStat(label, hp);
-                }
-            }
-            SyncDetailStats();
-        }
-
-        private void DrawAttackLine(MeshGenerationContext context)
-        {
-            if (_state?.phase != "battle" || _state.battle?.events == null
-                || _visibleBattleEvent < 0 || _visibleBattleEvent >= _state.battle.events.Length) return;
-            var exchange = _state.battle.events[_visibleBattleEvent];
-            if (!_battleCards.TryGetValue(exchange.attackerId, out var attacker)
-                || !_battleCards.TryGetValue(exchange.targetId, out var target)) return;
-            var origin = _line.worldBound.position;
-            var a = attacker.worldBound.center - origin;
-            var b = target.worldBound.center - origin;
-            var pulse = 0.55f + 0.45f * Mathf.Sin(Time.realtimeSinceStartup * 12f);
-            var painter = context.painter2D;
-            painter.strokeColor = new Color(1f, 0.3f + 0.5f * pulse, 0.15f, 1f);
-            painter.lineWidth = 3f + 4f * pulse;
-            painter.BeginPath();
-            painter.MoveTo(a);
-            painter.LineTo(b);
-            painter.Stroke();
         }
 
         private string CardName(string id)

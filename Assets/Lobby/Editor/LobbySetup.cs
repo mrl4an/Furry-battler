@@ -242,6 +242,7 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "result.heading", "Match complete", "Матч завершён");
             Add(english, russian, "result.you", "You", "Вы");
             Add(english, russian, "result.opponent", "Opponent", "Соперник");
+            Add(english, russian, "ui.statDelta", "{0:+0;−0;0}", "{0:+0;−0;0}");
             EditorUtility.SetDirty(english);
             EditorUtility.SetDirty(russian);
             EditorUtility.SetDirty(english.SharedData);

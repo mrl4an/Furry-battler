@@ -153,10 +153,16 @@ namespace AnimalBattler.Client.Lobby
             card.EnableInClassList("no-ability", !hasAbility);
             ability.text = hasAbility ? Format("ability." + definition.ability.kind, definition.ability.amount * tier) : string.Empty;
             if (!hasAbility) ability.style.display = DisplayStyle.None;
-            card.Q<Label>("character-attack").text = definition == null ? Format("ui.unknown")
-                : Format("ui.number", definition.attack + copies - 1);
-            card.Q<Label>("character-health").text = definition == null ? Format("ui.unknown")
-                : Format("ui.number", definition.health + copies - 1);
+            if (definition != null)
+            {
+                SetCharacterStat(card.Q<Label>("character-attack"), definition.attack + copies - 1);
+                SetCharacterStat(card.Q<Label>("character-health"), definition.health + copies - 1);
+            }
+            else
+            {
+                card.Q<Label>("character-attack").text = Format("ui.unknown");
+                card.Q<Label>("character-health").text = Format("ui.unknown");
+            }
             if (attack.HasValue) SetCharacterStat(card.Q<Label>("character-attack"), attack.Value);
             if (health.HasValue) SetCharacterStat(card.Q<Label>("character-health"), health.Value);
             foreach (var number in card.Query<Label>(className: "stat-number").ToList())
@@ -245,6 +251,7 @@ namespace AnimalBattler.Client.Lobby
             HideSynergyHelp();
             _touchDetails = touch;
             _detailsAnchor = anchor;
+            ForgetStatLabels(_detailsHost);
             _detailsHost.Clear();
             var detail = CharacterCard(id, copies, false, true);
             detail.focusable = false;
@@ -274,11 +281,12 @@ namespace AnimalBattler.Client.Lobby
 
         private void SetCharacterStat(Label label, int value)
         {
+            _statValues[label] = value;
             label.text = Format("ui.number", value);
             label.EnableInClassList("wide-number", label.text.Length >= 3);
         }
 
-        private void SyncDetailStats()
+        private void SyncDetailStats(bool animate = false, float pace = 1f)
         {
             if (_detailsAnchor == null || _detailsHost == null) return;
             foreach (var name in new[] { "character-attack", "character-health" })
@@ -286,7 +294,8 @@ namespace AnimalBattler.Client.Lobby
                 var source = _detailsAnchor.Q<Label>(name);
                 var target = _detailsHost.Q<Label>(name);
                 if (source == null || target == null) continue;
-                target.text = source.text;
+                if (_statValues.TryGetValue(source, out var value)) ApplyStatValue(target, value, animate, source.ClassListContains("stat-poison"), pace);
+                else target.text = source.text;
                 target.EnableInClassList("wide-number", source.ClassListContains("wide-number"));
             }
         }
@@ -294,6 +303,7 @@ namespace AnimalBattler.Client.Lobby
         private void CloseCardDetails()
         {
             _detailsLayer?.AddToClassList("hidden");
+            ForgetStatLabels(_detailsHost);
             _detailsHost?.Clear();
             _detailsAnchor = null;
             _touchDetails = false;
