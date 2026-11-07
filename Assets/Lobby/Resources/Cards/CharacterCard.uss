@@ -6,19 +6,19 @@
 .character-art { flex-grow: 1; min-height: 0; background-color: #493E48; background-size: contain; background-position: center; background-repeat: no-repeat; border-radius: 10px; }
 .character-art.has-portrait { background-size: cover; background-position: center top; }
 .class-icon { width: 34px; height: 34px; flex-shrink: 0; background-size: contain; background-repeat: no-repeat; background-position: center; }
-.group-pack { background-image: url("../../Art/ClassIcons/pack.png"); }
-.group-armored { background-image: url("../../Art/ClassIcons/armored.png"); }
-.group-forest { background-image: url("../../Art/ClassIcons/forest.png"); }
-.group-feathered { background-image: url("../../Art/ClassIcons/feathered.png"); }
-.group-venomous { background-image: url("../../Art/ClassIcons/venomous.png"); }
-.group-urban { background-image: url("../../Art/ClassIcons/urban.png"); }
+.group-pack { background-image: url("../../Art/ClassIcons/pack-v3.png"); }
+.group-armored { background-image: url("../../Art/ClassIcons/armored-v3.png"); }
+.group-forest { background-image: url("../../Art/ClassIcons/forest-v3.png"); }
+.group-feathered { background-image: url("../../Art/ClassIcons/feathered-v3.png"); }
+.group-venomous { background-image: url("../../Art/ClassIcons/venomous-v3.png"); }
+.group-urban { background-image: url("../../Art/ClassIcons/urban-v3.png"); }
 .corner-class { position: absolute; left: -14px; top: -14px; width: 40px; height: 40px; }
 .role-icon { position: absolute; right: -12px; top: -12px; width: 34px; height: 34px; background-size: contain; background-repeat: no-repeat; background-position: center; }
 .role-attack { background-image: url("../../Art/Icons/role-attack.svg"); }
 .role-support { background-image: url("../../Art/Icons/role-support.svg"); }
 .role-defense { background-image: url("../../Art/Icons/role-defense.svg"); }
 .character-stat { position: absolute; bottom: -12px; width: 46px; height: 42px; margin: 0; padding: 6px 0 0 0; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 19px; color: #291F24; background-size: contain; background-position: center; background-repeat: no-repeat; }
-.character-attack { left: -16px; background-image: url("../../Art/Icons/attack.svg"); }
+.character-attack { left: -16px; background-image: url("../../Art/Icons/attack-paw-v3.png"); }
 .character-health { right: -16px; background-image: url("../../Art/Icons/health.svg"); }
 .character-merge { position: absolute; top: 206px; left: 32px; right: 32px; align-items: center; }
 .merge-drops { flex-direction: row; }

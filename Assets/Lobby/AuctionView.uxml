@@ -8,7 +8,6 @@
             <ui:Label name="game-title" class="game-title" />
             <ui:Label name="stage-heading" class="section-title" />
             <ui:Label name="round" class="round" />
-            <ui:Label name="timer" class="timer" />
             <ui:Button name="language-button" class="language-button" />
         </ui:VisualElement>
         <ui:Label name="game-error" class="game-error hidden" />
@@ -85,7 +84,11 @@
             </ui:VisualElement>
             <ui:VisualElement class="player-sidebar">
                 <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="opponent-name" class="player-name" /><ui:Label name="opponent-health" class="player-health" /></ui:VisualElement>
-                <ui:VisualElement class="auction-ready"><ui:Button name="ready-button" class="primary-button" /><ui:Label name="ready-status" class="hint" /></ui:VisualElement>
+                <ui:VisualElement class="auction-ready">
+                    <ui:Label name="timer" class="timer" />
+                    <ui:Button name="ready-button" class="primary-button" />
+                    <ui:Label name="ready-status" class="hint" />
+                </ui:VisualElement>
                 <ui:VisualElement class="player-portrait"><ui:VisualElement class="shared-avatar" /><ui:Label name="self-name" class="player-name" /><ui:Label name="self-health" class="player-health" /><ui:Label name="self-coins" class="player-coins" /></ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
