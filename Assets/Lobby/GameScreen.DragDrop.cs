@@ -12,16 +12,25 @@ namespace AnimalBattler.Client.Lobby
         private Vector2 _dragOffset;
         private bool _dragging;
         private bool _dropPending;
+        private bool _refreshAfterDrag;
 
         private void BindDragCancellation()
         {
             _root.RegisterCallback<KeyDownEvent>(evt =>
             {
-                if (evt.keyCode == KeyCode.Escape) CancelDrag(true);
+                if (evt.keyCode == KeyCode.Escape)
+                {
+                    CancelDrag(true);
+                    FlushDragRefresh();
+                }
             }, TrickleDown.TrickleDown);
             _root.RegisterCallback<DetachFromPanelEvent>(evt =>
             {
-                if (ReferenceEquals(evt.target, _root)) CancelDrag();
+                if (ReferenceEquals(evt.target, _root))
+                {
+                    _refreshAfterDrag = false;
+                    CancelDrag();
+                }
             });
         }
 
@@ -29,10 +38,11 @@ namespace AnimalBattler.Client.Lobby
         {
             source.RegisterCallback<PointerDownEvent>(evt =>
             {
-                if (_state?.phase != "preparation" || _state.self.ready || _dropPending || evt.button != 0) return;
+                if (_state?.phase != "preparation" || _state.self.ready || _dropPending || _dragSource != null || evt.button != 0) return;
                 if (drag.FromShop && _state.self.coins < 3) return;
                 if (IsSpell(drag.DefinitionId) && drag.DefinitionId != "hazelnut") return;
                 ClearPreparationEffects();
+                StopCardPulse(source);
                 CancelDrag();
                 CloseCardDetails();
                 HideSynergyHelp();
@@ -63,6 +73,8 @@ namespace AnimalBattler.Client.Lobby
                     _ghost.focusable = false;
                     _ghost.AddToClassList("drag-card-ghost");
                     _ghost.style.position = Position.Absolute;
+                    _ghost.style.left = 0;
+                    _ghost.style.top = 0;
                     _ghost.style.width = source.resolvedStyle.width;
                     _ghost.style.height = source.resolvedStyle.height;
                     _ghost.style.marginLeft = 0;
@@ -92,15 +104,24 @@ namespace AnimalBattler.Client.Lobby
                     _dropPending = true;
                     _send(request);
                 }
+                FlushDragRefresh();
                 if (wasDragging) evt.StopPropagation();
             });
             source.RegisterCallback<PointerCancelEvent>(evt =>
             {
-                if (_dragSource == source && _dragPointerId == evt.pointerId) CancelDrag(true);
+                if (_dragSource == source && _dragPointerId == evt.pointerId)
+                {
+                    CancelDrag(true);
+                    FlushDragRefresh();
+                }
             });
             source.RegisterCallback<PointerCaptureOutEvent>(evt =>
             {
-                if (_dragSource == source && _dragPointerId == evt.pointerId) CancelDrag(true);
+                if (_dragSource == source && _dragPointerId == evt.pointerId)
+                {
+                    CancelDrag(true);
+                    FlushDragRefresh();
+                }
             });
         }
 
@@ -163,8 +184,34 @@ namespace AnimalBattler.Client.Lobby
             var point = layer.WorldToLocal(position) - _dragOffset;
             var width = _ghost.style.width.value.value;
             var height = _ghost.style.height.value.value;
-            _ghost.style.left = Mathf.Clamp(point.x, 28, Mathf.Max(28, layer.contentRect.width - width - 24));
-            _ghost.style.top = Mathf.Clamp(point.y, 20, Mathf.Max(20, layer.contentRect.height - height - 24));
+            _ghost.style.translate = new Translate(
+                Mathf.Clamp(point.x, 28, Mathf.Max(28, layer.contentRect.width - width - 24)),
+                Mathf.Clamp(point.y, 20, Mathf.Max(20, layer.contentRect.height - height - 24)), 0);
+        }
+
+        private bool CanKeepDrag(ServerMessage next)
+        {
+            if (_dragSource?.panel == null || _state?.phase != "preparation" || next?.phase != "preparation"
+                || next.round != _state.round || next.self == null || next.self.ready
+                || next.self.playerId != _state.self?.playerId) return false;
+            if (_drag.FromShop)
+                return next.self.coins >= 3 && next.self.shop != null && _drag.ShopSlot >= 0
+                    && _drag.ShopSlot < next.self.shop.Length
+                    && next.self.shop[_drag.ShopSlot]?.cardId == _drag.DefinitionId;
+            if (_drag.FromBoard)
+                return next.self.board != null && _drag.BoardSlot >= 0 && _drag.BoardSlot < next.self.board.Length
+                    && MatchesDraggedCard(next.self.board[_drag.BoardSlot]);
+            foreach (var card in next.self.hand ?? Array.Empty<CardInstanceMessage>())
+                if (MatchesDraggedCard(card)) return true;
+            return false;
+        }
+
+        private bool MatchesDraggedCard(CardInstanceMessage card) => card != null && card.id == _drag.CardId
+            && card.cardId == _drag.DefinitionId && card.copies == _drag.Copies;
+
+        private void FlushDragRefresh()
+        {
+            if (_refreshAfterDrag && _dragSource == null) Refresh();
         }
 
         private void CancelDrag(bool animateReturn = false)

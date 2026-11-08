@@ -194,7 +194,9 @@ namespace AnimalBattler.Client.Lobby
             if (_preparationFx == null) { ForgetStatLabels(ghost); ghost.RemoveFromHierarchy(); return; }
             var origin = _root.WorldToLocal(ghost.worldBound.center);
             var size = new Vector2(ghost.style.width.value.value, ghost.style.height.value.value);
+            ghost.style.translate = new Translate(0, 0, 0);
             _preparationFx.Add(ghost);
+            PositionRevealFx(ghost, _preparationFx.WorldToLocal(_root.LocalToWorld(origin)), size.x, size.y);
             source.style.opacity = 0;
             var effect = AddPreparationEffect(PreparationEffectKind.Return, ghost, source, 0.17f);
             effect.Origin = origin;

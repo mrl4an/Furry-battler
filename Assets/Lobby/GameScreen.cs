@@ -56,6 +56,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void Bind(UIDocument document, string sceneName)
         {
+            _refreshAfterDrag = false;
             CancelDrag();
             CloseCardDetails();
             HideSynergyHelp();
@@ -114,7 +115,7 @@ namespace AnimalBattler.Client.Lobby
                 ResetBattlePlayback();
                 _battleStartedAt = Time.realtimeSinceStartupAsDouble;
             }
-            CancelDrag();
+            if (!CanKeepDrag(state)) CancelDrag();
             _dropPending = false;
             _state = state;
             _errorKey = null;
@@ -123,6 +124,7 @@ namespace AnimalBattler.Client.Lobby
 
         public void Hide()
         {
+            _refreshAfterDrag = false;
             ClearSessionEffects();
             ClearPreparationEffects();
             _preparationChanges.Clear();
@@ -148,6 +150,12 @@ namespace AnimalBattler.Client.Lobby
         public void Refresh()
         {
             if (_state == null || _root == null || _sceneName != SceneFor(_state.phase)) return;
+            if (_dragSource != null)
+            {
+                _refreshAfterDrag = true;
+                return;
+            }
+            _refreshAfterDrag = false;
             CancelDrag();
             HideSynergyHelp();
             CloseCardDetails();

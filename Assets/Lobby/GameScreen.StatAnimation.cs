@@ -111,6 +111,13 @@ namespace AnimalBattler.Client.Lobby
             tween.Delta.RemoveFromHierarchy();
         }
 
+        private void StopCardPulse(VisualElement card)
+        {
+            for (var i = _cardPulses.Count - 1; i >= 0; i--)
+                if (_cardPulses[i].Card == card) _cardPulses.RemoveAt(i);
+            card.style.scale = new Scale(Vector3.one);
+        }
+
         private void ClearStatAnimations()
         {
             foreach (var tween in _statTweens) FinishStatTween(tween);
