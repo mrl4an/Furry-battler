@@ -92,6 +92,9 @@ namespace AnimalBattler.Client.Lobby
             if (index != _battleStep)
             {
                 _battleDead.Clear();
+                if (index > 0)
+                    foreach (var opening in _state.battle.openingCards ?? Array.Empty<BattleCardMessage>())
+                        if (opening.health <= 0) _battleDead.Add(opening.id);
                 for (var i = 0; i < index; i++)
                     foreach (var id in events[i].deadCardIds ?? Array.Empty<string>()) _battleDead.Add(id);
                 if (index > 0) ApplyEventAfter(events[index - 1], false, pace, true);
@@ -111,7 +114,7 @@ namespace AnimalBattler.Client.Lobby
                 }
                 else if (phase <= 3)
                 {
-                    ApplyBattleStats(exchangeEvent.statsOnHit, animate, pace, true, true, exchangeEvent, true);
+                    ApplyBattleStats(exchangeEvent.statsOnHit, animate, pace, true, true, exchangeEvent);
                     if (phase == 3) ApplyEventAfter(exchangeEvent, animate, pace, false);
                 }
                 else ApplyEventAfter(exchangeEvent, animate, pace, true);
@@ -134,29 +137,34 @@ namespace AnimalBattler.Client.Lobby
                 {
                     ApplyStatValue(visual.Q<Label>("character-attack"), card.attack, animate, false, pace);
                     ApplyStatValue(visual.Q<Label>("character-health"), card.health, animate, false, pace);
-                    if (_catalog.TryGetValue(card.cardId, out var definition) && definition.ability?.kind == "directShield")
+                    if (card.health <= 0) _battleDead.Add(card.id);
+                    if (_catalog.TryGetValue(card.cardId, out var definition)
+                        && (definition.ability?.kind == "directShield" || definition.ability?.kind == "reflectDamage"))
                         visual.Q<Label>("character-ability").text = AbilityText(definition,
                             card.copies >= 6 ? 3 : card.copies >= 3 ? 2 : 1);
                 }
         }
 
-        private void ApplyBattleStats(BattleStatMessage[] stats, bool animate, float pace, bool attack, bool health, BattleEventMessage exchange, bool poisonEffects = false)
+        private void ApplyBattleStats(BattleStatMessage[] stats, bool animate, float pace, bool attack, bool health, BattleEventMessage exchange)
         {
             foreach (var stat in stats ?? Array.Empty<BattleStatMessage>())
             {
                 if (_battleCards.TryGetValue(stat.id, out var visual))
                 {
                     var showAnimation = animate && !_battleDead.Contains(stat.id);
-                    var poison = poisonEffects && (stat.id == exchange.attackerId ? exchange.poisonToAttacker > 0
-                        : stat.id == exchange.targetId && exchange.poisonToTarget > 0);
+                    var poison = stat.poison > 0;
                     if (attack) ApplyStatValue(visual.Q<Label>("character-attack"), stat.attack, showAnimation, poison, pace);
                     if (health) ApplyStatValue(visual.Q<Label>("character-health"), stat.health, showAnimation, false, pace);
                     if (_battleDefinitions.TryGetValue(stat.id, out var card)
-                        && _catalog.TryGetValue(card.cardId, out var definition) && definition.ability?.kind == "directShield")
+                        && _catalog.TryGetValue(card.cardId, out var definition) && definition.ability != null)
                     {
                         var tier = card.copies >= 6 ? 3 : card.copies >= 3 ? 2 : 1;
-                        visual.Q<Label>("character-ability").text = Format("ability.directShield",
-                            definition.ability.amount * tier, 0, 0, stat.shieldChargesRemaining);
+                        var kind = definition.ability.kind;
+                        if (kind == "directShield" || kind == "reflectDamage" || kind == "growingAttackPoison")
+                            visual.Q<Label>("character-ability").text = Format("ability." + kind,
+                                kind == "growingAttackPoison" ? stat.abilityAmount : definition.ability.amount * tier,
+                                0, 0, kind == "reflectDamage" ? stat.reflectionChargesRemaining : stat.shieldChargesRemaining,
+                                0, 0, definition.ability.growth * tier);
                     }
                 }
             }

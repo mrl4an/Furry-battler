@@ -339,42 +339,6 @@ MonoBehaviour:
     m_Key: ability.attackOnOwnTurn
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628173
-    m_Key: ability.attackBeforeFirstTurn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628174
-    m_Key: ability.buffOtherGroupAttack
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628175
-    m_Key: ability.exchangeDamage
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628176
-    m_Key: ability.firstDirectShield
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628177
-    m_Key: ability.buffOtherGroupHealth
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628178
-    m_Key: ability.buffPreviousBoth
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628179
-    m_Key: ability.buffDefenseHealth
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628180
-    m_Key: ability.buffAttackSlotAttack
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628181
-    m_Key: ability.poisonOnExchange
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628182
     m_Key: card.dog
     m_Metadata:
@@ -763,18 +727,6 @@ MonoBehaviour:
     m_Key: ability.playDefenseHealth
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628279
-    m_Key: ability.endSelfAttack
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628280
-    m_Key: ability.endAttackHealth
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628281
-    m_Key: ability.endOtherGroupHealth
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628282
     m_Key: ability.endNutGrowth
     m_Metadata:
@@ -787,10 +739,6 @@ MonoBehaviour:
     m_Key: ability.endGiveCache
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628285
-    m_Key: ability.startOpenCaches
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628286
     m_Key: ability.endRandomBuff
     m_Metadata:
@@ -799,16 +747,8 @@ MonoBehaviour:
     m_Key: ability.featheredModifier
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628288
-    m_Key: ability.repeatRavens
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628289
     m_Key: ability.directShield
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628290
-    m_Key: ability.poisonedAttack
     m_Metadata:
       m_Items: []
   - m_Id: 1114628291
@@ -817,18 +757,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1114628292
     m_Key: ability.playCoins
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628293
-    m_Key: ability.playPurchaseBuff
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628294
-    m_Key: ability.endPurchaseBuff
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628295
-    m_Key: ability.endRefreshCoins
     m_Metadata:
       m_Items: []
   - m_Id: 1114628296
@@ -865,6 +793,66 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1114628304
     m_Key: card.mergeLevel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628305
+    m_Key: card.packCub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628306
+    m_Key: ability.playGiveCub
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628307
+    m_Key: ability.playCubGrowth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628308
+    m_Key: ability.playGiveNut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628309
+    m_Key: ability.endGroupAttack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628310
+    m_Key: ability.endAllHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628311
+    m_Key: ability.reflectDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628312
+    m_Key: ability.endOtherGroupStats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628313
+    m_Key: ability.repeatEndEffects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628314
+    m_Key: ability.attackPoison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628315
+    m_Key: ability.openingPoisonDamage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628316
+    m_Key: ability.growingAttackPoison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628317
+    m_Key: ability.otherPlayBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628318
+    m_Key: ability.endPlayedBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628319
+    m_Key: ability.attackNextRoundCoins
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -342,42 +342,6 @@ MonoBehaviour:
     m_Localized: "Attack: gains +{0} attack for this hit."
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628173
-    m_Localized: "+{0} attack before first turn"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628174
-    m_Localized: "+{0} attack to other allies"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628175
-    m_Localized: "After attack: deals {0} extra damage."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628176
-    m_Localized: "Blocks {0} first direct damage"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628177
-    m_Localized: "+{0} health to other allies"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628178
-    m_Localized: "+{0} attack and health to previous slot"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628179
-    m_Localized: "+{0} health to defense slot"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628180
-    m_Localized: "+{0} attack to attack slot"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628181
-    m_Localized: "Reduces the opponent's attack by {0} for 1 turn."
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628182
     m_Localized: "Dog"
     m_Metadata:
@@ -619,55 +583,55 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628242
-    m_Localized: "3 / 6 / 10 copies: +1 / +2 / +4 attack to each Pack ally."
+    m_Localized: "3/8/15 Pack copies: at preparation start, receive 0/1/2 pack cubs. Cub plays improve future cubs."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628243
-    m_Localized: "3 / 6 / 10 copies: +2 / +4 / +7 health to each Armored ally."
+    m_Localized: "3/8/15 Armored copies: at preparation end, all Armored allies permanently gain +2/+4/+9 health."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628244
-    m_Localized: "3 / 6 / 10 copies: +1 / +2 / +3 attack and health to each Forest ally."
+    m_Localized: "3/8/15 Forest copies: at preparation end, each cache gains 1/2/3 opening progress. At 3, it is consumed and applies one nut to every ally."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628245
-    m_Localized: "3 / 6 / 10 copies: +2 / +4 / +7 attack on each Feathered ally's own turn."
+    m_Localized: "3/8/15 Feathered copies: every own attack adds +2/+4/+7 attack until battle ends. Counters do not trigger the increase."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628246
-    m_Localized: "3 / 6 / 10 copies: poison reduces attack by an extra 1 / 2 / 3."
+    m_Localized: "3/8/15 Venomous copies: each poison application gains +1/+3/+8 strength. Poison stacks until battle ends."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628247
-    m_Localized: "3 / 6 / 10 copies: +1 / +2 / +3 coins per round, based on the previous battle's board."
+    m_Localized: "3/8/15 Urban copies: receive +2/+5/+10 coins before the next round's auction."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628248
-    m_Localized: "Combat bonuses affect this class. Thresholds: 3 / 6 / 10 field copies."
+    m_Localized: "Thresholds: 3 / 8 / 15 field copies. Effects depend on the class."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628249
-    m_Localized: "Attack +1 / +2 / +4"
+    m_Localized: "Preparation start: 0 / 1 / 2 pack cubs"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628250
-    m_Localized: "Health +2 / +4 / +7"
+    m_Localized: "Preparation end: permanent +2 / +4 / +9 health"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628251
-    m_Localized: "Attack & health +1 / +2 / +3"
+    m_Localized: "Preparation end: +1 / +2 / +3 cache progress"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628252
-    m_Localized: "Own-turn attack +2 / +4 / +7"
+    m_Localized: "Each own attack: +2 / +4 / +7 attack for this battle"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628253
-    m_Localized: "Extra poison: \u22121 / \u22122 / \u22123 attack"
+    m_Localized: "Poison strength +1 / +3 / +8"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628254
-    m_Localized: "Next-round income +1 / +2 / +3"
+    m_Localized: "Next-round income +2 / +5 / +10"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628255
@@ -766,20 +730,8 @@ MonoBehaviour:
     m_Localized: "Play: gives the ally in defense +{0} health."
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628279
-    m_Localized: "End of preparation: gains +{0} attack."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628280
-    m_Localized: "End of preparation: gives the ally in attack +{0} health."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628281
-    m_Localized: "End of preparation: gives other Armored allies +{0} health."
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628282
-    m_Localized: "End of preparation: permanently improves your nuts by +{0}/+{0}."
+    m_Localized: "End of preparation: permanently improves future nuts by +{0}/+{0}."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628283
@@ -790,56 +742,32 @@ MonoBehaviour:
     m_Localized: "End of preparation: gives {0} nut caches."
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628285
-    m_Localized: "Every third preparation: opens all caches. Applies {0} nuts per cache to random allies. Progress: {5}/3."
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628286
-    m_Localized: "End of preparation: gives a random other ally +{0} attack, +{1} health or +{2}/+{2} at random."
+    m_Localized: "End of preparation: a random other ally gains +{0} attack, +{1} health or +{2}/+{2} at random."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628287
-    m_Localized: "End of preparation: permanently improves your Feathered abilities by +{0} attack or health at random."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628288
-    m_Localized: "End of preparation: each raven gives its bonus {0} extra times."
+    m_Localized: "End of preparation: permanently improves future Feathered abilities by +{0} attack or health at random."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628289
     m_Localized: "Reduces direct damage by {0}. Uses left: {3}."
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628290
-    m_Localized: "Reduces the opponent's attack by {0} for 1 turn. Attack: gains +{4} attack against a poisoned target."
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628291
-    m_Localized: "Battle start: reduces all enemies' attack by {0} for 1 turn."
+    m_Localized: "Battle start: applies {0} poison to every enemy until battle ends."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628292
     m_Localized: "Play: gives {0} coins."
     m_Metadata:
       m_Items: []
-  - m_Id: 1114628293
-    m_Localized: "Play: gives the ally in attack +{0}/+{0} per purchase this round, up to 5 purchases."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628294
-    m_Localized: "End of preparation: with 3+ purchases, gives other allies +{0}/+{0}."
-    m_Metadata:
-      m_Items: []
-  - m_Id: 1114628295
-    m_Localized: "End of preparation: with 3+ paid refreshes, gives {0} coins."
-    m_Metadata:
-      m_Items: []
   - m_Id: 1114628296
-    m_Localized: "Gives a chosen ally +{0}/+{0} permanently."
+    m_Localized: "Permanently gives a chosen ally +{0}/+{0}."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628297
-    m_Localized: "Cannot be used manually or sold. A moose opens it and applies nuts."
+    m_Localized: "Opening progress: {5}/{0}. Forest synergy advances it. When opened, applies one nut to every ally. Cannot be cast or sold."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628298
@@ -868,6 +796,66 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1114628304
     m_Localized: "LVL{0}"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628305
+    m_Localized: "Pack cub"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628306
+    m_Localized: "Play: adds a pack cub to your hand."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628307
+    m_Localized: "Play: permanently improves your future pack cubs by +{0}/+{0}, including cubs in hand."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628308
+    m_Localized: "Play: gives {0} nut."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628309
+    m_Localized: "End of preparation: gives all allies of its class +{0} attack."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628310
+    m_Localized: "End of preparation: gives all allies +{0} health."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628311
+    m_Localized: "When attacked: reflects received direct damage to the attacker, even if killed. Uses left: {3}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628312
+    m_Localized: "End of preparation: other allies of its class gain +{4} attack and +{0} health."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628313
+    m_Localized: "All end-of-preparation effects trigger {0} extra times."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628314
+    m_Localized: "Attack: applies {0} poison until battle ends. Poison stacks and reduces attack."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628315
+    m_Localized: "Battle start: up to {3} different random enemies receive {0} poison and {4} damage."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628316
+    m_Localized: "Attack: applies {0} poison. After its attack: poison strength grows by {6} for this battle."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628317
+    m_Localized: "When another ally is played: gives a random ally +{0}/+{0}. This creature's effect permanently grows by +{6}/+{6}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628318
+    m_Localized: "End of preparation: a random ally gains +{0}/+{0} per creature played this round after this creature entered the board. Count: {7}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628319
+    m_Localized: "Attack: gives {0} coins at the start of the next round."
     m_Metadata:
       m_Items: []
   references:

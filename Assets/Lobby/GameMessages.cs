@@ -13,6 +13,7 @@ namespace AnimalBattler.Client.Lobby
     [Serializable] public sealed class CardDefinitionMessage
     {
         public string type;
+        public bool generatedOnly;
         public string id;
         public string group;
         public string rarity;
@@ -29,7 +30,8 @@ namespace AnimalBattler.Client.Lobby
         public int healthAmount;
         public int bothAmount;
         public int charges;
-        public int attackBonus;
+        public int attackAmount;
+        public int growth;
     }
 
     [Serializable] public sealed class CardInstanceMessage
@@ -42,7 +44,9 @@ namespace AnimalBattler.Client.Lobby
         public int health;
         public int bonusAttack;
         public int bonusHealth;
-        public int preparationCount;
+        public int cacheProgress;
+        public int abilityGrowth;
+        public int playedCreaturesThisRound;
     }
 
     [Serializable] public sealed class ShopOfferMessage
@@ -56,8 +60,8 @@ namespace AnimalBattler.Client.Lobby
         public int nutBonus;
         public int featheredAttackBonus;
         public int featheredHealthBonus;
-        public int purchasesThisRound;
-        public int refreshesThisRound;
+        public int packCubBonus;
+        public int pendingCoins;
         public string playerId;
         public int health;
         public int coins;
@@ -89,6 +93,7 @@ namespace AnimalBattler.Client.Lobby
 
     [Serializable] public sealed class BattleCardMessage
     {
+        public int poison;
         public int playerIndex;
         public int slot;
         public string id;
@@ -104,6 +109,9 @@ namespace AnimalBattler.Client.Lobby
         public int attack;
         public int health;
         public int shieldChargesRemaining;
+        public int reflectionChargesRemaining;
+        public int poison;
+        public int abilityAmount;
     }
 
     [Serializable] public sealed class BattleEventMessage

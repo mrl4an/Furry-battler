@@ -22,7 +22,7 @@ namespace AnimalBattler.Client.Lobby
                 .Where(card => card != null && !string.IsNullOrEmpty(card.cardId)
                     && _catalog.TryGetValue(card.cardId, out var definition) && definition.group == group)
                 .Sum(card => card.copies);
-            return count >= 10 ? 3 : count >= 6 ? 2 : count >= 3 ? 1 : 0;
+            return count >= 15 ? 3 : count >= 8 ? 2 : count >= 3 ? 1 : 0;
         }
 
         private void CaptureSessionEffects(ServerMessage previous, ServerMessage current)

@@ -12,7 +12,7 @@ namespace AnimalBattler.Client.Lobby
         private static readonly string[] ClassGroups = { "pack", "armored", "forest", "feathered", "venomous", "urban" };
         private static readonly Dictionary<string, string> RecommendedRoles = new Dictionary<string, string>
         {
-            { "dog", "attack" }, { "jackal", "attack" }, { "coyote", "attack" }, { "wolf", "support" },
+            { "packCub", "support" }, { "dog", "attack" }, { "jackal", "attack" }, { "coyote", "attack" }, { "wolf", "support" },
             { "turtle", "defense" }, { "porcupine", "defense" }, { "armadillo", "defense" }, { "pangolin", "support" },
             { "hare", "attack" }, { "squirrel", "support" }, { "deer", "support" }, { "moose", "defense" },
             { "raven", "attack" }, { "owl", "support" }, { "hawk", "attack" }, { "eagle", "attack" },
@@ -229,7 +229,7 @@ namespace AnimalBattler.Client.Lobby
             }
             else role.style.display = DisplayStyle.None;
             var art = card.Q<VisualElement>("character-art");
-            var portrait = Resources.Load<Texture2D>("Characters/" + id);
+            var portrait = Resources.Load<Texture2D>("Characters/" + (id == "packCub" ? "pack-cub-v1" : id));
             if (portrait != null)
             {
                 art.style.backgroundImage = new StyleBackground(portrait);
@@ -258,11 +258,15 @@ namespace AnimalBattler.Client.Lobby
         {
             var ability = definition?.ability;
             if (string.IsNullOrEmpty(ability?.kind)) return string.Empty;
-            var amount = ability.amount * tier;
+            var amount = ability.kind.StartsWith("play", StringComparison.Ordinal) ? ability.amount : ability.amount * tier;
             if (ability.kind == "applyNut") amount = ability.amount + (_state?.self?.nutBonus ?? 0);
+            if (ability.kind == "growingAttackPoison") amount = ability.amount;
+            if (ability.kind == "otherPlayBuff") amount += instance?.abilityGrowth ?? 0;
+            var charges = ability.kind == "reflectDamage" ? ability.amount * tier : ability.charges;
+            var growth = ability.kind == "growingAttackPoison" ? ability.growth * tier : ability.growth;
             return Format("ability." + ability.kind, amount, ability.healthAmount * tier,
-                ability.bothAmount * tier, ability.charges, ability.attackBonus,
-                instance?.preparationCount ?? 0);
+                ability.bothAmount * tier, charges, ability.attackAmount,
+                instance?.cacheProgress ?? 0, growth, instance?.playedCreaturesThisRound ?? 0);
         }
 
         private void BindCardDetails()
