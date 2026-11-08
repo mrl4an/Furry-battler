@@ -83,7 +83,7 @@ namespace AnimalBattler.Client.Lobby
             CloseCardDetails();
             RenderMatchSidebar();
             SetText("stage-heading", "auction.revealTitle");
-            SetText("auction-hint", "auction.revealHint");
+            _root.Q<Label>("auction-hint").AddToClassList("hidden");
             SetText("ready-status", "auction.revealTimerHint");
             var ready = _root.Q<Button>("ready-button");
             ready.text = Format("auction.revealBusy");
@@ -112,8 +112,6 @@ namespace AnimalBattler.Client.Lobby
                 lot.SelfNumber = offer.Q<Label>("reveal-self-bid");
                 lot.OpponentNumber = offer.Q<Label>("reveal-opponent-bid");
                 lot.Status = offer.Q<Label>("reveal-lot-status");
-                offer.Q<Label>("reveal-self-caption").text = Format("result.you");
-                offer.Q<Label>("reveal-opponent-caption").text = Format("result.opponent");
                 lot.SelfNumber.text = Format("ui.number", lot.SelfBid);
                 lot.OpponentNumber.text = Format("ui.number", lot.OpponentBid);
                 lot.Status.text = string.Empty;

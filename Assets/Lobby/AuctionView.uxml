@@ -40,14 +40,13 @@
             <ui:VisualElement class="auction-table">
                 <ui:VisualElement class="opponent-hand-zone">
                     <ui:VisualElement class="hand-zone-mark opponent-mark"><ui:VisualElement class="hand-zone-icon" picking-mode="Ignore" /><ui:Label name="opponent-hand-count" class="hand-count" /></ui:VisualElement>
-                    <ui:ScrollView name="opponent-hand" mode="Horizontal" class="capsule-scroll auction-hand" vertical-scroller-visibility="Hidden" />
+                    <ui:ScrollView name="opponent-hand" mode="Horizontal" class="capsule-scroll auction-hand" horizontal-scroller-visibility="Auto" vertical-scroller-visibility="Hidden" />
                 </ui:VisualElement>
                 <ui:VisualElement class="auction-offers-zone">
                     <ui:Label name="auction-hint" class="hint" />
                     <ui:VisualElement name="offers" class="auction-offers">
                         <ui:VisualElement name="offer-0" class="auction-offer">
                             <ui:VisualElement name="opponent-bet" class="opponent-bet hidden">
-                                <ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-opponent-tray" class="bet-tray"><ui:VisualElement name="reveal-opponent-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                             </ui:VisualElement>
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -56,14 +55,12 @@
                                 <ui:Button name="bid-refund" class="bid-refund"><ui:VisualElement class="bid-refund-icon" picking-mode="Ignore" /></ui:Button>
                             </ui:VisualElement>
                             <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
-                                <ui:Label name="reveal-self-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-self-tray" class="bet-tray"><ui:VisualElement name="reveal-self-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-self-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                                 <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-1" class="auction-offer">
                             <ui:VisualElement name="opponent-bet" class="opponent-bet hidden">
-                                <ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-opponent-tray" class="bet-tray"><ui:VisualElement name="reveal-opponent-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                             </ui:VisualElement>
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -72,14 +69,12 @@
                                 <ui:Button name="bid-refund" class="bid-refund"><ui:VisualElement class="bid-refund-icon" picking-mode="Ignore" /></ui:Button>
                             </ui:VisualElement>
                             <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
-                                <ui:Label name="reveal-self-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-self-tray" class="bet-tray"><ui:VisualElement name="reveal-self-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-self-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                                 <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-2" class="auction-offer">
                             <ui:VisualElement name="opponent-bet" class="opponent-bet hidden">
-                                <ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-opponent-tray" class="bet-tray"><ui:VisualElement name="reveal-opponent-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                             </ui:VisualElement>
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -88,14 +83,12 @@
                                 <ui:Button name="bid-refund" class="bid-refund"><ui:VisualElement class="bid-refund-icon" picking-mode="Ignore" /></ui:Button>
                             </ui:VisualElement>
                             <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
-                                <ui:Label name="reveal-self-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-self-tray" class="bet-tray"><ui:VisualElement name="reveal-self-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-self-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                                 <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-3" class="auction-offer">
                             <ui:VisualElement name="opponent-bet" class="opponent-bet hidden">
-                                <ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-opponent-tray" class="bet-tray"><ui:VisualElement name="reveal-opponent-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                             </ui:VisualElement>
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -104,14 +97,12 @@
                                 <ui:Button name="bid-refund" class="bid-refund"><ui:VisualElement class="bid-refund-icon" picking-mode="Ignore" /></ui:Button>
                             </ui:VisualElement>
                             <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
-                                <ui:Label name="reveal-self-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-self-tray" class="bet-tray"><ui:VisualElement name="reveal-self-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-self-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                                 <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
                             </ui:VisualElement>
                         </ui:VisualElement>
                         <ui:VisualElement name="offer-4" class="auction-offer">
                             <ui:VisualElement name="opponent-bet" class="opponent-bet hidden">
-                                <ui:Label name="reveal-opponent-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-opponent-tray" class="bet-tray"><ui:VisualElement name="reveal-opponent-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-opponent-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                             </ui:VisualElement>
                             <ui:VisualElement name="card-host" class="auction-card-host"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -120,7 +111,6 @@
                                 <ui:Button name="bid-refund" class="bid-refund"><ui:VisualElement class="bid-refund-icon" picking-mode="Ignore" /></ui:Button>
                             </ui:VisualElement>
                             <ui:VisualElement name="reveal-bids" class="reveal-bids hidden">
-                                <ui:Label name="reveal-self-caption" class="reveal-bid-caption" />
                                 <ui:VisualElement name="reveal-self-tray" class="bet-tray"><ui:VisualElement name="reveal-self-coins" class="bet-coins" picking-mode="Ignore" /><ui:Label name="reveal-self-bid" class="reveal-bid-number bet-value" /></ui:VisualElement>
                                 <ui:Label name="reveal-lot-status" class="reveal-lot-status" />
                             </ui:VisualElement>
@@ -129,7 +119,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement class="self-hand-zone">
                     <ui:VisualElement class="hand-zone-mark self-mark"><ui:VisualElement class="hand-zone-icon" picking-mode="Ignore" /><ui:Label name="hand-heading" class="hand-count" /></ui:VisualElement>
-                    <ui:ScrollView name="auction-hand" mode="Horizontal" class="capsule-scroll auction-hand" vertical-scroller-visibility="Hidden" />
+                    <ui:ScrollView name="auction-hand" mode="Horizontal" class="capsule-scroll auction-hand" horizontal-scroller-visibility="Auto" vertical-scroller-visibility="Hidden" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement class="player-sidebar">

@@ -221,6 +221,21 @@ namespace AnimalBattler.Client.Lobby
             scroll.horizontalScroller.valueChanged += value => ShowTrack();
             scroll.verticalScroller.valueChanged += value => ShowTrack();
             scroll.RegisterCallback<WheelEvent>(evt => ShowTrack(), TrickleDown.TrickleDown);
+            if (scroll.mode == ScrollViewMode.Horizontal)
+            {
+                void UpdateHorizontalVisibility()
+                {
+                    var viewportWidth = scroll.contentViewport.layout.width;
+                    var contentWidth = scroll.contentContainer.layout.width;
+                    if (viewportWidth <= 0 || float.IsNaN(viewportWidth) || float.IsNaN(contentWidth)
+                        || float.IsInfinity(viewportWidth) || float.IsInfinity(contentWidth)) return;
+                    var visibility = contentWidth > viewportWidth + 0.5f ? ScrollerVisibility.Auto : ScrollerVisibility.Hidden;
+                    if (scroll.horizontalScrollerVisibility != visibility) scroll.horizontalScrollerVisibility = visibility;
+                }
+                scroll.contentViewport.RegisterCallback<GeometryChangedEvent>(evt => UpdateHorizontalVisibility());
+                scroll.contentContainer.RegisterCallback<GeometryChangedEvent>(evt => UpdateHorizontalVisibility());
+                UpdateHorizontalVisibility();
+            }
             foreach (var scroller in new[] { scroll.horizontalScroller, scroll.verticalScroller })
             {
                 scroller.RegisterCallback<PointerDownEvent>(evt =>
@@ -321,9 +336,7 @@ namespace AnimalBattler.Client.Lobby
                 var card = _state.self.board != null && slot < _state.self.board.Length ? _state.self.board[slot] : null;
                 if (string.IsNullOrEmpty(card?.cardId)) card = null;
                 var target = Column("board-slot");
-                var heading = Row("slot-heading");
-                heading.Add(Text("slot-title", slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot));
-                target.Add(heading);
+                target.tooltip = Format(slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot);
                 var cardVisual = CharacterCard(card?.cardId, card?.copies ?? 1, card != null);
                 if (card == null)
                 {
@@ -347,7 +360,6 @@ namespace AnimalBattler.Client.Lobby
             SetText("hand-heading", "ui.number", _state.self.hand?.Length ?? 0);
             var hand = _root.Q<ScrollView>("hand");
             hand.contentContainer.Clear();
-            SetButton("hand-previous", "handPrevious", () => hand.horizontalScroller.value -= 120, true);
             foreach (var card in _state.self.hand ?? Array.Empty<CardInstanceMessage>())
             {
                 var item = Column("hand-item");
@@ -358,7 +370,6 @@ namespace AnimalBattler.Client.Lobby
                 BindDrag(cardVisual, new DragSource { CardId = card.id, DefinitionId = card.cardId, Copies = card.copies });
                 hand.Add(item);
             }
-            SetButton("hand-next", "handNext", () => hand.horizontalScroller.value += 120, true);
             SetText("drag-hint", "dragHint");
             hand.tooltip = Format("dragHint");
             StartPreparationEffects();

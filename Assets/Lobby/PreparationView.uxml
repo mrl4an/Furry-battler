@@ -39,7 +39,7 @@
             </ui:VisualElement>
             <ui:VisualElement name="page-content" class="match-table preparation-table">
                 <ui:VisualElement class="shop-zone">
-                    <ui:VisualElement class="section-header"><ui:Label name="shop-heading" class="section-title paper-heading" /><ui:Button name="refresh-button" class="game-button refresh-button"><ui:VisualElement class="control-icon refresh-icon" picking-mode="Ignore" /><ui:Label name="refresh-caption" picking-mode="Ignore" /><ui:VisualElement class="control-icon coin-icon" picking-mode="Ignore" /><ui:Label name="refresh-price" picking-mode="Ignore" /></ui:Button></ui:VisualElement>
+                    <ui:VisualElement class="section-header shop-header"><ui:Label name="shop-heading" class="section-title paper-heading" /><ui:Button name="refresh-button" class="game-button refresh-button"><ui:VisualElement class="control-icon refresh-icon" picking-mode="Ignore" /><ui:Label name="refresh-caption" picking-mode="Ignore" /><ui:VisualElement class="control-icon coin-icon" picking-mode="Ignore" /><ui:Label name="refresh-price" picking-mode="Ignore" /></ui:Button></ui:VisualElement>
                     <ui:VisualElement name="shop" class="card-grid shop-row">
                         <ui:VisualElement class="offer"><ui:Instance template="CharacterCard" /></ui:VisualElement>
                         <ui:VisualElement class="offer"><ui:Instance template="CharacterCard" /></ui:VisualElement>
@@ -61,9 +61,7 @@
                 <ui:VisualElement name="hand-drop-zone" class="preparation-hand-zone">
                     <ui:VisualElement class="hand-zone-mark self-mark"><ui:VisualElement class="hand-zone-icon" picking-mode="Ignore" /><ui:Label name="hand-heading" class="hand-count" /></ui:VisualElement>
                     <ui:VisualElement class="hand-controls">
-                        <ui:Button name="hand-previous" class="game-button" />
                         <ui:ScrollView name="hand" mode="Horizontal" class="capsule-scroll hand-scroll" horizontal-scroller-visibility="Auto" vertical-scroller-visibility="Hidden" />
-                        <ui:Button name="hand-next" class="game-button" />
                     </ui:VisualElement>
                     <ui:Label name="drag-hint" class="hint" />
                 </ui:VisualElement>

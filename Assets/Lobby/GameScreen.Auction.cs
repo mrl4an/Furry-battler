@@ -31,6 +31,7 @@ namespace AnimalBattler.Client.Lobby
         {
             SetText("stage-heading", "auctionHeading");
             SetText("auction-hint", "auction.stepHint");
+            _root.Q<Label>("auction-hint").RemoveFromClassList("hidden");
             SetText("hand-heading", "ui.number", _state.self.hand?.Length ?? 0);
             SetText("opponent-hand-count", "ui.number", _state.opponent?.handCount ?? 0);
             RenderMatchSidebar();

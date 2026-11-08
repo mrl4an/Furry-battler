@@ -61,7 +61,7 @@
 .auction-ready > .hint, .battle-status > .section-title { -unity-text-align: middle-center; margin-top: 10px; }
 .match-screen .paper-heading { align-self: flex-start; color: #291F24; background-color: #E9D4B5; padding: 4px 12px; border-radius: 3px; font-size: 22px; margin: 0; }
 .preparation-table { padding: 12px 16px; }
-.shop-zone { height: 320px; flex-shrink: 0; }
+.shop-zone { height: 360px; flex-shrink: 0; }
 .match-screen .shop-row .character-card { width: 160px; height: 192px; }
 .match-screen .section-header { min-height: 44px; margin-bottom: 10px; }
 .match-screen .section-header Button { font-size: 18px; min-height: 40px; padding: 4px 10px; margin: 0; }
@@ -69,15 +69,12 @@
 .match-screen .offer, .match-screen .board-slot { align-items: center; justify-content: center; width: 20%; min-width: 0; padding: 0; flex-shrink: 1; }
 .match-screen .offer-actions { flex-direction: row; width: 196px; margin-top: 28px; }
 .match-screen .offer-actions Button { font-size: 15px; min-height: 40px; width: 50%; padding: 2px; }
-.match-screen .board-zone { height: 340px; flex-shrink: 0; padding-top: 8px; border-top-width: 1px; border-top-color: #796573; }
-.match-screen.preparation-screen .shop-row { padding: 0 16px; }
+.match-screen .board-zone { height: 300px; flex-shrink: 0; padding-top: 8px; border-top-width: 1px; border-top-color: #796573; }
+.match-screen.preparation-screen .shop-row { padding: 0 16px 24px 16px; }
 .match-screen .board-row { padding: 8px 12px 40px 12px; }
-.match-screen.preparation-screen .board-row { padding-left: 16px; padding-right: 16px; }
-.match-screen .slot-heading { width: 196px; height: 40px; min-height: 40px; margin-bottom: 10px; align-items: center; justify-content: center; flex-shrink: 0; }
-.match-screen .slot-heading .slot-title { width: 100%; font-size: 17px; -unity-text-align: middle-center; white-space: nowrap; margin: 0; }
+.match-screen.preparation-screen .board-row { padding: 18px 16px 30px 16px; }
 .match-screen .preparation-hand-zone { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; padding-top: 10px; border-top-width: 1px; border-top-color: #796573; }
 .match-screen .hand-controls { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; margin-top: 4px; }
-.match-screen .hand-controls > Button { width: 32px; min-width: 32px; font-size: 22px; }
 .match-screen .hand-scroll { flex-grow: 1; min-width: 0; min-height: 0; }
 .match-screen .hand-scroll > .unity-scroll-view__content-viewport > .unity-scroll-view__content-container { flex-direction: row; padding: 18px 28px 28px 28px; align-items: center; justify-content: center; flex-shrink: 0; }
 .match-screen .hand-item { width: 204px; height: auto; padding: 0 26px; justify-content: center; align-items: center; flex-shrink: 0; }
@@ -162,7 +159,6 @@
 /* Results use the same five anchors; all motion lives outside flex layout. */
 .match-screen > .auction-reveal-fx { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
 .reveal-bids { width: 190px; margin-top: 30px; align-items: center; flex-shrink: 0; }
-.reveal-bid-caption { color: #D8C9CF; font-size: 14px; margin: 0; }
 .reveal-bid-number { color: #E9D4B5; font-size: 28px; margin: 0; height: 38px; -unity-font: url("Fonts/RussoOne-Regular.ttf"); text-shadow: 0 0 5px rgba(41, 31, 36, 0.8); }
 .reveal-bid-number.reveal-winning { color: #FFE7A2; text-shadow: 0 0 8px rgba(219, 183, 115, 0.8); }
 .reveal-bid-number.reveal-tied { color: #DBB773; }
@@ -184,9 +180,8 @@
 .auction-reveal-fx .auction-coin-delta { position: absolute; color: #FFE7A2; -unity-font: url("Fonts/RussoOne-Regular.ttf"); font-size: 28px; text-shadow: 0 0 5px rgba(41, 31, 36, 0.9); -unity-text-align: middle-center; }
 
 /* Painted betting plaques; the refund control is centered below its own plaque. */
-.auction-screen .opponent-hand-zone { height: 140px; }
+.auction-screen .opponent-hand-zone { height: 232px; }
 .auction-screen .self-hand-zone { height: 300px; }
-.auction-screen .opponent-hand-zone .card-back { width: 48px; height: 60px; }
 .auction-screen .opponent-hand-zone .unity-scroll-view__content-container { padding-top: 8px; padding-bottom: 12px; }
 .auction-screen .auction-offers-zone > .hint { margin-bottom: 6px; }
 .auction-screen .reveal-lot-status { height: 24px; }
@@ -206,7 +201,6 @@
 .bid-refund-empty { visibility: hidden; }
 .opponent-bet { width: 184px; align-items: center; margin-bottom: 18px; }
 .match-screen .reveal-bids { width: 184px; margin-top: 24px; }
-.reveal-bid-caption { height: 18px; margin: 0; }
 .opponent-bet .bet-tray { -unity-background-image-tint-color: #F0D9D1; }
 .session-atmosphere { position: absolute; left: 0; right: 0; top: 0; bottom: 0; overflow: hidden; }
 .session-mote, .session-celebration { position: absolute; background-size: contain; background-repeat: no-repeat; }
@@ -227,3 +221,19 @@
 .match-screen .bet-tray.bet-empty { background-image: none; background-color: rgba(41, 31, 36, 0.12); border-width: 2px; border-color: rgba(99, 220, 197, 0.32); border-radius: 12px 6px 12px 6px; }
 .match-screen .bid-controls > .bet-tray.bet-empty:hover, .match-screen .bid-controls > .bet-tray.bet-empty:focus { background-color: rgba(41, 31, 36, 0.24); border-color: rgba(99, 220, 197, 0.85); }
 .bet-tray.bet-empty:hover .bet-hint-coin, .bet-tray.bet-empty:focus .bet-hint-coin { opacity: 0.6; }
+
+/* Centered paper section titles, with breathing room below shop controls. */
+.preparation-screen .shop-header { height: 56px; min-height: 56px; flex-shrink: 0; margin-bottom: 18px; justify-content: center; }
+.preparation-screen #shop-heading, .preparation-screen #board-heading { align-self: center; background-image: url("Art/NoticePaper.png"); background-color: transparent; -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.10px; border-width: 0; border-radius: 0; height: 44px; min-height: 44px; padding: 6px 28px; font-size: 24px; -unity-text-align: middle-center; }
+.preparation-screen .shop-header > .refresh-button { height: 48px; min-height: 48px; margin-left: 16px; padding: 6px 20px; }
+.preparation-screen .refresh-button, .preparation-screen .offer-actions > Button { background-image: url("Art/NoticePaper.png"); background-color: transparent; -unity-slice-left: 180; -unity-slice-right: 180; -unity-slice-top: 150; -unity-slice-bottom: 150; -unity-slice-scale: 0.08px; border-width: 0; border-radius: 0; color: #291F24; -unity-background-image-tint-color: white; }
+.preparation-screen .refresh-button:hover, .preparation-screen .refresh-button:focus, .preparation-screen .offer-actions > Button:hover, .preparation-screen .offer-actions > Button:focus { background-color: transparent; -unity-background-image-tint-color: #FFF3D8; }
+.preparation-screen .refresh-button:disabled, .preparation-screen .offer-actions > Button:disabled { opacity: 0.55; }
+.preparation-screen .offer-actions > Button { height: 42px; min-height: 42px; margin: 0; font-size: 17px; padding: 4px; }
+.preparation-screen .offer-actions > .freeze-button { margin-left: 6px; }
+.preparation-screen .offer-actions > .freeze-button.is-frozen { background-color: transparent; -unity-background-image-tint-color: #B5EAF1; }
+
+.preparation-screen .shop-row { align-items: stretch; }
+.preparation-screen .shop-row > .offer { justify-content: flex-start; }
+
+.auction-revealing .auction-offers-zone { padding-top: 12px; padding-bottom: 12px; }
