@@ -296,7 +296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77af0fbbd03c0f54683d262e5c6daf59, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::AnimalBattler.Client.Lobby.LobbyController
-  configuredServerUrl: ws://localhost:5282/ws
+  configuredServerUrl: wss://xn--d1acp7aeu.xn--p1ai/animals/ws
   cardTemplate: {fileID: 9197481963319205126, guid: d1aeba394b554ad7b9d163dc990b37a9, type: 3}
   uiAudio: {fileID: 2040000003}
 --- !u!4 &2040000002
