@@ -866,6 +866,10 @@ MonoBehaviour:
     m_Localized: "Choose an ally on your board."
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628304
+    m_Localized: "LVL{0}"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -184,6 +184,9 @@ namespace AnimalBattler.Client.Lobby
             _catalog.TryGetValue(id, out var definition);
             card.userData = instance;
             var tier = copies >= 6 ? 3 : copies >= 3 ? 2 : 1;
+            var level = card.Q<Label>("character-level");
+            level.style.display = tier >= 2 && definition?.type != "spell" ? DisplayStyle.Flex : DisplayStyle.None;
+            level.text = tier >= 2 ? Format("card.mergeLevel", tier) : string.Empty;
             card.RemoveFromClassList("rarity-common");
             card.AddToClassList("rarity-" + (definition?.rarity ?? "common"));
             card.Q<Label>("character-name").text = CardName(id);

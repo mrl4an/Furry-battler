@@ -172,6 +172,7 @@ namespace AnimalBattler.Client.Editor
             Add(english, russian, "leaveAfterMatch", "Leave room", "Покинуть комнату");
             Add(english, russian, "emptySlot", "Empty", "Пусто");
             Add(english, russian, "artPlaceholder", "Artwork", "Иллюстрация");
+            Add(english, russian, "card.mergeLevel", "LVL{0}", "LVL{0}");
             Add(english, russian, "tier", "Tier {0}", "Тир {0}");
             Add(english, russian, "cardStats", "{0} ATK · {1} HP", "{0} АТК · {1} ЗДР");
             Add(english, russian, "copies", "Copies: {0}", "Копий: {0}");

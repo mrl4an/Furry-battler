@@ -12,6 +12,7 @@
             </ui:VisualElement>
             <ui:Label name="character-ability" class="character-ability full-only" />
         </ui:VisualElement>
+        <ui:Label name="character-level" class="character-level" picking-mode="Ignore" />
         <ui:VisualElement name="character-class" class="class-icon corner-class group-pack" />
         <ui:VisualElement name="character-role" class="role-icon role-support" />
         <ui:VisualElement class="character-stat character-attack"><ui:Label name="character-attack" class="stat-number" /></ui:VisualElement>

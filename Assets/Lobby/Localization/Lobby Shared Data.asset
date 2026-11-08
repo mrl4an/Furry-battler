@@ -863,6 +863,10 @@ MonoBehaviour:
     m_Key: invalidSpellTarget
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628304
+    m_Key: card.mergeLevel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

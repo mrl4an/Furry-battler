@@ -28,6 +28,9 @@
 .merge-drops { flex-direction: row; }
 .merge-drop { width: 18px; height: 9px; margin: 0 2px; background-color: #746874; border-radius: 7px 7px 7px 1px; }
 .merge-drop.filled { background-color: #63DCC5; }
+.character-level { position: absolute; top: -12px; left: 48px; right: 48px; height: 22px; margin: 0; padding: 0 4px; background-color: #342D38; color: #63DCC5; border-width: 1px; border-color: #63DCC5; border-radius: 5px; font-size: 13px; -unity-font: url("../../Fonts/RussoOne-Regular.ttf"); -unity-text-align: middle-center; }
+.detailed-card .character-level { left: 104px; right: 104px; }
+.empty-character .character-level, .spell-card .character-level { display: none; }
 .character-card .full-only { display: none; }
 .character-card.detailed-card { width: 280px; height: 400px; }
 .detailed-card .full-only { display: flex; }
