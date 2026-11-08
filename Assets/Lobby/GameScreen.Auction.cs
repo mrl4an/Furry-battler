@@ -20,6 +20,11 @@ namespace AnimalBattler.Client.Lobby
             { "pigeon", "defense" }, { "strayCat", "support" }, { "rat", "attack" }, { "raccoon", "support" }
         };
 
+        private static readonly Dictionary<string, string> SpellPortraits = new Dictionary<string, string>
+        {
+            { "hazelnut", "hazelnut-v1" }, { "nutCache", "nut-cache-v1" }
+        };
+
         private VisualTreeAsset _characterTemplate;
         private VisualElement _detailsLayer;
         private VisualElement _detailsHost;
@@ -76,7 +81,7 @@ namespace AnimalBattler.Client.Lobby
             var handOffset = hand.scrollOffset;
             hand.Clear();
             foreach (var card in _state.self.hand ?? Array.Empty<CardInstanceMessage>())
-                hand.Add(CharacterCard(card.cardId, card.copies, false));
+                hand.Add(InstanceCard(card, false));
             hand.schedule.Execute(() => hand.scrollOffset = handOffset);
 
             var opponentHand = _root.Q<ScrollView>("opponent-hand");
@@ -161,7 +166,7 @@ namespace AnimalBattler.Client.Lobby
         }
 
         private VisualElement CharacterCard(string id, int copies, bool showMerge, bool detailed = false,
-            int? attack = null, int? health = null)
+            int? attack = null, int? health = null, CardInstanceMessage instance = null)
         {
             if (_characterTemplate == null) _characterTemplate = Resources.Load<VisualTreeAsset>("Cards/CharacterCard");
             var tree = _characterTemplate.CloneTree();
@@ -177,16 +182,17 @@ namespace AnimalBattler.Client.Lobby
                 return card;
             }
             _catalog.TryGetValue(id, out var definition);
+            card.userData = instance;
             var tier = copies >= 6 ? 3 : copies >= 3 ? 2 : 1;
             card.RemoveFromClassList("rarity-common");
             card.AddToClassList("rarity-" + (definition?.rarity ?? "common"));
             card.Q<Label>("character-name").text = CardName(id);
             card.Q<Label>("character-group").text = definition == null ? Format("ui.unknown")
-                : Format("group." + definition.group);
+                : definition.type == "spell" ? string.Empty : Format("group." + definition.group);
             var ability = card.Q<Label>("character-ability");
             var hasAbility = !string.IsNullOrEmpty(definition?.ability?.kind);
             card.EnableInClassList("no-ability", !hasAbility);
-            ability.text = hasAbility ? Format("ability." + definition.ability.kind, definition.ability.amount * tier) : string.Empty;
+            ability.text = AbilityText(definition, tier, instance);
             if (!hasAbility) ability.style.display = DisplayStyle.None;
             if (definition != null)
             {
@@ -209,7 +215,7 @@ namespace AnimalBattler.Client.Lobby
             {
                 var icon = card.Q<VisualElement>(name);
                 icon.RemoveFromClassList("group-pack");
-                if (definition != null) icon.AddToClassList("group-" + definition.group);
+                if (definition != null && definition.type != "spell") icon.AddToClassList("group-" + definition.group);
             }
             var role = card.Q<VisualElement>("character-role");
             role.RemoveFromClassList("role-support");
@@ -226,8 +232,34 @@ namespace AnimalBattler.Client.Lobby
                 art.style.backgroundImage = new StyleBackground(portrait);
                 art.AddToClassList("has-portrait");
             }
+            if (definition?.type == "spell")
+            {
+                card.AddToClassList("spell-card");
+                var spellArt = SpellPortraits.TryGetValue(id, out var resource) ? resource : id;
+                art.style.backgroundImage = new StyleBackground(Resources.Load<Texture2D>("Spells/" + spellArt));
+            }
             if (!detailed) BindCharacterDetails(card, id, copies);
             return card;
+        }
+
+        private bool IsSpell(string id) => !string.IsNullOrEmpty(id)
+            && _catalog.TryGetValue(id, out var definition) && definition.type == "spell";
+
+        private VisualElement InstanceCard(CardInstanceMessage card, bool showMerge)
+        {
+            return CharacterCard(card?.cardId, card?.copies ?? 1, showMerge, false,
+                card?.attack, card?.health, card);
+        }
+
+        private string AbilityText(CardDefinitionMessage definition, int tier, CardInstanceMessage instance = null)
+        {
+            var ability = definition?.ability;
+            if (string.IsNullOrEmpty(ability?.kind)) return string.Empty;
+            var amount = ability.amount * tier;
+            if (ability.kind == "applyNut") amount = ability.amount + (_state?.self?.nutBonus ?? 0);
+            return Format("ability." + ability.kind, amount, ability.healthAmount * tier,
+                ability.bothAmount * tier, ability.charges, ability.attackBonus,
+                instance?.preparationCount ?? 0);
         }
 
         private void BindCardDetails()
@@ -288,7 +320,7 @@ namespace AnimalBattler.Client.Lobby
             _detailsAnchor = anchor;
             ForgetStatLabels(_detailsHost);
             _detailsHost.Clear();
-            var detail = CharacterCard(id, copies, false, true);
+            var detail = CharacterCard(id, copies, false, true, instance: anchor.userData as CardInstanceMessage);
             detail.focusable = false;
             _detailsHost.Add(detail);
             SyncDetailStats();
@@ -324,6 +356,9 @@ namespace AnimalBattler.Client.Lobby
         private void SyncDetailStats(bool animate = false, float pace = 1f)
         {
             if (_detailsAnchor == null || _detailsHost == null) return;
+            var sourceAbility = _detailsAnchor.Q<Label>("character-ability");
+            var targetAbility = _detailsHost.Q<Label>("character-ability");
+            if (sourceAbility != null && targetAbility != null) targetAbility.text = sourceAbility.text;
             foreach (var name in new[] { "character-attack", "character-health" })
             {
                 var source = _detailsAnchor.Q<Label>(name);

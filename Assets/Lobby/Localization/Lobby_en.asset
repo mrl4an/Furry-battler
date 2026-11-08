@@ -239,7 +239,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628147
-    m_Localized: "Drag cards from hand to board or between board slots."
+    m_Localized: "Drag animals to board slots; drag a nut onto an ally to use it."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628148
@@ -339,7 +339,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628172
-    m_Localized: "+{0} attack on own turn"
+    m_Localized: "Attack: gains +{0} attack for this hit."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628173
@@ -351,7 +351,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628175
-    m_Localized: "{0} extra damage on exchange"
+    m_Localized: "After attack: deals {0} extra damage."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628176
@@ -375,7 +375,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628181
-    m_Localized: "-{0} enemy attack on exchange"
+    m_Localized: "Reduces the opponent's attack by {0} for 1 turn."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628182
@@ -756,6 +756,114 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 1114628276
     m_Localized: "Return the entire bid"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628277
+    m_Localized: "Play: gives the ally in attack +{0}/+{0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628278
+    m_Localized: "Play: gives the ally in defense +{0} health."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628279
+    m_Localized: "End of preparation: gains +{0} attack."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628280
+    m_Localized: "End of preparation: gives the ally in attack +{0} health."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628281
+    m_Localized: "End of preparation: gives other Armored allies +{0} health."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628282
+    m_Localized: "End of preparation: permanently improves your nuts by +{0}/+{0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628283
+    m_Localized: "Start of preparation: gives {0} nuts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628284
+    m_Localized: "End of preparation: gives {0} nut caches."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628285
+    m_Localized: "Every third preparation: opens all caches. Applies {0} nuts per cache to random allies. Progress: {5}/3."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628286
+    m_Localized: "End of preparation: gives a random other ally +{0} attack, +{1} health or +{2}/+{2} at random."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628287
+    m_Localized: "End of preparation: permanently improves your Feathered abilities by +{0} attack or health at random."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628288
+    m_Localized: "End of preparation: each raven gives its bonus {0} extra times."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628289
+    m_Localized: "Reduces direct damage by {0}. Uses left: {3}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628290
+    m_Localized: "Reduces the opponent's attack by {0} for 1 turn. Attack: gains +{4} attack against a poisoned target."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628291
+    m_Localized: "Battle start: reduces all enemies' attack by {0} for 1 turn."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628292
+    m_Localized: "Play: gives {0} coins."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628293
+    m_Localized: "Play: gives the ally in attack +{0}/+{0} per purchase this round, up to 5 purchases."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628294
+    m_Localized: "End of preparation: with 3+ purchases, gives other allies +{0}/+{0}."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628295
+    m_Localized: "End of preparation: with 3+ paid refreshes, gives {0} coins."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628296
+    m_Localized: "Gives a chosen ally +{0}/+{0} permanently."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628297
+    m_Localized: "Cannot be used manually or sold. A moose opens it and applies nuts."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628298
+    m_Localized: "Hazelnut"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628299
+    m_Localized: "Nut cache"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628300
+    m_Localized: "Spells cannot be placed on the board."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628301
+    m_Localized: "Spells cannot be sold."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628302
+    m_Localized: "This card cannot be cast manually."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628303
+    m_Localized: "Choose an ally on your board."
     m_Metadata:
       m_Items: []
   references:

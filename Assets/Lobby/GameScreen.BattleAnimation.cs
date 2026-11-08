@@ -134,6 +134,9 @@ namespace AnimalBattler.Client.Lobby
                 {
                     ApplyStatValue(visual.Q<Label>("character-attack"), card.attack, animate, false, pace);
                     ApplyStatValue(visual.Q<Label>("character-health"), card.health, animate, false, pace);
+                    if (_catalog.TryGetValue(card.cardId, out var definition) && definition.ability?.kind == "directShield")
+                        visual.Q<Label>("character-ability").text = AbilityText(definition,
+                            card.copies >= 6 ? 3 : card.copies >= 3 ? 2 : 1);
                 }
         }
 
@@ -148,6 +151,13 @@ namespace AnimalBattler.Client.Lobby
                         : stat.id == exchange.targetId && exchange.poisonToTarget > 0);
                     if (attack) ApplyStatValue(visual.Q<Label>("character-attack"), stat.attack, showAnimation, poison, pace);
                     if (health) ApplyStatValue(visual.Q<Label>("character-health"), stat.health, showAnimation, false, pace);
+                    if (_battleDefinitions.TryGetValue(stat.id, out var card)
+                        && _catalog.TryGetValue(card.cardId, out var definition) && definition.ability?.kind == "directShield")
+                    {
+                        var tier = card.copies >= 6 ? 3 : card.copies >= 3 ? 2 : 1;
+                        visual.Q<Label>("character-ability").text = Format("ability.directShield",
+                            definition.ability.amount * tier, 0, 0, stat.shieldChargesRemaining);
+                    }
                 }
             }
         }

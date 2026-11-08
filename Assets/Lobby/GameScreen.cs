@@ -337,7 +337,7 @@ namespace AnimalBattler.Client.Lobby
                 if (string.IsNullOrEmpty(card?.cardId)) card = null;
                 var target = Column("board-slot");
                 target.tooltip = Format(slot == 0 ? "attackSlot" : slot == 4 ? "defenseSlot" : "supportSlot", slot);
-                var cardVisual = CharacterCard(card?.cardId, card?.copies ?? 1, card != null);
+                var cardVisual = InstanceCard(card, card != null);
                 if (card == null)
                 {
                     var role = slot == 0 ? "attack" : slot == 4 ? "defense" : "support";
@@ -363,7 +363,7 @@ namespace AnimalBattler.Client.Lobby
             foreach (var card in _state.self.hand ?? Array.Empty<CardInstanceMessage>())
             {
                 var item = Column("hand-item");
-                var cardVisual = CharacterCard(card.cardId, card.copies, false);
+                var cardVisual = InstanceCard(card, false);
                 AnimatePreparationCard(cardVisual, card);
                 _preparationCards[card.id] = cardVisual;
                 item.Add(cardVisual);

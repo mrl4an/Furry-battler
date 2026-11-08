@@ -11,7 +11,7 @@ namespace AnimalBattler.Client.Lobby
         private readonly Dictionary<Label, int> _statValues = new Dictionary<Label, int>();
         private readonly List<StatTween> _statTweens = new List<StatTween>();
         private readonly List<CardPulse> _cardPulses = new List<CardPulse>();
-        private readonly Dictionary<string, int> _pendingPreparationCopies = new Dictionary<string, int>();
+        private readonly Dictionary<string, CardInstanceMessage> _pendingPreparationCards = new Dictionary<string, CardInstanceMessage>();
 
         private sealed class StatTween
         {
@@ -33,25 +33,25 @@ namespace AnimalBattler.Client.Lobby
 
         private void CapturePreparationChanges(ServerMessage previous, ServerMessage current)
         {
-            _pendingPreparationCopies.Clear();
+            _pendingPreparationCards.Clear();
             if (previous?.phase != "preparation" || current.phase != "preparation" || previous.round != current.round) return;
             foreach (var card in (previous.self.hand ?? Array.Empty<CardInstanceMessage>())
                 .Concat(previous.self.board ?? Array.Empty<CardInstanceMessage>()))
-                if (!string.IsNullOrEmpty(card?.id)) _pendingPreparationCopies[card.id] = card.copies;
+                if (!string.IsNullOrEmpty(card?.id)) _pendingPreparationCards[card.id] = card;
         }
 
         private void AnimatePreparationCard(VisualElement visual, CardInstanceMessage card)
         {
-            if (card == null || !_pendingPreparationCopies.TryGetValue(card.id, out var oldCopies)) return;
-            _pendingPreparationCopies.Remove(card.id);
-            if (oldCopies == card.copies || !_catalog.TryGetValue(card.cardId, out var definition)) return;
+            if (card == null || IsSpell(card.cardId) || !_pendingPreparationCards.TryGetValue(card.id, out var old)) return;
+            _pendingPreparationCards.Remove(card.id);
+            if (old.attack == card.attack && old.health == card.health) return;
             var attack = visual.Q<Label>("character-attack");
             var health = visual.Q<Label>("character-health");
-            SetCharacterStat(attack, definition.attack + oldCopies - 1);
-            SetCharacterStat(health, definition.health + oldCopies - 1);
-            AnimateStat(attack, definition.attack + card.copies - 1);
-            AnimateStat(health, definition.health + card.copies - 1);
-            var tierUp = (oldCopies >= 6 ? 3 : oldCopies >= 3 ? 2 : 1) < card.tier;
+            SetCharacterStat(attack, old.attack);
+            SetCharacterStat(health, old.health);
+            AnimateStat(attack, card.attack);
+            AnimateStat(health, card.health);
+            var tierUp = old.tier < card.tier;
             _cardPulses.Add(new CardPulse { Card = visual, Started = Time.realtimeSinceStartupAsDouble,
                 Strength = tierUp ? 0.14f : 0.07f, Duration = tierUp ? 0.6f : 0.38f });
         }

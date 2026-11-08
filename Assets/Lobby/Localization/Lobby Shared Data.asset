@@ -755,6 +755,114 @@ MonoBehaviour:
     m_Key: auction.refundBid
     m_Metadata:
       m_Items: []
+  - m_Id: 1114628277
+    m_Key: ability.playAttackBoth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628278
+    m_Key: ability.playDefenseHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628279
+    m_Key: ability.endSelfAttack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628280
+    m_Key: ability.endAttackHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628281
+    m_Key: ability.endOtherGroupHealth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628282
+    m_Key: ability.endNutGrowth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628283
+    m_Key: ability.startGiveNut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628284
+    m_Key: ability.endGiveCache
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628285
+    m_Key: ability.startOpenCaches
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628286
+    m_Key: ability.endRandomBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628287
+    m_Key: ability.featheredModifier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628288
+    m_Key: ability.repeatRavens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628289
+    m_Key: ability.directShield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628290
+    m_Key: ability.poisonedAttack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628291
+    m_Key: ability.openingPoison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628292
+    m_Key: ability.playCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628293
+    m_Key: ability.playPurchaseBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628294
+    m_Key: ability.endPurchaseBuff
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628295
+    m_Key: ability.endRefreshCoins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628296
+    m_Key: ability.applyNut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628297
+    m_Key: ability.lockedCache
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628298
+    m_Key: card.hazelnut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628299
+    m_Key: card.nutCache
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628300
+    m_Key: spellCannotBePlaced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628301
+    m_Key: spellCannotBeSold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628302
+    m_Key: spellCannotBeCast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1114628303
+    m_Key: invalidSpellTarget
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

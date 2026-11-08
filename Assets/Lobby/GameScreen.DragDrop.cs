@@ -31,6 +31,7 @@ namespace AnimalBattler.Client.Lobby
             {
                 if (_state?.phase != "preparation" || _state.self.ready || _dropPending || evt.button != 0) return;
                 if (drag.FromShop && _state.self.coins < 3) return;
+                if (IsSpell(drag.DefinitionId) && drag.DefinitionId != "hazelnut") return;
                 ClearPreparationEffects();
                 CancelDrag();
                 CloseCardDetails();
@@ -53,6 +54,12 @@ namespace AnimalBattler.Client.Lobby
                     _dragLiftStarted = Time.realtimeSinceStartupAsDouble;
                     CloseCardDetails();
                     _ghost = CharacterCard(drag.DefinitionId, drag.Copies, false);
+                    foreach (var name in new[] { "character-attack", "character-health" })
+                    {
+                        var from = source.Q<Label>(name);
+                        var to = _ghost.Q<Label>(name);
+                        if (from != null && to != null) to.text = from.text;
+                    }
                     _ghost.focusable = false;
                     _ghost.AddToClassList("drag-card-ghost");
                     _ghost.style.position = Position.Absolute;
@@ -67,7 +74,7 @@ namespace AnimalBattler.Client.Lobby
                     (_root.Q<VisualElement>("drag-layer") ?? _root).Add(_ghost);
                     source.AddToClassList("drag-source");
                     var salePrice = _root.Q<VisualElement>("sale-price-row");
-                    salePrice?.EnableInClassList("sale-price-hidden", drag.FromShop);
+                    salePrice?.EnableInClassList("sale-price-hidden", drag.FromShop || IsSpell(drag.DefinitionId));
                     SetText("sale-price", "ui.number", drag.Copies >= 6 ? 3 : drag.Copies >= 3 ? 2 : 1);
                 }
                 MoveGhost(evt.position);
@@ -102,6 +109,7 @@ namespace AnimalBattler.Client.Lobby
             if (_drag.FromBoard && _drag.BoardSlot == slot) return false;
             var board = _state.self.board;
             var target = board != null && slot < board.Length ? board[slot] : null;
+            if (IsSpell(_drag.DefinitionId)) return _drag.DefinitionId == "hazelnut" && !string.IsNullOrEmpty(target?.cardId);
             if (string.IsNullOrEmpty(target?.cardId)) return true;
             if (_drag.FromBoard && target.cardId != _drag.DefinitionId) return true;
             return target.cardId == _drag.DefinitionId && target.copies + _drag.Copies <= 6;
@@ -111,7 +119,7 @@ namespace AnimalBattler.Client.Lobby
         {
             if (_state?.phase != "preparation" || _state.self.ready) return null;
             var sale = _root.Q<VisualElement>("sale-zone");
-            if (!_drag.FromShop && sale != null && sale.worldBound.Contains(position))
+            if (!_drag.FromShop && !IsSpell(_drag.DefinitionId) && sale != null && sale.worldBound.Contains(position))
                 return new GameRequest { type = "sellCard", cardId = _drag.CardId };
             for (var slot = 0; slot < _boardTargets.Length; slot++)
             {
@@ -119,6 +127,8 @@ namespace AnimalBattler.Client.Lobby
                     || !CanDropOnBoard(slot)) continue;
                 if (_drag.FromShop)
                     return new GameRequest { type = "buyToBoard", shopSlot = _drag.ShopSlot, targetSlot = slot };
+                if (IsSpell(_drag.DefinitionId))
+                    return new GameRequest { type = "castSpell", cardId = _drag.CardId, targetSlot = slot };
                 if (_drag.FromBoard)
                     return new GameRequest { type = "moveCard", sourceSlot = _drag.BoardSlot, targetSlot = slot };
                 return new GameRequest { type = "placeCard", cardId = _drag.CardId, slot = slot };
@@ -139,8 +149,8 @@ namespace AnimalBattler.Client.Lobby
                 target.EnableInClassList("slot-drop-hover", allowed && target.worldBound.Contains(position));
             }
             var sale = _root.Q<VisualElement>("sale-zone");
-            sale?.EnableInClassList("drop-allowed", !_drag.FromShop);
-            sale?.EnableInClassList("drop-hover", !_drag.FromShop && sale.worldBound.Contains(position));
+            sale?.EnableInClassList("drop-allowed", !_drag.FromShop && !IsSpell(_drag.DefinitionId));
+            sale?.EnableInClassList("drop-hover", !_drag.FromShop && !IsSpell(_drag.DefinitionId) && sale.worldBound.Contains(position));
             var hand = _root.Q<VisualElement>("hand-drop-zone");
             hand?.EnableInClassList("drop-allowed", _drag.FromShop);
             hand?.EnableInClassList("drop-hover", _drag.FromShop && hand.worldBound.Contains(position));
