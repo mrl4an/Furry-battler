@@ -583,35 +583,35 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628242
-    m_Localized: "3/8/15 Pack copies: at preparation start, receive 0/1/2 pack cubs. Cub plays improve future cubs."
+    m_Localized: "3/7/12 Pack copies: at preparation start, receive 1/2/3 pack cubs. Cub plays improve future cubs."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628243
-    m_Localized: "3/8/15 Armored copies: at preparation end, all Armored allies permanently gain +2/+4/+9 health."
+    m_Localized: "3/7/12 Armored copies: at preparation end, all Armored allies permanently gain +2/+4/+9 health."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628244
-    m_Localized: "3/8/15 Forest copies: at preparation end, each cache gains 1/2/3 opening progress. At 3, it is consumed and applies one nut to every ally."
+    m_Localized: "3/7/12 Forest copies: at preparation end, each cache gains 1/2/3 opening progress. At 3, it is consumed and applies one nut to every ally."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628245
-    m_Localized: "3/8/15 Feathered copies: every own attack adds +2/+4/+7 attack until battle ends. Counters do not trigger the increase."
+    m_Localized: "3/7/12 Feathered copies: every own attack adds +2/+4/+7 attack until battle ends. Counters do not trigger the increase."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628246
-    m_Localized: "3/8/15 Venomous copies: each poison application gains +1/+3/+8 strength. Poison stacks until battle ends."
+    m_Localized: "3/7/12 Venomous copies: each poison application gains +1/+3/+8 strength. Poison stacks until battle ends."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628247
-    m_Localized: "3/8/15 Urban copies: receive +2/+5/+10 coins before the next round's auction."
+    m_Localized: "3/7/12 Urban copies: receive +2/+5/+10 coins before the next round's auction."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628248
-    m_Localized: "Thresholds: 3 / 8 / 15 field copies. Effects depend on the class."
+    m_Localized: "Thresholds: 3 / 7 / 12 field copies. Effects depend on the class."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628249
-    m_Localized: "Preparation start: 0 / 1 / 2 pack cubs"
+    m_Localized: "Preparation start: 1 / 2 / 3 pack cubs"
     m_Metadata:
       m_Items: []
   - m_Id: 1114628250
@@ -731,7 +731,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628282
-    m_Localized: "End of preparation: permanently improves future nuts by +{0}/+{0}."
+    m_Localized: "End of preparation: permanently improves future nuts by +0/+{0}."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628283
@@ -747,7 +747,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628287
-    m_Localized: "End of preparation: permanently improves future Feathered abilities by +{0} attack or health at random."
+    m_Localized: "End of preparation: permanently improves future Feathered abilities by +{0}/+{0}."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628289
@@ -763,7 +763,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628296
-    m_Localized: "Permanently gives a chosen ally +{0}/+{0}."
+    m_Localized: "Permanently gives a chosen ally +{0}/+{1}."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628297
@@ -811,7 +811,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628308
-    m_Localized: "Play: gives {0} nut."
+    m_Localized: "Play: gives {0} nut and permanently improves all nuts by +{4}/+0."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628309
@@ -847,7 +847,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1114628317
-    m_Localized: "When another ally is played: gives a random ally +{0}/+{0}. This creature's effect permanently grows by +{6}/+{6}."
+    m_Localized: "When another ally is played: gives a random ally +{0}/+{0}."
     m_Metadata:
       m_Items: []
   - m_Id: 1114628318

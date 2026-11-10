@@ -45,7 +45,6 @@ namespace AnimalBattler.Client.Lobby
         public int bonusAttack;
         public int bonusHealth;
         public int cacheProgress;
-        public int abilityGrowth;
         public int playedCreaturesThisRound;
     }
 
@@ -57,7 +56,8 @@ namespace AnimalBattler.Client.Lobby
 
     [Serializable] public sealed class MatchSelfMessage
     {
-        public int nutBonus;
+        public int nutAttackBonus;
+        public int nutHealthBonus;
         public int featheredAttackBonus;
         public int featheredHealthBonus;
         public int packCubBonus;

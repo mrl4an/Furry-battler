@@ -259,12 +259,14 @@ namespace AnimalBattler.Client.Lobby
             var ability = definition?.ability;
             if (string.IsNullOrEmpty(ability?.kind)) return string.Empty;
             var amount = ability.kind.StartsWith("play", StringComparison.Ordinal) ? ability.amount : ability.amount * tier;
-            if (ability.kind == "applyNut") amount = ability.amount + (_state?.self?.nutBonus ?? 0);
+            if (ability.kind == "applyNut") amount = ability.amount + (_state?.self?.nutAttackBonus ?? 0);
             if (ability.kind == "growingAttackPoison") amount = ability.amount;
-            if (ability.kind == "otherPlayBuff") amount += instance?.abilityGrowth ?? 0;
             var charges = ability.kind == "reflectDamage" ? ability.amount * tier : ability.charges;
             var growth = ability.kind == "growingAttackPoison" ? ability.growth * tier : ability.growth;
-            return Format("ability." + ability.kind, amount, ability.healthAmount * tier,
+            var healthAmount = ability.kind == "applyNut"
+                ? ability.amount + (_state?.self?.nutHealthBonus ?? 0)
+                : ability.healthAmount * tier;
+            return Format("ability." + ability.kind, amount, healthAmount,
                 ability.bothAmount * tier, charges, ability.attackAmount,
                 instance?.cacheProgress ?? 0, growth, instance?.playedCreaturesThisRound ?? 0);
         }
